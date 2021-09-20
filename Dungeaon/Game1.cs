@@ -87,13 +87,10 @@ namespace Dungeaon
                 "plp llnkokovojicvcdfjidffidjfi iijfiefiefie\nasdaasdadssdaf?"
             };
 
-            if (a)
+            if (a && textBox.DrawTextBox(_spriteBatch, deltTime, character, "Name", dialog))
             {
-                if (textBox.DrawTextBox(_spriteBatch, deltTime, character, "Name", dialog))
-                {
-                    textBox.Reset();
-                    a = false;
-                }
+                textBox.Reset();
+                a = false;
             }
 
             _spriteBatch.End();

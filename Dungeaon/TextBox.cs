@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -37,23 +38,20 @@ namespace Dungeaon
             {
                 _spriteBatch.DrawString(Game1.font, "Press 'E' to continue.", new Vector2(1095, 1020), Color.Black, 0, Vector2.Zero, 2, SpriteEffects.None, 0);
 
-                if (dialogIndex + 1 < dialog.Count)
+                if (Keyboard.GetState().IsKeyDown(Keys.E))
                 {
-                    if (Keyboard.GetState().IsKeyDown(Keys.E))
+                    if (dialogIndex + 1 < dialog.Count)
                     {
-                        if (dialogIndex + 1 < dialog.Count)
-                        {
-                            dialogIndex++;
-                            int diaIndex = dialogIndex;
-                            Reset();
-                            dialogIndex = diaIndex;
-                        }
-                        else
-                        {
-                            return true;
-                        }
-                        
+                        dialogIndex++;
+                        int diaIndex = dialogIndex;
+                        Reset();
+                        dialogIndex = diaIndex;
                     }
+                    else
+                    {
+                        return true;
+                    }
+                    
                 }
             }
             _spriteBatch.DrawString(Game1.font, text, new Vector2(700, 910), Color.Black, 0, Vector2.Zero, 2, SpriteEffects.None, 0);
