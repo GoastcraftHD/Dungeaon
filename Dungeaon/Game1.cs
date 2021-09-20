@@ -15,6 +15,9 @@ namespace Dungeaon
 
         private Texture2D character;
         private Texture2D whiteRectangle;
+
+        private List<Component> gameComponents;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -24,6 +27,8 @@ namespace Dungeaon
 
         protected override void Initialize()
         {
+            IsMouseVisible = true;
+
             _graphics.PreferredBackBufferWidth = 1920;
             _graphics.PreferredBackBufferHeight = 1080;
             _graphics.IsFullScreen = true;
@@ -37,9 +42,7 @@ namespace Dungeaon
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            character = Content.Load<Texture2D>("Bub");
-            font = Content.Load<SpriteFont>("File");
-
+            font = Content.Load<SpriteFont>("font");
             whiteRectangle = new Texture2D(GraphicsDevice, 800, 150);
             Color[] color = new Color[whiteRectangle.Height * whiteRectangle.Width];
 
@@ -50,6 +53,31 @@ namespace Dungeaon
 
             whiteRectangle.SetData(color);
             textBox.textBoxbackground = whiteRectangle; //Content.Load<Texture2D>("TextBack");
+
+            Button button = new Button(whiteRectangle, font)
+            {
+                position = new Vector2(100, 100),
+                text = "Exit Game",
+                textColor = Color.Black
+            };
+
+            button.click += button_Click;
+
+            gameComponents = new List<Component>()
+            {
+                button
+            };
+
+
+
+            character = Content.Load<Texture2D>("Bub");
+
+            
+        }
+
+        private void button_Click(object sender, EventArgs e)
+        {
+            Exit();
         }
 
         private Vector2 playerPos = new Vector2(100, 100);
@@ -60,7 +88,11 @@ namespace Dungeaon
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            playerPos = PlayerUtil.Movement(playerPos);
+            foreach (Component component in gameComponents)
+            {
+                component.Update(gameTime);
+            }
+
             fps = 1.0f / (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             base.Update(gameTime);
@@ -76,6 +108,11 @@ namespace Dungeaon
 
             _spriteBatch.Begin(SpriteSortMode.Immediate, null, SamplerState.PointClamp, null, null, null,
                 null);
+
+            foreach (Component component in gameComponents)
+            {
+                component.Draw(gameTime, _spriteBatch);
+            }
 
             // _spriteBatch.Draw(character, playerPos, Color.White);
 
