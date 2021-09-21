@@ -10,47 +10,61 @@ namespace Dungeaon
     class Button : Component
     {
         private MouseState currentMouse;
-        private SpriteFont font;
-        private bool isHovering;
         private MouseState previousMouse;
+        private bool isHovering;
         private Texture2D texture;
 
         public event EventHandler click;
         public bool clicked;
-        public Color textColor;
         public Vector2 position;
+
+        public Color spriteColor = Color.White;
+        public Color spriteColorHover = Color.Gray;
+        public float spriteRotation = 0f;
+        public Vector2 spriteOrigin = Vector2.Zero;
+        public int spriteScale = 1;
+        public int hitBoxScaleX = 1;
+        public int hitBoxScaleY = 1;
+        public SpriteEffects spriteEffect = SpriteEffects.None;
+
+        public SpriteFont font;
+        public Color textColor = Color.Black;
+        public float textRotation = 0f;
+        public Vector2 textOrigin = Vector2.Zero;
+        public float textScale = 1f;
+        public SpriteEffects textEffect = SpriteEffects.None;
 
         public Rectangle rectangle
         {
             get
             {
-                return new Rectangle((int) position.X, (int) position.Y, texture.Width, texture.Height);
+                return new Rectangle((int) position.X, (int) position.Y, texture.Width * spriteScale, texture.Height * spriteScale);
             }
         }
 
         public string text;
 
-        public Button(Texture2D texture, SpriteFont font)
+        public Button(Texture2D texture, Vector2 position)
         {
             this.texture = texture;
-            this.font = font;
+            this.position = position;
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            Color color = Color.White;
+            Color color = spriteColor;
 
             if (isHovering)
-                color = Color.Gray;
+                color = spriteColorHover;
 
-            spriteBatch.Draw(texture, rectangle, color);
+            spriteBatch.Draw(texture, position, null, color, spriteRotation, spriteOrigin, spriteScale, spriteEffect, 0);
 
             if (!string.IsNullOrEmpty(text))
             {
-                float x = (rectangle.X + (rectangle.Width / 2)) - (font.MeasureString(text).X / 2);
-                float y = (rectangle.Y + (rectangle.Height / 2)) - (font.MeasureString(text).Y / 2);
+                float x = (rectangle.X + (rectangle.Width / 2)) - (font.MeasureString(text).X * textScale / 2);
+                float y = (rectangle.Y + (rectangle.Height / 2)) - (font.MeasureString(text).Y * textScale / 2);
 
-                spriteBatch.DrawString(font, text, new Vector2(x, y), textColor);
+                spriteBatch.DrawString(font, text, new Vector2(x, y), textColor, textRotation, textOrigin, textScale, textEffect, 0);
             }
         }
 
