@@ -22,7 +22,7 @@ namespace Dungeaon
         public Color spriteColorHover = Color.Gray;
         public float spriteRotation = 0f;
         public Vector2 spriteOrigin = Vector2.Zero;
-        public int spriteScale = 0;
+        public int spriteScale = 1;
         public int hitBoxSizeX = 0;
         public int hitBoxSizeY = 0;
         public SpriteEffects spriteEffect = SpriteEffects.None;
