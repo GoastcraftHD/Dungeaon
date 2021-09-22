@@ -16,7 +16,7 @@ namespace Dungeaon.States
         public MainMenuState(Game1 game, GraphicsDeviceManager graphicsDeviceManager, ContentManager content, State previousState) : base(game, graphicsDeviceManager, content, previousState)
         {
             optionsState = new OptionsState(game, graphicsDeviceManager, content, this);
-            mainGameState = new MainGame(game, graphicsDeviceManager, content, this);
+            mainGameState = new MainGameState(game, graphicsDeviceManager, content, this);
 
             int buttonScale = 8;
 
