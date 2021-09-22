@@ -22,9 +22,9 @@ namespace Dungeaon
         public Color spriteColorHover = Color.Gray;
         public float spriteRotation = 0f;
         public Vector2 spriteOrigin = Vector2.Zero;
-        public int spriteScale = 1;
-        public int hitBoxScaleX = 1;
-        public int hitBoxScaleY = 1;
+        public int spriteScale = 0;
+        public int hitBoxSizeX = 0;
+        public int hitBoxSizeY = 0;
         public SpriteEffects spriteEffect = SpriteEffects.None;
 
         public SpriteFont font;
@@ -38,7 +38,10 @@ namespace Dungeaon
         {
             get
             {
-                return new Rectangle((int) position.X, (int) position.Y, texture.Width * spriteScale, texture.Height * spriteScale);
+                int width = hitBoxSizeX == 0 ? texture.Width * spriteScale : hitBoxSizeX;
+                int height = hitBoxSizeY == 0 ? texture.Height * spriteScale : hitBoxSizeY;
+
+                return new Rectangle((int) position.X, (int) position.Y, width, height);
             }
         }
 
@@ -57,12 +60,13 @@ namespace Dungeaon
             if (isHovering)
                 color = spriteColorHover;
 
-            spriteBatch.Draw(texture, position, null, color, spriteRotation, spriteOrigin, spriteScale, spriteEffect, 0);
+            if  (texture != null)
+                spriteBatch.Draw(texture, position, null, color, spriteRotation, spriteOrigin, spriteScale, spriteEffect, 0);
 
             if (!string.IsNullOrEmpty(text))
             {
-                float x = (rectangle.X + (rectangle.Width / 2)) - (font.MeasureString(text).X * textScale / 2);
-                float y = (rectangle.Y + (rectangle.Height / 2)) - (font.MeasureString(text).Y * textScale / 2);
+                float x = (position.X + (texture.Width * spriteScale / 2)) - (font.MeasureString(text).X * textScale / 2);
+                float y = (position.Y + (texture.Height * spriteScale / 2)) - (font.MeasureString(text).Y * textScale / 2);
 
                 spriteBatch.DrawString(font, text, new Vector2(x, y), textColor, textRotation, textOrigin, textScale, textEffect, 0);
             }

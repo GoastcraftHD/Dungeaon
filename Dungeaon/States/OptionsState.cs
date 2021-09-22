@@ -36,24 +36,36 @@ namespace Dungeaon.States
 
         public OptionsState(Game1 game, GraphicsDeviceManager graphicsDeviceManager, ContentManager content, State previousState) : base(game, graphicsDeviceManager, content, previousState)
         {
-            Button colorAddButton = new Button(game.buttonTexture, new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 + (game.button.Width * buttonScale) / 2, colorButtonPosY + game.button.Height * buttonScale / 2))
+            Button debugModeButton = new Button(game.button, new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - (game.button.Width * buttonScale) / 2, 500))
+            {
+                font = game.font,
+                text = "Debug Mode",
+                textScale = 2,
+                spriteScale = buttonScale
+            };
+
+            debugModeButton.click += debugModeButton_Click;
+
+            Button colorAddButton = new Button(game.whiteTexture, new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 + (game.button.Width * buttonScale) / 2 - 30, colorButtonPosY + game.button.Height * buttonScale / 2))
             {
                 font = game.font,
                 text = "+",
                 textScale = 2,
                 spriteScale = 10,
-                hitBoxScaleY = game.button.Height
+                hitBoxSizeY = game.button.Height * buttonScale,
+                hitBoxSizeX = 50
             };
 
             colorAddButton.click += colorAddButton_Click;
 
-            Button colorSubButton = new Button(game.buttonTexture, new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - (game.button.Width * buttonScale) / 2, colorButtonPosY + game.button.Height * buttonScale / 2))
+            Button colorSubButton = new Button(game.whiteTexture, new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - (game.button.Width * buttonScale) / 2 + 20, colorButtonPosY + game.button.Height * buttonScale / 2))
             {
                 font = game.font,
                 text = "-",
                 textScale = 2,
                 spriteScale = 10,
-                hitBoxScaleY = game.button.Height
+                hitBoxSizeY = game.button.Height * buttonScale,
+                hitBoxSizeX = 50
             };
 
             colorSubButton.click += colorSubButton_Click;
@@ -71,7 +83,8 @@ namespace Dungeaon.States
             {
                 colorSubButton,
                 colorAddButton,
-                backButton
+                backButton,
+                debugModeButton
             };
         }
 
@@ -125,6 +138,11 @@ namespace Dungeaon.States
                 colorIndex--;
 
             game.options.backgroundColor = bgColors[colorIndex];
+        }
+
+        private void debugModeButton_Click(object sender, EventArgs e)
+        {
+            game.options.debugMode = !game.options.debugMode;
         }
     }
 }

@@ -13,20 +13,24 @@ namespace Dungeaon
         private State currentState;
         private State nextState;
 
-        public Texture2D buttonTexture;
+        public Texture2D whiteTexture;
         public Texture2D room1;
+        public Texture2D room2;
+        public Texture2D bossRoom;
         public Texture2D player;
         public Texture2D button;
         public SpriteFont font;
 
         public Options options = new Options()
         {
-            backgroundColor = Color.Gray
+            backgroundColor = Color.Gray,
+            debugMode = false
         };
 
         public struct Options
         {
             public Color backgroundColor;
+            public bool debugMode;
         }
 
         public void ChangeState(State state)
@@ -64,10 +68,12 @@ namespace Dungeaon
                 color[i] = Color.White;
             }
             buttonBack.SetData(color);
-            buttonTexture = buttonBack;
+            whiteTexture = buttonBack;
             font = Content.Load<SpriteFont>("font");
             room1 = Content.Load<Texture2D>("rooms/room1");
-            player = Content.Load<Texture2D>("player");
+            room2 = Content.Load<Texture2D>("rooms/room2");
+            bossRoom = Content.Load<Texture2D>("rooms/bossroom");
+            player = Content.Load<Texture2D>("Player");
             button = Content.Load<Texture2D>("button");
 
             currentState = new MainMenuState(this, _graphics, Content, null);
