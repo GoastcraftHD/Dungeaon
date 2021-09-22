@@ -16,7 +16,7 @@ namespace Dungeaon
         {
             get
             {
-                return new Rectangle((int)playerPosition.X, (int)playerPosition.Y, (int)(playerTexture.Width * MainGame.roomScale), (int)(playerTexture.Height * MainGame.roomScale));
+                return new Rectangle((int)playerPosition.X, (int)playerPosition.Y, (int)(playerTexture.Width * MainGameState.roomScale), (int)(playerTexture.Height * MainGameState.roomScale));
             }
         }
 
@@ -29,7 +29,7 @@ namespace Dungeaon
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(playerTexture, playerPosition, null, Color.White, 0f, Vector2.Zero, MainGame.roomScale, playerDir, 0);
+            spriteBatch.Draw(playerTexture, playerPosition, null, Color.White, 0f, Vector2.Zero, MainGameState.roomScale, playerDir, 0);
 
             if (game.options.debugMode)
                 spriteBatch.Draw(game.whiteTexture, playerPosition, playerHitBox, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);
@@ -39,27 +39,27 @@ namespace Dungeaon
         {
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
-                if (playerPosition.Y > MainGame.roomRectangle.Y)
+                if (playerPosition.Y > MainGameState.roomRectangle.Y)
                     playerPosition.Y -= 2;
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
                 playerDir = SpriteEffects.FlipHorizontally;
-                if (playerPosition.X > MainGame.roomRectangle.X)
+                if (playerPosition.X > MainGameState.roomRectangle.X)
                     playerPosition.X -= 2;
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
-                if (playerPosition.Y < MainGame.roomRectangle.Height + MainGame.roomRectangle.Y - playerTexture.Height * MainGame.roomScale)
+                if (playerPosition.Y < MainGameState.roomRectangle.Height + MainGameState.roomRectangle.Y - playerTexture.Height * MainGameState.roomScale)
                     playerPosition.Y += 2;
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
                 playerDir = SpriteEffects.None;
-                if (playerPosition.X < MainGame.roomRectangle.Width + MainGame.roomRectangle.X - playerTexture.Width * MainGame.roomScale)
+                if (playerPosition.X < MainGameState.roomRectangle.Width + MainGameState.roomRectangle.X - playerTexture.Width * MainGameState.roomScale)
                     playerPosition.X += 2;
             }
         }
