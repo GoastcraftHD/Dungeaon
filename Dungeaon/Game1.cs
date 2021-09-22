@@ -19,7 +19,10 @@ namespace Dungeaon
         public Texture2D bossRoom;
         public Texture2D player;
         public Texture2D button;
+        public Texture2D knightEnemy;
+        public Texture2D fightScreen;
         public SpriteFont font;
+        
 
         public Options options = new Options()
         {
@@ -75,6 +78,8 @@ namespace Dungeaon
             bossRoom = Content.Load<Texture2D>("rooms/bossroom");
             player = Content.Load<Texture2D>("Player");
             button = Content.Load<Texture2D>("button");
+            knightEnemy = Content.Load<Texture2D>("versuchsperson");
+            fightScreen = Content.Load<Texture2D>("Fightscreen");
 
             currentState = new MainMenuState(this, _graphics, Content, null);
         }
