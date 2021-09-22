@@ -52,16 +52,14 @@ namespace Dungeaon.States
             };
         }
 
+        private int mouseX;
+        private int mouseY;
+
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);
 
             spriteBatch.Draw(roomTexture, roomPos, null, Color.White, 0f, Vector2.Zero, roomScale, SpriteEffects.None, 0);
-
-            int mouseX = Mouse.GetState().X;
-            int mouseY = Mouse.GetState().Y;
-
-            spriteBatch.DrawString(game.font, "X: " + mouseX + " Y: " + mouseY, new Vector2(0, 0), Color.Black, 0f, Vector2.Zero, 2, SpriteEffects.None, 0);
 
             if (game.options.debugMode)
             {
@@ -69,6 +67,8 @@ namespace Dungeaon.States
                 spriteBatch.Draw(game.whiteTexture, rightDoor, Color.White);
                 spriteBatch.Draw(game.whiteTexture, lowerDoor, Color.White);
                 spriteBatch.Draw(game.whiteTexture, leftDoor, Color.White);
+                spriteBatch.DrawString(game.font, "X: " + mouseX + " Y: " + mouseY, new Vector2(0, 0), Color.Black, 0f, Vector2.Zero, 2, SpriteEffects.None, 0);
+
             }
 
             foreach (Component component in components)
@@ -90,6 +90,9 @@ namespace Dungeaon.States
         {
             double deltaTime = gameTime.ElapsedGameTime.TotalSeconds;
             timeSinceLastDebugDraw += deltaTime;
+
+            mouseX = Mouse.GetState().X;
+            mouseY = Mouse.GetState().Y;
 
             if (timeSinceLastDebugDraw > .5D)
             {
