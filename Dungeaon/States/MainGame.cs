@@ -103,6 +103,11 @@ namespace Dungeaon.States
             {
                 game.ChangeState(previousState);
             }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.E))
+            {
+                game.ChangeState(new FightState(game, graphicsDeviceManager,content,this));
+            }
         }
 
         private void CheckForDoorColission()
