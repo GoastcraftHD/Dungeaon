@@ -1,5 +1,4 @@
-﻿using System;
-using Dungeaon.States;
+﻿using Dungeaon.States;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -27,7 +26,9 @@ namespace Dungeaon
         public Texture2D knightEnemy;
         public Texture2D financeEnemy;
         public Texture2D ghostEnemy;
-        
+
+        public Texture2D playerHead;
+
 
 
         public Options options = new Options()
@@ -77,7 +78,7 @@ namespace Dungeaon
                 color[i] = Color.White;
             }
             buttonBack.SetData(color);
-            
+
             whiteTexture = buttonBack;
             font = Content.Load<SpriteFont>("font");
             room1 = Content.Load<Texture2D>("rooms/room1");
@@ -89,6 +90,9 @@ namespace Dungeaon
             financeEnemy = Content.Load<Texture2D>("enemies/Finanzmitarbeiter");
             ghostEnemy = Content.Load<Texture2D>("enemies/Geist");
             fightScreen = Content.Load<Texture2D>("Fightscreen");
+            playerCard = Content.Load<Texture2D>("Board");
+            playerHead = Content.Load<Texture2D>("player-head");
+            // = Content.Load<Texture2D>("");
 
             currentState = new MainMenuState(this, _graphics, Content, null);
         }

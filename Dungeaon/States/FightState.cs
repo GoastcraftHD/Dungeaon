@@ -102,8 +102,11 @@ namespace Dungeaon.States
             spriteBatch.DrawString(game.font, "X: " + mouseX + " Y: " + mouseY, new Vector2(0, 0), Color.Black, 0f, Vector2.Zero, 2, SpriteEffects.None, 0);
             spriteBatch.Draw(game.fightScreen, roomPos, null, Color.White, 0f, Vector2.Zero, 3.5f, SpriteEffects.None, 0);
             spriteBatch.Draw(game.knightEnemy, new Vector2(820, 260), null, Color.White, 0f, Vector2.Zero, 10f, SpriteEffects.None, 0);
-            spriteBatch.Draw(enemyHealthbar, new Vector2(roomPos.X + game.fightScreen.Width * 3.5f / 2 - enemyHealthbar.Width / 2, 70),Color.White);
+            spriteBatch.Draw(enemyHealthbar, new Vector2(roomPos.X + game.fightScreen.Width * 3.4f / 2 - enemyHealthbar.Width / 2, 70),Color.White);
             spriteBatch.DrawString(game.font,"Versuchsperson", new Vector2(roomPos.X + game.fightScreen.Width * 3.5f / 2 - enemyHealthbar.Width / 2, 35),Color.Yellow, 0f, Vector2.Zero, 2, SpriteEffects.None, 0);
+            spriteBatch.Draw(game.playerCard, new Vector2(roomPos.X / 2 - game.playerCard.Width * 3.4f / 2, 10), null, Color.White, 0f, Vector2.Zero, 3.4f, SpriteEffects.None, 0);
+            spriteBatch.Draw(MainGameState.playerHealthbar, new Vector2(roomPos.X / 2 - MainGameState.playerHealthbar.Width / 2, 820), Color.White);
+            spriteBatch.Draw(game.playerHead, new Vector2(roomPos.X / 2 - game.playerHead.Width * 4f / 2, 114), null, Color.White, 0f, Vector2.Zero, 4f, SpriteEffects.None, 0);
 
             foreach (Component component in componentList)
             {
