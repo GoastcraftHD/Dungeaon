@@ -22,6 +22,8 @@ namespace Dungeaon.States
 
         private Room[,] rooms = new Room[3, 3];
 
+        public Texture2D playerHealthbar;
+
         public static Rectangle roomRectangle;
         public static float roomScale = 3.5f;
         public static Rectangle upperDoor;
@@ -42,6 +44,15 @@ namespace Dungeaon.States
             roomPos = new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - (game.room1.Width * roomScale) / 2, 0);
             roomRectangle = new Rectangle((int)roomPos.X + 5, (int)roomPos.Y + 10, (int)(game.room1.Width * roomScale) - 10, (int)(game.room1.Height * roomScale) - 18);
             player = new Player(game.player, new Vector2(700, 500), game);
+
+            playerHealthbar = new Texture2D(graphicsDeviceManager.GraphicsDevice, 286, 32);
+            Color[] healthbarColor = new Color[playerHealthbar.Width * playerHealthbar.Height];
+
+            for (int i = 0; i < healthbarColor.Length; i++)
+            {
+                healthbarColor[i] = Color.Red;
+            }
+            playerHealthbar.SetData(healthbarColor);
 
             upperDoor = new Rectangle((int)(roomPos.X + roomRectangle.Width / 2) - 15, (int)roomPos.Y + 1, 50, 10);
             rightDoor = new Rectangle((int)(roomPos.X + roomRectangle.Width), (int)(roomPos.Y + roomRectangle.Height / 2), 10, 50);
@@ -100,12 +111,14 @@ namespace Dungeaon.States
 
             room.enemie?.Draw(gameTime, spriteBatch);
 
+            spriteBatch.Draw(playerHealthbar, new Vector2(255, 860),Color.White);
+
             if (game.options.debugMode)
             {
                 spriteBatch.Draw(game.whiteTexture, upperDoor, Color.White);
                 spriteBatch.Draw(game.whiteTexture, rightDoor, Color.White);
                 spriteBatch.Draw(game.whiteTexture, lowerDoor, Color.White);
-                spriteBatch.Draw(game.whiteTexture, leftDoor, Color.White);
+                spriteBatch.Draw(game.whiteTexture, leftDoor, Color.White);         
                 spriteBatch.DrawString(game.font, "X: " + mouseX + " Y: " + mouseY, new Vector2(0, 0), Color.Black, 0f, Vector2.Zero, 2, SpriteEffects.None, 0);
 
             }

@@ -26,6 +26,7 @@ namespace Dungeaon
         public Texture2D knightEnemy;
         public Texture2D financeEnemy;
         public Texture2D ghostEnemy;
+        
 
 
         public Options options = new Options()
