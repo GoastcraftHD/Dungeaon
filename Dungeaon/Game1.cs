@@ -14,15 +14,19 @@ namespace Dungeaon
         private State nextState;
 
         public Texture2D whiteTexture;
+        public Texture2D player;
+        public Texture2D button;
+        public SpriteFont font;
+
+        public Texture2D fightScreen;
         public Texture2D room1;
         public Texture2D room2;
         public Texture2D bossRoom;
-        public Texture2D player;
-        public Texture2D button;
+
         public Texture2D knightEnemy;
-        public Texture2D fightScreen;
-        public SpriteFont font;
-        
+        public Texture2D financeEnemy;
+        public Texture2D ghostEnemy;
+
 
         public Options options = new Options()
         {
@@ -79,7 +83,9 @@ namespace Dungeaon
             bossRoom = Content.Load<Texture2D>("rooms/bossroom");
             player = Content.Load<Texture2D>("Player");
             button = Content.Load<Texture2D>("button");
-            knightEnemy = Content.Load<Texture2D>("versuchsperson");
+            knightEnemy = Content.Load<Texture2D>("enemies/versuchsperson");
+            financeEnemy = Content.Load<Texture2D>("enemies/Finanzmitarbeiter");
+            ghostEnemy = Content.Load<Texture2D>("enemies/Geist");
             fightScreen = Content.Load<Texture2D>("Fightscreen");
 
             currentState = new MainMenuState(this, _graphics, Content, null);

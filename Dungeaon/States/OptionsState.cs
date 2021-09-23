@@ -33,18 +33,32 @@ namespace Dungeaon.States
 
         int buttonScale = 8;
         private int colorButtonPosY = 200;
+        private Button debugModeButton;
+        private Button fullscreenButton;
+
 
         public OptionsState(Game1 game, GraphicsDeviceManager graphicsDeviceManager, ContentManager content, State previousState) : base(game, graphicsDeviceManager, content, previousState)
         {
-            Button debugModeButton = new Button(game.button, new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - (game.button.Width * buttonScale) / 2, 500))
+            debugModeButton = new Button(game.button, new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - (game.button.Width * buttonScale) / 2, 400))
             {
                 font = game.font,
                 text = "Debug Mode",
                 textScale = 2,
                 spriteScale = buttonScale
             };
-
+            
             debugModeButton.click += debugModeButton_Click;
+
+            fullscreenButton = new Button(game.button, new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - (game.button.Width * buttonScale) / 2, 600))
+            {
+                font = game.font,
+                text = "Fullscreen",
+                textScale = 2,
+                spriteScale = buttonScale,
+                buttonStayPressed = true
+            };
+
+            fullscreenButton.click += fullscreenButton_Click;
 
             Button colorAddButton = new Button(game.whiteTexture, new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 + (game.button.Width * buttonScale) / 2 - 30, colorButtonPosY + game.button.Height * buttonScale / 2))
             {
@@ -84,7 +98,8 @@ namespace Dungeaon.States
                 colorSubButton,
                 colorAddButton,
                 backButton,
-                debugModeButton
+                debugModeButton,
+                fullscreenButton
             };
         }
 
@@ -143,6 +158,14 @@ namespace Dungeaon.States
         private void debugModeButton_Click(object sender, EventArgs e)
         {
             game.options.debugMode = !game.options.debugMode;
+            debugModeButton.buttonStayPressed = !debugModeButton.buttonStayPressed;
+        }
+
+        private void fullscreenButton_Click(object sender, EventArgs e)
+        {
+            fullscreenButton.buttonStayPressed = !fullscreenButton.buttonStayPressed;
+            graphicsDeviceManager.IsFullScreen = !graphicsDeviceManager.IsFullScreen;
+            graphicsDeviceManager.ApplyChanges();
         }
     }
 }

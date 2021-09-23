@@ -16,6 +16,7 @@ namespace Dungeaon
         public bool clicked;
         public Vector2 position;
 
+        public bool buttonStayPressed = false;
         public Color spriteColor = Color.White;
         public Color spriteColorHover = Color.Gray;
         public float spriteRotation = 0f;
@@ -55,7 +56,7 @@ namespace Dungeaon
         {
             Color color = spriteColor;
 
-            if (isHovering)
+            if (isHovering || buttonStayPressed)
                 color = spriteColorHover;
 
             if  (texture != null)

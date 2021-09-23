@@ -7,60 +7,54 @@ namespace Dungeaon
 {
     class Player : Component
     {
-        private Texture2D playerTexture;
-        public Vector2 playerPosition;
-        private SpriteEffects playerDir = SpriteEffects.None;
+        private Texture2D texture;
+        public Vector2 position;
+        private SpriteEffects direction = SpriteEffects.None;
         private Game1 game;
 
-        public Rectangle playerHitBox
-        {
-            get
-            {
-                return new Rectangle((int)playerPosition.X, (int)playerPosition.Y, (int)(playerTexture.Width * MainGameState.roomScale), (int)(playerTexture.Height * MainGameState.roomScale));
-            }
-        }
+        public Rectangle hitBox => new Rectangle((int)position.X, (int)position.Y, (int)(texture.Width * MainGameState.roomScale), (int)(texture.Height * MainGameState.roomScale));
 
         public Player(Texture2D playerTexture, Vector2 spawnPosition, Game1 game)
         {
-            this.playerTexture = playerTexture;
-            this.playerPosition = spawnPosition;
+            this.texture = playerTexture;
+            this.position = spawnPosition;
             this.game = game;
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(playerTexture, playerPosition, null, Color.White, 0f, Vector2.Zero, MainGameState.roomScale, playerDir, 0);
+            spriteBatch.Draw(texture, position, null, Color.White, 0f, Vector2.Zero, MainGameState.roomScale, direction, 0);
 
             if (game.options.debugMode)
-                spriteBatch.Draw(game.whiteTexture, playerPosition, playerHitBox, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);
+                spriteBatch.Draw(game.whiteTexture, position, hitBox, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);
         }
 
         public override void Update(GameTime gameTime)
         {
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
-                if (playerPosition.Y > MainGameState.roomRectangle.Y)
-                    playerPosition.Y -= 2;
+                if (position.Y > MainGameState.roomRectangle.Y)
+                    position.Y -= 2;
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
-                playerDir = SpriteEffects.FlipHorizontally;
-                if (playerPosition.X > MainGameState.roomRectangle.X)
-                    playerPosition.X -= 2;
+                direction = SpriteEffects.FlipHorizontally;
+                if (position.X > MainGameState.roomRectangle.X)
+                    position.X -= 2;
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
-                if (playerPosition.Y < MainGameState.roomRectangle.Height + MainGameState.roomRectangle.Y - playerTexture.Height * MainGameState.roomScale)
-                    playerPosition.Y += 2;
+                if (position.Y < MainGameState.roomRectangle.Height + MainGameState.roomRectangle.Y - texture.Height * MainGameState.roomScale)
+                    position.Y += 2;
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
-                playerDir = SpriteEffects.None;
-                if (playerPosition.X < MainGameState.roomRectangle.Width + MainGameState.roomRectangle.X - playerTexture.Width * MainGameState.roomScale)
-                    playerPosition.X += 2;
+                direction = SpriteEffects.None;
+                if (position.X < MainGameState.roomRectangle.Width + MainGameState.roomRectangle.X - texture.Width * MainGameState.roomScale)
+                    position.X += 2;
             }
         }
     }
