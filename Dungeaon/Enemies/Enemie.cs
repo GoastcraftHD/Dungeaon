@@ -20,8 +20,8 @@ namespace Dungeaon.Enemies
         public abstract Rectangle hitBox { get; }
         protected Vector2 _position { get; set; }
         public abstract Vector2 position { get; set; }
-        protected  bool _isAggressiv { get; set; }
-        public abstract bool isAggressiv { get; set; }
+        protected  bool _isAlive { get; set; }
+        public abstract bool isAlive { get; set; }
 
 
         protected Game1 game;

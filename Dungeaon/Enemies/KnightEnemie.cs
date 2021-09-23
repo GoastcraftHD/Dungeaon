@@ -16,11 +16,13 @@ namespace Dungeaon.Enemies
         public override Rectangle hitBox => new Rectangle((int)position.X, (int)position.Y, (int)(texture.Width * scale), (int)(texture.Height * scale));
         public override float scale { get => _scale; set => _scale = value; }
         public override Vector2 position { get => _position; set => _position = value; }
-        public override bool isAggressiv { get => _isAggressiv; set => _isAggressiv = value; }
+        public override bool isAlive { get => _isAlive; set => _isAlive = value; }
 
         public KnightEnemie(Game1 game, Vector2 position) : base(game, position)
         {
             health = maxHealth;
+            isAlive = true;
+            scale = 3.5f;
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)

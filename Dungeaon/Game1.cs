@@ -16,6 +16,7 @@ namespace Dungeaon
         public Texture2D whiteTexture;
         public Texture2D player;
         public Texture2D button;
+        public Texture2D playerCard;
         public SpriteFont font;
 
         public Texture2D fightScreen;

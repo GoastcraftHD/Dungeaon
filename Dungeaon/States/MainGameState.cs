@@ -33,9 +33,6 @@ namespace Dungeaon.States
         private Player player;
         private Vector2 playerRoomPos = new Vector2(0, 0);
         private Texture2D[] roomTextures;
-        private Texture2D roomTexture;
-
-        private Enemie knight;
 
         public MainGameState(Game1 game, GraphicsDeviceManager graphicsDeviceManager, ContentManager content, State previousState) : base(game, graphicsDeviceManager, content, previousState)
         {
@@ -48,39 +45,10 @@ namespace Dungeaon.States
             lowerDoor = new Rectangle((int)(roomPos.X + roomRectangle.Width / 2) - 15, (int)(roomPos.Y + roomRectangle.Height) + 9, 50, 10);
             leftDoor = new Rectangle((int)(roomPos.X), (int)(roomPos.Y + roomRectangle.Height / 2), 10, 50);
 
-            roomTextures = new Texture2D[3] { game.room1, game.room2, game.bossRoom};
-            roomTexture = roomTextures[0];
+            roomTextures = new Texture2D[2] { game.room1, game.room2};
+            rooms = new Room[3, 3];
 
-            knight = new KnightEnemie(game, new Vector2(900, 400));
-            knight.scale = 3.5f;
-
-            Room r1 = new Room();
-            r1.texture = roomTextures[0];
-            r1.enemie = null;
-
-            Room r2 = new Room();
-            r2.texture = roomTextures[1];
-            r2.enemie = knight;
-
-            Room r3 = new Room();
-            r3.texture = roomTextures[0];
-            r3.enemie = knight;
-
-            Room r4 = new Room();
-            r4.texture = roomTextures[1];
-            r4.enemie = null;
-
-            Room r5 = new Room();
-            r5.texture = roomTextures[2];
-            r5.enemie = null;
-            r5.isBoss = true;
-
-            rooms = new Room[3, 3]
-            {
-                { r1, r2, r3 },
-                { r4, r5, r1 },
-                { r3, r4, r2 }
-            };
+            rooms = GenerateDungeon(3, 3);
 
             components = new List<Component>()
             {
@@ -96,9 +64,12 @@ namespace Dungeaon.States
         {
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);
 
+            room = rooms[(int)playerRoomPos.Y, (int)playerRoomPos.X];
+
             spriteBatch.Draw(room.texture, roomPos, null, Color.White, 0f, Vector2.Zero, roomScale, SpriteEffects.None, 0);
 
-            room.enemie?.Draw(gameTime, spriteBatch);
+            if (room.enemie != null && room.enemie.isAlive)
+                room.enemie.Draw(gameTime, spriteBatch);
 
             if (game.options.debugMode)
             {
@@ -107,7 +78,6 @@ namespace Dungeaon.States
                 spriteBatch.Draw(game.whiteTexture, lowerDoor, Color.White);
                 spriteBatch.Draw(game.whiteTexture, leftDoor, Color.White);
                 spriteBatch.DrawString(game.font, "X: " + mouseX + " Y: " + mouseY, new Vector2(0, 0), Color.Black, 0f, Vector2.Zero, 2, SpriteEffects.None, 0);
-
             }
 
             foreach (Component component in components)
@@ -130,8 +100,6 @@ namespace Dungeaon.States
             double deltaTime = gameTime.ElapsedGameTime.TotalSeconds;
             timeSinceLastDebugDraw += deltaTime;
 
-            room = rooms[(int)playerRoomPos.Y, (int)playerRoomPos.X];
-
             mouseX = Mouse.GetState().X;
             mouseY = Mouse.GetState().Y;
 
@@ -142,7 +110,7 @@ namespace Dungeaon.States
 
             CheckForDoorColission();
 
-            if (room.enemie != null)
+            if (room.enemie != null && room.enemie.isAlive)
             {
                 room.enemie.position = Vector2.Lerp(room.enemie.position, player.position, 0.01f);
 
@@ -159,6 +127,49 @@ namespace Dungeaon.States
             {
                 game.ChangeState(new FightState(game, graphicsDeviceManager,content,this));
             }
+        }
+
+        private Room[,] GenerateDungeon(int sizeX, int sizeY)
+        {
+            Random rand = new Random();
+
+            Room[,] rooms = new Room[sizeY, sizeX];
+
+            for (int y = 0; y < sizeY; y++)
+            {
+                for (int x = 0; x < sizeX; x++)
+                {
+                    Room room = new Room();
+                    int index = rand.Next(roomTextures.Length);
+                    room.texture = roomTextures[index];
+
+                    if (rand.Next(2) == 1)
+                    {
+                        int enemieIndex = rand.Next(1);
+                        Enemie enemie = new KnightEnemie(game, new Vector2(900, 400));
+                        
+                        if (enemieIndex == 0)
+                        {
+                            enemie = new KnightEnemie(game, new Vector2(900, 400));
+                        }
+
+                        room.enemie = enemie;
+                    }
+
+                    rooms[y, x] = room;
+                }
+            }
+
+            Room startRoom = new Room();
+            startRoom.texture = roomTextures[0];
+            rooms[0, 0] = startRoom;
+            
+            Room estartRoom = new Room();
+            estartRoom.texture = roomTextures[1];
+            estartRoom.enemie = new KnightEnemie(game, new Vector2(900, 400));
+            rooms[0, 0] = estartRoom;
+
+            return rooms;
         }
 
         private void CheckForDoorColission()
