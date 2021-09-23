@@ -8,11 +8,26 @@ namespace Dungeaon.States
 {
     class FightState : State
     {
+        private Texture2D enemyHealthbar;
         private Vector2 roomPos;
         List<Component> componentList;
 
         public FightState(Game1 game, GraphicsDeviceManager graphicsDeviceManager, ContentManager content, State previousState) : base(game, graphicsDeviceManager, content, previousState)
         {
+            roomPos = new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - (game.room1.Width * 3.5f) / 2, 0);
+
+            //Healthbar vom Gegner
+            enemyHealthbar = new Texture2D(graphicsDeviceManager.GraphicsDevice, 286, 32);
+            Color[] healthbarColor = new Color[enemyHealthbar.Width * enemyHealthbar.Height];
+
+            for (int i = 0; i < healthbarColor.Length; i++)
+            {
+                healthbarColor[i] = Color.Red;
+            }
+            enemyHealthbar.SetData(healthbarColor);
+
+
+            //Attackbutton
             Texture2D buttonAttackTexture = new Texture2D(graphicsDeviceManager.GraphicsDevice, 64, 32);
             Color[] color = new Color[buttonAttackTexture.Width * buttonAttackTexture.Height];
 
@@ -20,20 +35,17 @@ namespace Dungeaon.States
             {
                 color[i] = Color.Red;
             }
-
-            //MediumPurple
-            buttonAttackTexture.SetData(color);
-
-            roomPos = new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - (game.room1.Width * 3.5f) / 2, 0);
-
+            buttonAttackTexture.SetData(color);      
+            
             Button attackButton = new Button(buttonAttackTexture, new Vector2(600, 730))
             {
                 font = game.font,
                 text = "ATTACK",
-                textScale = 2,
+                textScale = 4,
                 spriteScale = 3,
             };
 
+            //Block Button
             Texture2D buttonAttackTextureB = new Texture2D(graphicsDeviceManager.GraphicsDevice, 64, 32);
             Color[] colorB = new Color[buttonAttackTexture.Width * buttonAttackTexture.Height];
 
@@ -43,14 +55,16 @@ namespace Dungeaon.States
             }
 
             buttonAttackTextureB.SetData(colorB);
-            Button blockButton = new Button(buttonAttackTextureB, new Vector2(838, 730))
+            Button blockButton = new Button(buttonAttackTextureB, new Vector2(868, 730))
             {
                 font = game.font,
                 text = "BLOCK",
-                textScale = 2,
+                textScale = 4,
                 spriteScale = 3,
             };
-        
+
+
+            //DodgeButton
             Texture2D buttonAttackTextureC = new Texture2D(graphicsDeviceManager.GraphicsDevice, 64, 32);
             Color[] colorC = new Color[buttonAttackTexture.Width * buttonAttackTexture.Height];
 
@@ -60,13 +74,15 @@ namespace Dungeaon.States
             }
 
             buttonAttackTextureC.SetData(colorC);
-            Button dodgeButton = new Button(buttonAttackTextureC, new Vector2(1078, 730))
+            Button dodgeButton = new Button(buttonAttackTextureC, new Vector2(1138, 730))
             {
                 font = game.font,
                 text = "DODGE",
-                textScale = 2,
+                textScale = 4,
                 spriteScale = 3,
             };
+
+            //List
             componentList = new List<Component>()
             {
                 attackButton,
@@ -85,6 +101,8 @@ namespace Dungeaon.States
             spriteBatch.DrawString(game.font, "X: " + mouseX + " Y: " + mouseY, new Vector2(0, 0), Color.Black, 0f, Vector2.Zero, 2, SpriteEffects.None, 0);
             spriteBatch.Draw(game.fightScreen, roomPos, null, Color.White, 0f, Vector2.Zero, 3.5f, SpriteEffects.None, 0);
             spriteBatch.Draw(game.knightEnemy, new Vector2(820, 260), null, Color.White, 0f, Vector2.Zero, 10f, SpriteEffects.None, 0);
+            spriteBatch.Draw(enemyHealthbar, new Vector2(roomPos.X + game.fightScreen.Width * 3.5f / 2 - enemyHealthbar.Width / 2, 70),Color.White);
+            spriteBatch.DrawString(game.font,"Versuchsperson", new Vector2(roomPos.X + game.fightScreen.Width * 3.5f / 2 - enemyHealthbar.Width / 2, 35),Color.Yellow, 0f, Vector2.Zero, 2, SpriteEffects.None, 0);
 
             foreach (Component component in componentList)
             {
