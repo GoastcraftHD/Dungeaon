@@ -71,6 +71,7 @@ namespace Dungeaon
                 color[i] = Color.White;
             }
             buttonBack.SetData(color);
+            
             whiteTexture = buttonBack;
             font = Content.Load<SpriteFont>("font");
             room1 = Content.Load<Texture2D>("rooms/room1");
