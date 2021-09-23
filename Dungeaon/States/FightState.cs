@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using Dungeaon.Enemies;
 
 namespace Dungeaon.States
 {
@@ -113,7 +114,7 @@ namespace Dungeaon.States
 
         public override void PostUpdate(GameTime gameTime)
         {
-
+            
         }
 
         public override void Update(GameTime gameTime)
