@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using Dungeaon.Enemies;
+using System;
 
 namespace Dungeaon.States
 {
@@ -13,22 +14,19 @@ namespace Dungeaon.States
         private Vector2 roomPos;
         private List<Component> componentList;
         private Enemie enemie;
+        private int enemieHealthBarWitdh = 286;
+        private Rectangle ememieHealthBarRect =>  new Rectangle(0, 0, enemieHealthBarWitdh, 32); 
 
         public FightState(Game1 game, GraphicsDeviceManager graphicsDeviceManager, ContentManager content, State previousState, Enemie enemie) : base(game, graphicsDeviceManager, content, previousState)
         {
             this.enemie = enemie;
 
+            enemyHealthbar = new Texture2D(graphicsDeviceManager.GraphicsDevice, 1, 1);
+            
             roomPos = new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - (game.room1.Width * 3.5f) / 2, 0);
 
             //Healthbar vom Gegner
-            enemyHealthbar = new Texture2D(graphicsDeviceManager.GraphicsDevice, 286, 32);
-            Color[] healthbarColor = new Color[enemyHealthbar.Width * enemyHealthbar.Height];
-
-            for (int i = 0; i < healthbarColor.Length; i++)
-            {
-                healthbarColor[i] = Color.Red;
-            }
-            enemyHealthbar.SetData(healthbarColor);
+            enemyHealthbar.SetData(new Color[] { Color.Red });
 
             #region buttons
 
@@ -49,6 +47,8 @@ namespace Dungeaon.States
                 textScale = 4,
                 spriteScale = 3,
             };
+
+            attackButton.click += atk_Button;
 
             //Block Button
             Texture2D buttonAttackTextureB = new Texture2D(graphicsDeviceManager.GraphicsDevice, 64, 32);
@@ -109,8 +109,8 @@ namespace Dungeaon.States
             spriteBatch.DrawString(game.font, "X: " + mouseX + " Y: " + mouseY, new Vector2(0, 0), Color.Black, 0f, Vector2.Zero, 2, SpriteEffects.None, 0);
             spriteBatch.Draw(game.fightScreen, roomPos, null, Color.White, 0f, Vector2.Zero, 3.5f, SpriteEffects.None, 0);
             spriteBatch.Draw(game.knightEnemy, new Vector2(820, 260), null, Color.White, 0f, Vector2.Zero, 10f, SpriteEffects.None, 0);
-            spriteBatch.Draw(enemyHealthbar, new Vector2(roomPos.X + game.fightScreen.Width * 3.4f / 2 - enemyHealthbar.Width / 2, 70), Color.White);
-            spriteBatch.DrawString(game.font, "Versuchsperson", new Vector2(roomPos.X + game.fightScreen.Width * 3.5f / 2 - enemyHealthbar.Width / 2, 35), Color.Yellow, 0f, Vector2.Zero, 2, SpriteEffects.None, 0);
+            spriteBatch.Draw(enemyHealthbar, new Vector2(roomPos.X + game.fightScreen.Width * 3.4f / 2 - ememieHealthBarRect.Width / 2, 70), ememieHealthBarRect, Color.White);
+            spriteBatch.DrawString(game.font, "Versuchsperson", new Vector2(roomPos.X + game.fightScreen.Width * 3.5f / 2 - ememieHealthBarRect.Width / 2, 35), Color.Yellow, 0f, Vector2.Zero, 2, SpriteEffects.None, 0);
             spriteBatch.Draw(game.playerCard, new Vector2(roomPos.X / 2 - game.playerCard.Width * 3.4f / 2, 10), null, Color.White, 0f, Vector2.Zero, 3.4f, SpriteEffects.None, 0);
             spriteBatch.Draw(MainGameState.playerHealthbar, new Vector2(roomPos.X / 2 - MainGameState.playerHealthbar.Width / 2 + 6, 819), Color.White);
             spriteBatch.Draw(game.playerHead, new Vector2(roomPos.X / 2 - game.playerHead.Width * 4f / 2, 114), null, Color.White, 0f, Vector2.Zero, 4f, SpriteEffects.None, 0);
@@ -138,6 +138,17 @@ namespace Dungeaon.States
             {
                 game.ChangeState(previousState);
             }
+
+
+
+        }
+
+        private void atk_Button(object sender,EventArgs e)
+        {
+            enemie.health -= 10;
+            float helathbarPercentage = (float)enemie.health / (float)enemie.maxHealth;
+            float b = (float)enemieHealthBarWitdh * helathbarPercentage;
+            enemieHealthBarWitdh = (int)b;
         }
     }
 }

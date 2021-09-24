@@ -23,12 +23,20 @@ namespace Dungeaon
         public Texture2D room1;
         public Texture2D room2;
         public Texture2D bossRoom;
+        public Texture2D shoproom;
 
         public Texture2D knightEnemy;
         public Texture2D financeEnemy;
         public Texture2D ghostEnemy;
+        public Texture2D boss1;
+        public Texture2D devil;
+        public Texture2D devilShop;
+        public Texture2D necromancer;
 
         public Texture2D playerHead;
+        public Texture2D boss1Head;
+        public Texture2D devilHead;
+        public Texture2D necromancerHead;
 
 
 
@@ -92,8 +100,17 @@ namespace Dungeaon
             ghostEnemy = Content.Load<Texture2D>("enemies/Geist");
             fightScreen = Content.Load<Texture2D>("Fightscreen");
             playerCard = Content.Load<Texture2D>("Board");
-            playerHead = Content.Load<Texture2D>("player-head");
+            playerHead = Content.Load<Texture2D>("heads/player-head");
             textBoxSprite = Content.Load<Texture2D>("Textbox");
+            shoproom = Content.Load<Texture2D>("rooms/shoproom");
+            boss1Head = Content.Load<Texture2D>("heads/boss1-head");
+            boss1= Content.Load<Texture2D>("enemies/boss1");
+            devilHead= Content.Load<Texture2D>("heads/devil-Head");
+            devil = Content.Load<Texture2D>("devil");
+            devilShop= Content.Load<Texture2D>("devilshop");
+            necromancerHead = Content.Load<Texture2D>("heads/Necromancer-Head");
+            necromancer= Content.Load<Texture2D>("enemies/Necromancer");
+
             // = Content.Load<Texture2D>("");
 
             currentState = new MainMenuState(this, _graphics, Content, null);
