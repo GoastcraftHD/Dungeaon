@@ -16,6 +16,7 @@ namespace Dungeaon.States
         {
             public Texture2D texture;
             public Enemie enemie;
+            public bool[] walls;
             public bool isBoss;
             public bool isShop;
         }
@@ -35,6 +36,7 @@ namespace Dungeaon.States
         private Player player;
         private Vector2 playerRoomPos = new Vector2(0, 0);
         private Texture2D[] roomTextures;
+        private TextBox textBox;
 
         public MainGameState(Game1 game, GraphicsDeviceManager graphicsDeviceManager, ContentManager content, State previousState) : base(game, graphicsDeviceManager, content, previousState)
         {
@@ -56,6 +58,8 @@ namespace Dungeaon.States
             lowerDoor = new Rectangle((int)(roomPos.X + roomRectangle.Width / 2) - 15, (int)(roomPos.Y + roomRectangle.Height) + 9, 50, 10);
             leftDoor = new Rectangle((int)(roomPos.X), (int)(roomPos.Y + roomRectangle.Height / 2), 10, 50);
 
+            textBox = new TextBox(game, new Vector2(roomPos.X + game.room1.Width * roomScale / 2 - game.textBoxSprite.Width * 10 / 2, 900), "Test");
+
             roomTextures = new Texture2D[2] { game.room1, game.room2};
             rooms = new Room[3, 3];
 
@@ -63,7 +67,8 @@ namespace Dungeaon.States
 
             components = new List<Component>()
             {
-                player
+                player,
+                textBox
             };
         }
 
@@ -86,7 +91,6 @@ namespace Dungeaon.States
             spriteBatch.Draw(playerHealthbar, new Vector2(roomPos.X / 2 - playerHealthbar.Width / 2 + 6, 819),Color.White);
             spriteBatch.Draw(game.playerHead, new Vector2(roomPos.X / 2 - game.playerHead.Width * 4f / 2, 114), null, Color.White, 0f, Vector2.Zero, 4f, SpriteEffects.None, 0);
             
-     
             if (game.options.debugMode)
             {
                 spriteBatch.Draw(game.whiteTexture, upperDoor, Color.White);
@@ -158,6 +162,16 @@ namespace Dungeaon.States
                     Room room = new Room();
                     int index = rand.Next(roomTextures.Length);
                     room.texture = roomTextures[index];
+                    room.walls = new bool[4];
+
+                    if ((int) playerRoomPos.X - 1 == -1)
+                        room.walls[3] = true;
+                    else if ((int) playerRoomPos.X + 1 == sizeX)
+                        room.walls[1] = true;
+                    else if ((int) playerRoomPos.Y - 1 == -1)
+                        room.walls[0] = true;
+                    else if ((int) playerRoomPos.Y + 1 == sizeY)
+                        room.walls[2] = true;
 
                     if (rand.Next(2) == 1)
                     {
@@ -178,12 +192,8 @@ namespace Dungeaon.States
 
             Room startRoom = new Room();
             startRoom.texture = roomTextures[0];
+            startRoom.walls = new bool[4] { true, false, false, true};
             rooms[0, 0] = startRoom;
-            
-            Room estartRoom = new Room();
-            estartRoom.texture = roomTextures[1];
-            estartRoom.enemie = new KnightEnemie(game, new Vector2(900, 400));
-            rooms[0, 0] = estartRoom;
 
             return rooms;
         }

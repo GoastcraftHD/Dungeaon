@@ -16,6 +16,7 @@ namespace Dungeaon
         public Texture2D player;
         public Texture2D button;
         public Texture2D playerCard;
+        public Texture2D textBoxSprite;
         public SpriteFont font;
 
         public Texture2D fightScreen;
@@ -92,6 +93,7 @@ namespace Dungeaon
             fightScreen = Content.Load<Texture2D>("Fightscreen");
             playerCard = Content.Load<Texture2D>("Board");
             playerHead = Content.Load<Texture2D>("player-head");
+            textBoxSprite = Content.Load<Texture2D>("Textbox");
             // = Content.Load<Texture2D>("");
 
             currentState = new MainMenuState(this, _graphics, Content, null);
