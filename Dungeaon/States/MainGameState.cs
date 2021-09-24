@@ -22,7 +22,7 @@ namespace Dungeaon.States
 
         private Room[,] rooms = new Room[3, 3];
 
-        public static Texture2D playerHealthbar;
+        public Texture2D playerHealthbar;
 
         public static Rectangle roomRectangle;
         public static float roomScale = 3.5f;
@@ -82,13 +82,8 @@ namespace Dungeaon.States
             if (room.enemie != null && room.enemie.isAlive)
                 room.enemie.Draw(gameTime, spriteBatch);
 
-            #region PlayerCard
+            spriteBatch.Draw(playerHealthbar, new Vector2(255, 860),Color.White);
 
-            spriteBatch.Draw(game.playerCard,new Vector2(roomPos.X / 2 - game.playerCard.Width * 3.4f / 2, 10), null, Color.White, 0f, Vector2.Zero, 3.4f, SpriteEffects.None, 0);
-            spriteBatch.Draw(playerHealthbar, new Vector2(roomPos.X / 2 - playerHealthbar.Width / 2, 820),Color.White);
-            spriteBatch.Draw(game.playerHead, new Vector2(roomPos.X / 2 - game.playerHead.Width * 4f / 2, 114), null, Color.White, 0f, Vector2.Zero, 4f, SpriteEffects.None, 0);
-            
-            #endregion
             if (game.options.debugMode)
             {
                 spriteBatch.Draw(game.whiteTexture, upperDoor, Color.White);
