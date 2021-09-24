@@ -85,7 +85,7 @@ namespace Dungeaon.States
             #region PlayerCard
 
             spriteBatch.Draw(game.playerCard,new Vector2(roomPos.X / 2 - game.playerCard.Width * 3.4f / 2, 10), null, Color.White, 0f, Vector2.Zero, 3.4f, SpriteEffects.None, 0);
-            spriteBatch.Draw(playerHealthbar, new Vector2(roomPos.X / 2 - playerHealthbar.Width / 2, 820),Color.White);
+            spriteBatch.Draw(playerHealthbar, new Vector2(roomPos.X / 2 - playerHealthbar.Width / 2 + 6, 819),Color.White);
             spriteBatch.Draw(game.playerHead, new Vector2(roomPos.X / 2 - game.playerHead.Width * 4f / 2, 114), null, Color.White, 0f, Vector2.Zero, 4f, SpriteEffects.None, 0);
             
             #endregion
