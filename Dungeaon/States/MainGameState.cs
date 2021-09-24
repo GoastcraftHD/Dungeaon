@@ -131,7 +131,7 @@ namespace Dungeaon.States
                 room.enemie.position = Vector2.Lerp(room.enemie.position, player.position, 0.01f);
 
                 if (room.enemie.hitBox.Intersects(player.hitBox))
-                    game.ChangeState(new FightState(game, graphicsDeviceManager, content, this));
+                    game.ChangeState(new FightState(game, graphicsDeviceManager, content, this, room.enemie));
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
