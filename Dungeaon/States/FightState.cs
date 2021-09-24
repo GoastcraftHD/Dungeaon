@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using Dungeaon.Enemies;
 
 namespace Dungeaon.States
 {
@@ -10,10 +11,13 @@ namespace Dungeaon.States
     {
         private Texture2D enemyHealthbar;
         private Vector2 roomPos;
-        List<Component> componentList;
+        private List<Component> componentList;
+        private Enemie enemie;
 
-        public FightState(Game1 game, GraphicsDeviceManager graphicsDeviceManager, ContentManager content, State previousState) : base(game, graphicsDeviceManager, content, previousState)
+        public FightState(Game1 game, GraphicsDeviceManager graphicsDeviceManager, ContentManager content, State previousState, Enemie enemie) : base(game, graphicsDeviceManager, content, previousState)
         {
+            this.enemie = enemie;
+
             roomPos = new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - (game.room1.Width * 3.5f) / 2, 0);
 
             //Healthbar vom Gegner

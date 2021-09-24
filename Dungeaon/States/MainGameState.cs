@@ -36,7 +36,6 @@ namespace Dungeaon.States
         private Player player;
         private Vector2 playerRoomPos = new Vector2(0, 0);
         private Texture2D[] roomTextures;
-        private TextBox textBox;
 
         public MainGameState(Game1 game, GraphicsDeviceManager graphicsDeviceManager, ContentManager content, State previousState) : base(game, graphicsDeviceManager, content, previousState)
         {
@@ -58,17 +57,14 @@ namespace Dungeaon.States
             lowerDoor = new Rectangle((int)(roomPos.X + roomRectangle.Width / 2) - 15, (int)(roomPos.Y + roomRectangle.Height) + 9, 50, 10);
             leftDoor = new Rectangle((int)(roomPos.X), (int)(roomPos.Y + roomRectangle.Height / 2), 10, 50);
 
-            textBox = new TextBox(game, new Vector2(roomPos.X + game.room1.Width * roomScale / 2 - game.textBoxSprite.Width * 10 / 2, 900), "Test");
-
             roomTextures = new Texture2D[2] { game.room1, game.room2};
             rooms = new Room[3, 3];
 
             rooms = GenerateDungeon(3, 3);
-
+            En
             components = new List<Component>()
             {
-                player,
-                textBox
+                player
             };
         }
 
@@ -141,11 +137,6 @@ namespace Dungeaon.States
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
                 game.ChangeState(previousState);
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.E))
-            {
-                game.ChangeState(new FightState(game, graphicsDeviceManager,content,this));
             }
         }
 
