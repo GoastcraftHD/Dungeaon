@@ -9,6 +9,7 @@ namespace Dungeaon
 {
     class Player : Component
     {
+        public static Texture2D playerHealthBar;
         public static int player_Health = 100;
         public static int player_maxHealth = 100;
         public static int playerHealthBarWidth = 286;
@@ -21,11 +22,14 @@ namespace Dungeaon
 
         public Rectangle hitBox => new Rectangle((int)position.X + 20, (int)position.Y + 20, (int)(texture.Width * MainGameState.roomScale) - 30, (int)(texture.Height * MainGameState.roomScale) - 30);
 
-        public Player(Texture2D playerTexture, Vector2 spawnPosition, Game1 game)
+        public Player(Texture2D playerTexture, Vector2 spawnPosition, Game1 game,GraphicsDeviceManager graphicsDeviceManager)
         {
             this.texture = playerTexture;
             this.position = spawnPosition;
             this.game = game;
+
+            playerHealthBar = new Texture2D(graphicsDeviceManager.GraphicsDevice, 1, 1);
+            playerHealthBar.SetData(new Color[] { Color.Red });
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
