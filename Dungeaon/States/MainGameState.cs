@@ -53,9 +53,9 @@ namespace Dungeaon.States
             playerHealthbar.SetData(healthbarColor);
 
             upperDoor = new Rectangle((int)(roomPos.X + roomRectangle.Width / 2) - 20, (int)roomPos.Y + 10, 50, 35);
-            rightDoor = new Rectangle((int)(roomPos.X + roomRectangle.Width) - 10, (int)(roomPos.Y + roomRectangle.Height / 2), 15, 50);
-            lowerDoor = new Rectangle((int)(roomPos.X + roomRectangle.Width / 2) - 15, (int)(roomPos.Y + roomRectangle.Height) - 5, 50, 20);
-            leftDoor = new Rectangle((int)(roomPos.X), (int)(roomPos.Y + roomRectangle.Height / 2), 30, 50);
+            rightDoor = new Rectangle((int)(roomPos.X + roomRectangle.Width) - 10, (int)(roomPos.Y + roomRectangle.Height / 2) + 12, 15, 50);
+            lowerDoor = new Rectangle((int)(roomPos.X + roomRectangle.Width / 2) - 20, (int)(roomPos.Y + roomRectangle.Height) - 5, 50, 20);
+            leftDoor = new Rectangle((int)(roomPos.X), (int)(roomPos.Y + roomRectangle.Height / 2) + 12, 30, 50);
 
             roomTextures = new Texture2D[2] { game.room1, game.room2 };
             rooms = new Room[3, 3];
@@ -82,6 +82,16 @@ namespace Dungeaon.States
 
             if (room.walls[0])
                 spriteBatch.Draw(game.door, new Vector2(upperDoor.X, upperDoor.Y), null, Color.White, 0f, Vector2.Zero, roomScale, SpriteEffects.None, 0);
+
+            if (room.walls[1])
+                spriteBatch.Draw(game.smallDoor, new Vector2(rightDoor.X + 10, rightDoor.Y), null, Color.White, 0f, Vector2.Zero, roomScale, SpriteEffects.None, 0);
+
+            if (room.walls[2])
+                spriteBatch.Draw(game.smallDoor, new Vector2(lowerDoor.X, lowerDoor.Y + 22), null, Color.White, -(float)(Math.PI / 2), Vector2.Zero, roomScale, SpriteEffects.None, 0);
+
+            if (room.walls[3])
+                spriteBatch.Draw(game.smallDoor, new Vector2(leftDoor.X, leftDoor.Y), null, Color.White, 0f, Vector2.Zero, roomScale, SpriteEffects.None, 0);
+
 
             if (room.enemie != null && room.enemie.isAlive)
                 room.enemie.Draw(gameTime, spriteBatch);
@@ -158,13 +168,16 @@ namespace Dungeaon.States
                     room.texture = roomTextures[index];
                     room.walls = new bool[4];
 
-                    if ((int)playerRoomPos.X - 1 == -1)
+                    if (x - 1 == -1)
                         room.walls[3] = true;
-                    else if ((int)playerRoomPos.X + 1 == sizeX)
+
+                    if (x + 1 == sizeX)
                         room.walls[1] = true;
-                    else if ((int)playerRoomPos.Y - 1 == -1)
+
+                    if (y - 1 == -1)
                         room.walls[0] = true;
-                    else if ((int)playerRoomPos.Y + 1 == sizeY)
+
+                    if (y + 1 == sizeY)
                         room.walls[2] = true;
 
                     if (rand.Next(101) <= 66)
@@ -186,7 +199,7 @@ namespace Dungeaon.States
 
             Room startRoom = new Room();
             startRoom.texture = roomTextures[0];
-            startRoom.walls = new bool[4] { true, true, true, true };
+            startRoom.walls = new bool[4] { true, false, false, true };
             rooms[0, 0] = startRoom;
 
             return rooms;
@@ -194,48 +207,29 @@ namespace Dungeaon.States
 
         private void CheckForDoorColission()
         {
-            if (player.hitBox.Intersects(upperDoor))
+            if (player.hitBox.Intersects(upperDoor) && !room.walls[0])
             {
                 playerRoomPos.Y--;
-                Vector2 cache = Vector2.Clamp(playerRoomPos, Vector2.Zero, new Vector2(rooms.GetLength(1) - 1, rooms.GetLength(0) - 1));
-
-                if (playerRoomPos == cache)
-                    player.position = new Vector2(roomRectangle.X + roomRectangle.Width / 2, roomRectangle.Y + roomRectangle.Height - player.hitBox.Height - 40);
-
-                playerRoomPos = cache;
+                player.position = new Vector2(roomRectangle.X + roomRectangle.Width / 2, roomRectangle.Y + roomRectangle.Height - player.hitBox.Height - 40);
             }
 
-            if (player.hitBox.Intersects(rightDoor))
+            if (player.hitBox.Intersects(rightDoor) && !room.walls[1])
             {
                 playerRoomPos.X++;
-                Vector2 cache = Vector2.Clamp(playerRoomPos, Vector2.Zero, new Vector2(rooms.GetLength(1) - 1, rooms.GetLength(0) - 1));
-
-                if (playerRoomPos == cache)
-                    player.position = new Vector2(roomRectangle.X + 10, roomRectangle.Y + roomRectangle.Height / 2);
-
-                playerRoomPos = cache;
+                player.position = new Vector2(roomRectangle.X + 10, roomRectangle.Y + roomRectangle.Height / 2);
             }
 
-            if (player.hitBox.Intersects(lowerDoor))
+            if (player.hitBox.Intersects(lowerDoor) && !room.walls[2])
             {
                 playerRoomPos.Y++;
-                Vector2 cache = Vector2.Clamp(playerRoomPos, Vector2.Zero, new Vector2(rooms.GetLength(1) - 1, rooms.GetLength(0) - 1));
+                player.position = new Vector2(roomRectangle.X + roomRectangle.Width / 2, roomRectangle.Y + 20);
 
-                if (playerRoomPos == cache)
-                    player.position = new Vector2(roomRectangle.X + roomRectangle.Width / 2, roomRectangle.Y + 20);
-
-                playerRoomPos = cache;
             }
 
-            if (player.hitBox.Intersects(leftDoor))
+            if (player.hitBox.Intersects(leftDoor) && !room.walls[3])
             {
                 playerRoomPos.X--;
-                Vector2 cache = Vector2.Clamp(playerRoomPos, Vector2.Zero, new Vector2(rooms.GetLength(1) - 1, rooms.GetLength(0) - 1));
-
-                if (playerRoomPos == cache)
-                    player.position = new Vector2(roomRectangle.X + roomRectangle.Width - player.hitBox.Width - 50, roomRectangle.Y + roomRectangle.Height / 2);
-
-                playerRoomPos = cache;
+                player.position = new Vector2(roomRectangle.X + roomRectangle.Width - player.hitBox.Width - 50, roomRectangle.Y + roomRectangle.Height / 2);
             }
         }
     }
