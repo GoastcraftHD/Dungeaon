@@ -30,7 +30,7 @@ namespace Dungeaon.States
         public static Rectangle lowerDoor;
         public static Rectangle leftDoor;
 
-        private Vector2 roomPos;
+        public static Vector2 roomPos;
         private Player player;
         private Vector2 playerRoomPos = new Vector2(0, 0);
         private Texture2D[] roomTextures;
@@ -88,10 +88,6 @@ namespace Dungeaon.States
             if (room.enemie != null && room.enemie.isAlive)
                 room.enemie.Draw(gameTime, spriteBatch);
 
-            spriteBatch.Draw(game.playerCard, new Vector2(roomPos.X / 2 - game.playerCard.Width * 3.4f / 2, 10), null, Color.White, 0f, Vector2.Zero, 3.4f, SpriteEffects.None, 0);
-            spriteBatch.Draw(Player.playerHealthBar, new Vector2(roomPos.X / 2 - Player.constant_PlayerHealthBarWidth / 2 + 6, 819), Player.playerHealthBarRect, Color.White);
-            spriteBatch.Draw(game.playerHead, new Vector2(roomPos.X / 2 - game.playerHead.Width * 4f / 2, 114), null, Color.White, 0f, Vector2.Zero, 4f, SpriteEffects.None, 0);
-
             if (room.isShop)
                 spriteBatch.Draw(game.devil, new Vector2(680, 75), null, Color.White, 0f, Vector2.Zero, 1.5f, SpriteEffects.None, 0);
 
@@ -107,6 +103,8 @@ namespace Dungeaon.States
 
                 spriteBatch.DrawString(game.font, "X: " + mouseX + " Y: " + mouseY, new Vector2(0, 0), Color.Black, 0f, Vector2.Zero, 2, SpriteEffects.None, 0);
             }
+
+            DrawUI(spriteBatch, game);
 
             foreach (Component component in components)
             {
@@ -154,6 +152,13 @@ namespace Dungeaon.States
             {
                 game.ChangeState(previousState);
             }
+        }
+
+        public static void DrawUI(SpriteBatch spriteBatch, Game1 game)
+        {
+            spriteBatch.Draw(game.playerCard, new Vector2(MainGameState.roomPos.X / 2 - game.playerCard.Width * 3.4f / 2, 10), null, Color.White, 0f, Vector2.Zero, 3.4f, SpriteEffects.None, 0);
+            spriteBatch.Draw(Player.playerHealthBar, new Vector2(MainGameState.roomPos.X / 2 - Player.constant_PlayerHealthBarWidth / 2 + 6, 819), Player.playerHealthBarRect, Color.White);
+            spriteBatch.Draw(game.playerHead, new Vector2(MainGameState.roomPos.X / 2 - game.playerHead.Width * 4f / 2, 114), null, Color.White, 0f, Vector2.Zero, 4f, SpriteEffects.None, 0);
         }
 
         private Room[,] GenerateDungeon(int sizeX, int sizeY)

@@ -24,7 +24,7 @@ namespace Dungeaon.States
 
             enemyHealthbar = new Texture2D(graphicsDeviceManager.GraphicsDevice, 1, 1);
 
-            roomPos = new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - (game.room1.Width * 3.5f) / 2, 0);
+            roomPos = MainGameState.roomPos;
 
             //Healthbar vom Gegner
             enemyHealthbar.SetData(new Color[] { Color.Red });
@@ -113,9 +113,8 @@ namespace Dungeaon.States
             spriteBatch.Draw(game.knightEnemy, new Vector2(820, 260), null, Color.White, 0f, Vector2.Zero, 10f, SpriteEffects.None, 0);
             spriteBatch.Draw(enemyHealthbar, new Vector2(roomPos.X + game.fightScreen.Width * 3.4f / 2 - ememieHealthBarRect.Width / 2, 70), ememieHealthBarRect, Color.White);
             spriteBatch.DrawString(game.font, "Versuchsperson", new Vector2(roomPos.X + game.fightScreen.Width * 3.5f / 2 - ememieHealthBarRect.Width / 2, 35), Color.Yellow, 0f, Vector2.Zero, 2, SpriteEffects.None, 0);
-            spriteBatch.Draw(game.playerCard, new Vector2(roomPos.X / 2 - game.playerCard.Width * 3.4f / 2, 10), null, Color.White, 0f, Vector2.Zero, 3.4f, SpriteEffects.None, 0);
-            spriteBatch.Draw(enemyHealthbar, new Vector2(roomPos.X / 2 - Player.constant_PlayerHealthBarWidth / 2 + 6, 819), Player.playerHealthBarRect, Color.White);
-            spriteBatch.Draw(game.playerHead, new Vector2(roomPos.X / 2 - game.playerHead.Width * 4f / 2, 114), null, Color.White, 0f, Vector2.Zero, 4f, SpriteEffects.None, 0);
+           
+            MainGameState.DrawUI(spriteBatch, game);
 
             foreach (Component component in componentList)
             {

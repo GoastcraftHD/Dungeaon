@@ -40,6 +40,8 @@ namespace Dungeaon
         public Texture2D devilHead;
         public Texture2D necromancerHead;
 
+        public Texture2D healthPostion;
+        public Texture2D speedPotion;
 
 
         public Options options = new Options()
@@ -114,6 +116,8 @@ namespace Dungeaon
             necromancer = Content.Load<Texture2D>("enemies/Necromancer");
             smallDoor = Content.Load<Texture2D>("rooms/no-door-schmol");
             door = Content.Load<Texture2D>("rooms/no-door");
+            healthPostion = Content.Load<Texture2D>("items/Hpotion");
+            speedPotion = Content.Load<Texture2D>("items/Speed");
 
             // = Content.Load<Texture2D>("");
 
