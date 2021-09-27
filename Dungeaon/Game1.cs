@@ -24,6 +24,8 @@ namespace Dungeaon
         public Texture2D room2;
         public Texture2D bossRoom;
         public Texture2D shoproom;
+        public Texture2D door;
+        public Texture2D smallDoor;
 
         public Texture2D knightEnemy;
         public Texture2D financeEnemy;
@@ -110,6 +112,8 @@ namespace Dungeaon
             devilShop = Content.Load<Texture2D>("devilshop");
             necromancerHead = Content.Load<Texture2D>("heads/Necromancer-Head");
             necromancer = Content.Load<Texture2D>("enemies/Necromancer");
+            smallDoor = Content.Load<Texture2D>("rooms/no-door-schmol");
+            door = Content.Load<Texture2D>("rooms/no-door");
 
             // = Content.Load<Texture2D>("");
 

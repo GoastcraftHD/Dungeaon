@@ -41,7 +41,7 @@ namespace Dungeaon.States
             roomRectangle = new Rectangle((int)roomPos.X + 5, (int)roomPos.Y + 10, (int)(game.room1.Width * roomScale) - 10, (int)(game.room1.Height * roomScale) - 18);
             player = new Player(game.player, new Vector2(700, 500), game,graphicsDeviceManager);
 
-            upperDoor = new Rectangle((int)(roomPos.X + roomRectangle.Width / 2) - 15, (int)roomPos.Y + 1, 50, 35);
+            upperDoor = new Rectangle((int)(roomPos.X + roomRectangle.Width / 2) - 20, (int)roomPos.Y + 10, 50, 35);
             rightDoor = new Rectangle((int)(roomPos.X + roomRectangle.Width) - 10, (int)(roomPos.Y + roomRectangle.Height / 2), 15, 50);
             lowerDoor = new Rectangle((int)(roomPos.X + roomRectangle.Width / 2) - 15, (int)(roomPos.Y + roomRectangle.Height) - 5, 50, 20);
             leftDoor = new Rectangle((int)(roomPos.X), (int)(roomPos.Y + roomRectangle.Height / 2), 30, 50);
@@ -68,6 +68,9 @@ namespace Dungeaon.States
             room = rooms[(int)playerRoomPos.Y, (int)playerRoomPos.X];
 
             spriteBatch.Draw(room.texture, roomPos, null, Color.White, 0f, Vector2.Zero, roomScale, SpriteEffects.None, 0);
+
+            if (room.walls[0])
+                spriteBatch.Draw(game.door, new Vector2(upperDoor.X, upperDoor.Y), null, Color.White, 0f, Vector2.Zero, roomScale, SpriteEffects.None, 0);
 
             if (room.enemie != null && room.enemie.isAlive)
                 room.enemie.Draw(gameTime, spriteBatch);
@@ -153,7 +156,7 @@ namespace Dungeaon.States
                     else if ((int)playerRoomPos.Y + 1 == sizeY)
                         room.walls[2] = true;
 
-                    if (rand.Next(2) == 1)
+                    if (rand.Next(101) <= 66)
                     {
                         int enemieIndex = rand.Next(1);
                         Enemie enemie = new KnightEnemie(game, new Vector2(900, 400));
@@ -172,7 +175,7 @@ namespace Dungeaon.States
 
             Room startRoom = new Room();
             startRoom.texture = roomTextures[0];
-            startRoom.walls = new bool[4] { true, false, false, true };
+            startRoom.walls = new bool[4] { true, true, true, true };
             rooms[0, 0] = startRoom;
 
             return rooms;
