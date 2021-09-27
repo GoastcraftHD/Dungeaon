@@ -21,7 +21,7 @@ namespace Dungeaon.States
             public bool isShop;
         }
 
-        private Room[,] rooms = new Room[3, 3];
+        private Room[,] rooms = new Room[5, 5];
 
         public static Rectangle roomRectangle;
         public static float roomScale = 3.5f;
@@ -47,7 +47,7 @@ namespace Dungeaon.States
             leftDoor = new Rectangle((int)(roomPos.X), (int)(roomPos.Y + roomRectangle.Height / 2) + 12, 30, 50);
 
             roomTextures = new Texture2D[2] { game.room1, game.room2 };
-            rooms = new Room[3, 3];
+            rooms = new Room[5, 5];
 
             rooms = GenerateDungeon(3, 3);
 
@@ -145,7 +145,6 @@ namespace Dungeaon.States
         private Room[,] GenerateDungeon(int sizeX, int sizeY)
         {
             Random rand = new Random();
-
             Room[,] rooms = new Room[sizeY, sizeX];
 
             for (int y = 0; y < sizeY; y++)
@@ -181,7 +180,6 @@ namespace Dungeaon.States
 
                         room.enemie = enemie;
                     }
-
                     rooms[y, x] = room;
                 }
             }
@@ -190,6 +188,15 @@ namespace Dungeaon.States
             startRoom.texture = roomTextures[0];
             startRoom.walls = new bool[4] { true, false, false, true };
             rooms[0, 0] = startRoom;
+
+            Room shopRoom = new Room();
+            shopRoom.texture = game.shoproom;
+            rooms[rand.Next(1, sizeY), rand.Next(1, sizeX)] = shopRoom;
+
+            Room bossRoom = new Room();
+            bossRoom.texture = game.bossRoom;
+            rooms[rand.Next(1, sizeY), rand.Next(1, sizeX)] = bossRoom;
+
 
             return rooms;
         }
