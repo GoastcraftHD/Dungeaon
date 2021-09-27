@@ -89,6 +89,7 @@ namespace Dungeaon.States
                 spriteScale = 3,
             };
 
+            dodgeButton.click += dge_Button;
             #endregion
 
             //List
@@ -113,7 +114,7 @@ namespace Dungeaon.States
             spriteBatch.Draw(enemyHealthbar, new Vector2(roomPos.X + game.fightScreen.Width * 3.4f / 2 - ememieHealthBarRect.Width / 2, 70), ememieHealthBarRect, Color.White);
             spriteBatch.DrawString(game.font, "Versuchsperson", new Vector2(roomPos.X + game.fightScreen.Width * 3.5f / 2 - ememieHealthBarRect.Width / 2, 35), Color.Yellow, 0f, Vector2.Zero, 2, SpriteEffects.None, 0);
             spriteBatch.Draw(game.playerCard, new Vector2(roomPos.X / 2 - game.playerCard.Width * 3.4f / 2, 10), null, Color.White, 0f, Vector2.Zero, 3.4f, SpriteEffects.None, 0);
-            spriteBatch.Draw(enemyHealthbar, new Vector2(roomPos.X / 2 - Player.playerHealthBarRect.Width / 2 + 6, 819), Player.playerHealthBarRect, Color.White);
+            spriteBatch.Draw(enemyHealthbar, new Vector2(roomPos.X / 2 - Player.constant_PlayerHealthBarWidth / 2 + 6, 819), Player.playerHealthBarRect, Color.White);
             spriteBatch.Draw(game.playerHead, new Vector2(roomPos.X / 2 - game.playerHead.Width * 4f / 2, 114), null, Color.White, 0f, Vector2.Zero, 4f, SpriteEffects.None, 0);
 
             foreach (Component component in componentList)
@@ -140,10 +141,12 @@ namespace Dungeaon.States
                 game.ChangeState(previousState);
             }
         }
-
+         
         private void atk_Button(object sender, EventArgs e)
         {
-            enemie.health -= 10;
+            bool dodge = false;
+            bool block = false;
+            enemie.health -= 15;
             double enemieHealth = ((double)enemie.health / (double)enemie.maxHealth) * enemieHealthBarWitdhB;
             enemieHealthBarWitdh = (int)enemieHealth;
             if (enemie.health <= 0)
@@ -155,18 +158,22 @@ namespace Dungeaon.States
             {
                 game.ChangeState(new MainMenuState(game , graphicsDeviceManager, content,null));
             }
-            enemie.Attack();
+            enemie.Attack(block,dodge);
 
         }
 
         private void blk_Button(object sender, EventArgs e)
         {
-
+            bool dodge = false;
+            bool block = true;
+            enemie.Attack(block, dodge);
         }
 
         private void dge_Button(object sender, EventArgs e)
         {
-
+            bool dodge = true;
+            bool block = false;
+            enemie.Attack(block, dodge);
         }
     }
 }
