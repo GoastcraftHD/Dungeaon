@@ -154,19 +154,7 @@ namespace Dungeaon.States
                     Room room = new Room();
                     int index = rand.Next(roomTextures.Length);
                     room.texture = roomTextures[index];
-                    room.walls = new bool[4];
-
-                    if (x - 1 == -1)
-                        room.walls[3] = true;
-
-                    if (x + 1 == sizeX)
-                        room.walls[1] = true;
-
-                    if (y - 1 == -1)
-                        room.walls[0] = true;
-
-                    if (y + 1 == sizeY)
-                        room.walls[2] = true;
+                    room.walls = setDoors(y, x, sizeY, sizeX);
 
                     if (rand.Next(101) <= 66)
                     {
@@ -189,16 +177,43 @@ namespace Dungeaon.States
             startRoom.walls = new bool[4] { true, false, false, true };
             rooms[0, 0] = startRoom;
 
+            int shopX = rand.Next(1, sizeX);
+            int shopY = rand.Next(1, sizeY);
+
             Room shopRoom = new Room();
             shopRoom.texture = game.shoproom;
-            rooms[rand.Next(1, sizeY), rand.Next(1, sizeX)] = shopRoom;
+            shopRoom.walls = setDoors(shopY, shopX, sizeY, sizeX);
+            rooms[shopY, shopX] = shopRoom;
+
+            int bossX = rand.Next(1, sizeX);
+            int bossY = rand.Next(1, sizeY);
 
             Room bossRoom = new Room();
             bossRoom.texture = game.bossRoom;
-            rooms[rand.Next(1, sizeY), rand.Next(1, sizeX)] = bossRoom;
+            bossRoom.walls = setDoors(bossY, bossX, sizeY, sizeX);
+            rooms[bossY, bossX] = bossRoom;
 
 
             return rooms;
+        }
+
+        private bool[] setDoors(int y, int x, int sizeY, int sizeX)
+        {
+            bool[] array = new bool[4];
+
+            if (x - 1 == -1)
+                array[3] = true;
+
+            if (x + 1 == sizeX)
+                array[1] = true;
+
+            if (y - 1 == -1)
+                array[0] = true;
+
+            if (y + 1 == sizeY)
+                array[2] = true;
+
+            return array;
         }
 
         private void CheckForDoorColission()
