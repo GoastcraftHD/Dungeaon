@@ -1,10 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Dungeaon.Enemies;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System.Collections.Generic;
-using Dungeaon.Enemies;
 using System;
+using System.Collections.Generic;
 
 namespace Dungeaon.States
 {
@@ -14,15 +14,15 @@ namespace Dungeaon.States
         private Vector2 roomPos;
         private List<Component> componentList;
         private Enemie enemie;
-        private int enemieHealthBarWitdh = 286;
-        private Rectangle ememieHealthBarRect =>  new Rectangle(0, 0, enemieHealthBarWitdh, 32); 
+        private int enemieHealthBarWidth = 286;
+        private Rectangle ememieHealthBarRect => new Rectangle(0, 0, enemieHealthBarWidth, 32);
 
         public FightState(Game1 game, GraphicsDeviceManager graphicsDeviceManager, ContentManager content, State previousState, Enemie enemie) : base(game, graphicsDeviceManager, content, previousState)
         {
             this.enemie = enemie;
 
             enemyHealthbar = new Texture2D(graphicsDeviceManager.GraphicsDevice, 1, 1);
-            
+
             roomPos = new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - (game.room1.Width * 3.5f) / 2, 0);
 
             //Healthbar vom Gegner
@@ -68,6 +68,7 @@ namespace Dungeaon.States
                 spriteScale = 3,
             };
 
+            blockButton.click += blk_Button;
 
             //DodgeButton
             Texture2D buttonAttackTextureC = new Texture2D(graphicsDeviceManager.GraphicsDevice, 64, 32);
@@ -88,7 +89,6 @@ namespace Dungeaon.States
             };
 
             #endregion
-
 
             //List
             componentList = new List<Component>()
@@ -138,17 +138,30 @@ namespace Dungeaon.States
             {
                 game.ChangeState(previousState);
             }
-
-
-
         }
 
-        private void atk_Button(object sender,EventArgs e)
+        private void atk_Button(object sender, EventArgs e)
         {
             enemie.health -= 10;
             float helathbarPercentage = (float)enemie.health / (float)enemie.maxHealth;
-            float b = (float)enemieHealthBarWitdh * helathbarPercentage;
-            enemieHealthBarWitdh = (int)b;
+            float b = (float)enemieHealthBarWidth * helathbarPercentage;
+            enemieHealthBarWidth = (int)b;
+            if (enemieHealthBarWidth <= 0)
+            {
+                enemie.isAlive = false;
+                game.ChangeState(previousState);
+            }
+            Player.playerHealthBarWidth = enemie.enemie_Attack();
+        }
+
+        private void blk_Button(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dge_Button(object sender, EventArgs e)
+        {
+
         }
     }
 }

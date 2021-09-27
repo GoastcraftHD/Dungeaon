@@ -31,5 +31,15 @@ namespace Dungeaon.Enemies
             this.game = game;
             _position = spawnPosition;
         }
+
+        public int enemie_Attack()
+        {
+            Player.player_Health -= 10;
+            float helathbarPercentage = (float)Player.player_Health / (float)Player.player_maxHealth;
+            float b = (float)Player.playerHealthBarWidth * helathbarPercentage;
+            Player.playerHealthBarWidth = (int)b;
+
+            return Player.playerHealthBarWidth;
+        }
     }
 }

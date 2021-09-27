@@ -7,8 +7,11 @@ namespace Dungeaon
 {
     class Player : Component
     {
-        private Texture2D texture;
+        public static int player_Health = 100;
+        public static int player_maxHealth = 100;
+        public static int playerHealthBarWidth = 286;
         public Vector2 position;
+        private Texture2D texture;
         private SpriteEffects direction = SpriteEffects.None;
         private Game1 game;
 
