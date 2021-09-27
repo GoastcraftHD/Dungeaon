@@ -35,11 +35,14 @@ namespace Dungeaon.States
         private Vector2 playerRoomPos = new Vector2(0, 0);
         private Texture2D[] roomTextures;
 
+        private Rectangle shopHitbox;
+
         public MainGameState(Game1 game, GraphicsDeviceManager graphicsDeviceManager, ContentManager content, State previousState) : base(game, graphicsDeviceManager, content, previousState)
         {
             roomPos = new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - (game.room1.Width * roomScale) / 2, 0);
             roomRectangle = new Rectangle((int)roomPos.X + 5, (int)roomPos.Y + 10, (int)(game.room1.Width * roomScale) - 10, (int)(game.room1.Height * roomScale) - 18);
             player = new Player(game.player, new Vector2(700, 500), game, graphicsDeviceManager);
+            shopHitbox = new Rectangle((int)roomPos.X, (int)roomPos.Y, 350, 150);
 
             upperDoor = new Rectangle((int)(roomPos.X + roomRectangle.Width / 2) - 20, (int)roomPos.Y + 10, 50, 35);
             rightDoor = new Rectangle((int)(roomPos.X + roomRectangle.Width) - 10, (int)(roomPos.Y + roomRectangle.Height / 2) + 12, 15, 50);
@@ -89,12 +92,19 @@ namespace Dungeaon.States
             spriteBatch.Draw(Player.playerHealthBar, new Vector2(roomPos.X / 2 - Player.constant_PlayerHealthBarWidth / 2 + 6, 819), Player.playerHealthBarRect, Color.White);
             spriteBatch.Draw(game.playerHead, new Vector2(roomPos.X / 2 - game.playerHead.Width * 4f / 2, 114), null, Color.White, 0f, Vector2.Zero, 4f, SpriteEffects.None, 0);
 
+            if (room.isShop)
+                spriteBatch.Draw(game.devil, new Vector2(680, 75), null, Color.White, 0f, Vector2.Zero, 1.5f, SpriteEffects.None, 0);
+
             if (game.options.debugMode)
             {
                 spriteBatch.Draw(game.whiteTexture, upperDoor, Color.White);
                 spriteBatch.Draw(game.whiteTexture, rightDoor, Color.White);
                 spriteBatch.Draw(game.whiteTexture, lowerDoor, Color.White);
                 spriteBatch.Draw(game.whiteTexture, leftDoor, Color.White);
+
+                if (room.isShop)
+                    spriteBatch.Draw(game.whiteTexture, shopHitbox, Color.White);
+
                 spriteBatch.DrawString(game.font, "X: " + mouseX + " Y: " + mouseY, new Vector2(0, 0), Color.Black, 0f, Vector2.Zero, 2, SpriteEffects.None, 0);
             }
 
@@ -127,6 +137,10 @@ namespace Dungeaon.States
             }
 
             CheckForDoorColission();
+
+            if (room.isShop && player.hitBox.Intersects(shopHitbox))
+                game.ChangeState(new ShopState(game, graphicsDeviceManager, content, this));
+
 
             if (room.enemie != null && room.enemie.isAlive)
             {
@@ -182,6 +196,7 @@ namespace Dungeaon.States
 
             Room shopRoom = new Room();
             shopRoom.texture = game.shoproom;
+            shopRoom.isShop = true;
             shopRoom.walls = setDoors(shopY, shopX, sizeY, sizeX);
             rooms[shopY, shopX] = shopRoom;
 
@@ -190,6 +205,7 @@ namespace Dungeaon.States
 
             Room bossRoom = new Room();
             bossRoom.texture = game.bossRoom;
+            bossRoom.isBoss = true;
             bossRoom.walls = setDoors(bossY, bossX, sizeY, sizeX);
             rooms[bossY, bossX] = bossRoom;
 
