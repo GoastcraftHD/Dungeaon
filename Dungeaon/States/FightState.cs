@@ -14,6 +14,7 @@ namespace Dungeaon.States
         private Vector2 roomPos;
         private List<Component> componentList;
         private Enemie enemie;
+        private const int enemieHealthBarWitdhB = 286;
         private int enemieHealthBarWitdh = 286;
         private Rectangle ememieHealthBarRect =>  new Rectangle(0, 0, enemieHealthBarWitdh, 32); 
 
@@ -146,9 +147,8 @@ namespace Dungeaon.States
         private void atk_Button(object sender,EventArgs e)
         {
             enemie.health -= 10;
-            float helathbarPercentage = (float)enemie.health / (float)enemie.maxHealth;
-            float b = (float)enemieHealthBarWitdh * helathbarPercentage;
-            enemieHealthBarWitdh = (int)b;
+            double enemieHealth = ((double)enemie.health / (double)enemie.maxHealth) * enemieHealthBarWitdhB;
+            enemieHealthBarWitdh = (int)enemieHealth;
         }
     }
 }

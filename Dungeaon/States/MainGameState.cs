@@ -52,10 +52,10 @@ namespace Dungeaon.States
             }
             playerHealthbar.SetData(healthbarColor);
 
-            upperDoor = new Rectangle((int)(roomPos.X + roomRectangle.Width / 2) - 15, (int)roomPos.Y + 1, 50, 10);
-            rightDoor = new Rectangle((int)(roomPos.X + roomRectangle.Width), (int)(roomPos.Y + roomRectangle.Height / 2), 10, 50);
-            lowerDoor = new Rectangle((int)(roomPos.X + roomRectangle.Width / 2) - 15, (int)(roomPos.Y + roomRectangle.Height) + 9, 50, 10);
-            leftDoor = new Rectangle((int)(roomPos.X), (int)(roomPos.Y + roomRectangle.Height / 2), 10, 50);
+            upperDoor = new Rectangle((int)(roomPos.X + roomRectangle.Width / 2) - 15, (int)roomPos.Y + 1, 50, 35);
+            rightDoor = new Rectangle((int)(roomPos.X + roomRectangle.Width) - 10, (int)(roomPos.Y + roomRectangle.Height / 2), 15, 50);
+            lowerDoor = new Rectangle((int)(roomPos.X + roomRectangle.Width / 2) - 15, (int)(roomPos.Y + roomRectangle.Height) - 5, 50, 20);
+            leftDoor = new Rectangle((int)(roomPos.X), (int)(roomPos.Y + roomRectangle.Height / 2), 30, 50);
 
             roomTextures = new Texture2D[2] { game.room1, game.room2};
             rooms = new Room[3, 3];
@@ -197,7 +197,7 @@ namespace Dungeaon.States
                 Vector2 cache = Vector2.Clamp(playerRoomPos, Vector2.Zero, new Vector2(rooms.GetLength(1)-1, rooms.GetLength(0)-1));
                 
                 if (playerRoomPos == cache)
-                    player.position = new Vector2(roomRectangle.X + roomRectangle.Width / 2, roomRectangle.Y + roomRectangle.Height - player.hitBox.Height - 10);
+                    player.position = new Vector2(roomRectangle.X + roomRectangle.Width / 2, roomRectangle.Y + roomRectangle.Height - player.hitBox.Height - 40);
 
                 playerRoomPos = cache;
             }
@@ -219,7 +219,7 @@ namespace Dungeaon.States
                 Vector2 cache = Vector2.Clamp(playerRoomPos, Vector2.Zero, new Vector2(rooms.GetLength(1)-1, rooms.GetLength(0)-1));
 
                 if (playerRoomPos == cache)
-                    player.position = new Vector2(roomRectangle.X + roomRectangle.Width / 2, roomRectangle.Y + 10);
+                    player.position = new Vector2(roomRectangle.X + roomRectangle.Width / 2, roomRectangle.Y + 20);
 
                 playerRoomPos = cache;
             }
@@ -230,7 +230,7 @@ namespace Dungeaon.States
                 Vector2 cache = Vector2.Clamp(playerRoomPos, Vector2.Zero, new Vector2(rooms.GetLength(1)-1, rooms.GetLength(0)-1));
 
                 if (playerRoomPos == cache)
-                    player.position = new Vector2(roomRectangle.X + roomRectangle.Width - player.hitBox.Width - 10, roomRectangle.Y + roomRectangle.Height / 2);
+                    player.position = new Vector2(roomRectangle.X + roomRectangle.Width - player.hitBox.Width - 50, roomRectangle.Y + roomRectangle.Height / 2);
 
                 playerRoomPos = cache;
             }

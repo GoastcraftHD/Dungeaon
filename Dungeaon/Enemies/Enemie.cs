@@ -15,6 +15,7 @@ namespace Dungeaon.Enemies
         public abstract int health { get; set; }
         public abstract int damage { get; }
         public abstract Texture2D texture { get; }
+        public abstract Texture2D headTexture { get; }
         protected float _scale { get; set; }
         public abstract float scale { get; set; }
         public abstract Rectangle hitBox { get; }
@@ -23,6 +24,7 @@ namespace Dungeaon.Enemies
         protected  bool _isAlive { get; set; }
         public abstract bool isAlive { get; set; }
 
+        public abstract void Attack();
 
         protected Game1 game;
 
