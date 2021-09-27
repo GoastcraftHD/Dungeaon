@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace Dungeaon.Enemies
 {
@@ -21,7 +19,7 @@ namespace Dungeaon.Enemies
         public abstract Rectangle hitBox { get; }
         protected Vector2 _position { get; set; }
         public abstract Vector2 position { get; set; }
-        protected  bool _isAlive { get; set; }
+        protected bool _isAlive { get; set; }
         public abstract bool isAlive { get; set; }
 
         public abstract void Attack();
@@ -32,16 +30,6 @@ namespace Dungeaon.Enemies
         {
             this.game = game;
             _position = spawnPosition;
-        }
-
-        public int enemie_Attack()
-        {
-            Player.player_Health -= 10;
-            float helathbarPercentage = (float)Player.player_Health / (float)Player.player_maxHealth;
-            float b = (float)Player.playerHealthBarWidth * helathbarPercentage;
-            Player.playerHealthBarWidth = (int)b;
-
-            return Player.playerHealthBarWidth;
         }
     }
 }

@@ -1,8 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Dungeaon.Enemies
 {
@@ -26,11 +23,6 @@ namespace Dungeaon.Enemies
             scale = 3.5f;
         }
 
-        public override void Attack()
-        {
-
-        }
-
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, position, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0);
@@ -43,7 +35,14 @@ namespace Dungeaon.Enemies
 
         public override void Update(GameTime gameTime)
         {
-            
+
+        }
+
+        public override void Attack()
+        {
+            Player.player_Health -= 10;
+            double playerhealth = ((double)Player.player_Health / (double)Player.player_maxHealth) * Player.constant_PlayerHealthBarWidth;
+            Player.playerHealthBarWidth = (int)playerhealth;
         }
     }
 }

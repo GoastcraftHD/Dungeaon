@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using Dungeaon.Enemies;
+﻿using Dungeaon.Enemies;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
 
 namespace Dungeaon.States
 {
@@ -43,7 +43,7 @@ namespace Dungeaon.States
             roomRectangle = new Rectangle((int)roomPos.X + 5, (int)roomPos.Y + 10, (int)(game.room1.Width * roomScale) - 10, (int)(game.room1.Height * roomScale) - 18);
             player = new Player(game.player, new Vector2(700, 500), game);
 
-            playerHealthbar = new Texture2D(graphicsDeviceManager.GraphicsDevice, 286, 32);
+            playerHealthbar = new Texture2D(graphicsDeviceManager.GraphicsDevice, Player.playerHealthBarWidth, 32);
             Color[] healthbarColor = new Color[playerHealthbar.Width * playerHealthbar.Height];
 
             for (int i = 0; i < healthbarColor.Length; i++)
@@ -57,11 +57,11 @@ namespace Dungeaon.States
             lowerDoor = new Rectangle((int)(roomPos.X + roomRectangle.Width / 2) - 15, (int)(roomPos.Y + roomRectangle.Height) - 5, 50, 20);
             leftDoor = new Rectangle((int)(roomPos.X), (int)(roomPos.Y + roomRectangle.Height / 2), 30, 50);
 
-            roomTextures = new Texture2D[2] { game.room1, game.room2};
+            roomTextures = new Texture2D[2] { game.room1, game.room2 };
             rooms = new Room[3, 3];
 
             rooms = GenerateDungeon(3, 3);
-            
+
             components = new List<Component>()
             {
                 player
@@ -83,16 +83,16 @@ namespace Dungeaon.States
             if (room.enemie != null && room.enemie.isAlive)
                 room.enemie.Draw(gameTime, spriteBatch);
 
-            spriteBatch.Draw(game.playerCard,new Vector2(roomPos.X / 2 - game.playerCard.Width * 3.4f / 2, 10), null, Color.White, 0f, Vector2.Zero, 3.4f, SpriteEffects.None, 0);
-            spriteBatch.Draw(playerHealthbar, new Vector2(roomPos.X / 2 - playerHealthbar.Width / 2 + 6, 819),Color.White);
+            spriteBatch.Draw(game.playerCard, new Vector2(roomPos.X / 2 - game.playerCard.Width * 3.4f / 2, 10), null, Color.White, 0f, Vector2.Zero, 3.4f, SpriteEffects.None, 0);
+            spriteBatch.Draw(playerHealthbar, new Vector2(roomPos.X / 2 - playerHealthbar.Width / 2 + 6, 819), Player.playerHealthBarRect, Color.White);
             spriteBatch.Draw(game.playerHead, new Vector2(roomPos.X / 2 - game.playerHead.Width * 4f / 2, 114), null, Color.White, 0f, Vector2.Zero, 4f, SpriteEffects.None, 0);
-            
+
             if (game.options.debugMode)
             {
                 spriteBatch.Draw(game.whiteTexture, upperDoor, Color.White);
                 spriteBatch.Draw(game.whiteTexture, rightDoor, Color.White);
                 spriteBatch.Draw(game.whiteTexture, lowerDoor, Color.White);
-                spriteBatch.Draw(game.whiteTexture, leftDoor, Color.White);         
+                spriteBatch.Draw(game.whiteTexture, leftDoor, Color.White);
                 spriteBatch.DrawString(game.font, "X: " + mouseX + " Y: " + mouseY, new Vector2(0, 0), Color.Black, 0f, Vector2.Zero, 2, SpriteEffects.None, 0);
             }
 
@@ -106,7 +106,7 @@ namespace Dungeaon.States
 
         public override void PostUpdate(GameTime gameTime)
         {
-            
+
         }
 
         private double timeSinceLastDebugDraw = 0D;
@@ -155,20 +155,20 @@ namespace Dungeaon.States
                     room.texture = roomTextures[index];
                     room.walls = new bool[4];
 
-                    if ((int) playerRoomPos.X - 1 == -1)
+                    if ((int)playerRoomPos.X - 1 == -1)
                         room.walls[3] = true;
-                    else if ((int) playerRoomPos.X + 1 == sizeX)
+                    else if ((int)playerRoomPos.X + 1 == sizeX)
                         room.walls[1] = true;
-                    else if ((int) playerRoomPos.Y - 1 == -1)
+                    else if ((int)playerRoomPos.Y - 1 == -1)
                         room.walls[0] = true;
-                    else if ((int) playerRoomPos.Y + 1 == sizeY)
+                    else if ((int)playerRoomPos.Y + 1 == sizeY)
                         room.walls[2] = true;
 
                     if (rand.Next(2) == 1)
                     {
                         int enemieIndex = rand.Next(1);
                         Enemie enemie = new KnightEnemie(game, new Vector2(900, 400));
-                        
+
                         if (enemieIndex == 0)
                         {
                             enemie = new KnightEnemie(game, new Vector2(900, 400));
@@ -183,7 +183,7 @@ namespace Dungeaon.States
 
             Room startRoom = new Room();
             startRoom.texture = roomTextures[0];
-            startRoom.walls = new bool[4] { true, false, false, true};
+            startRoom.walls = new bool[4] { true, false, false, true };
             rooms[0, 0] = startRoom;
 
             return rooms;
@@ -194,8 +194,8 @@ namespace Dungeaon.States
             if (player.hitBox.Intersects(upperDoor))
             {
                 playerRoomPos.Y--;
-                Vector2 cache = Vector2.Clamp(playerRoomPos, Vector2.Zero, new Vector2(rooms.GetLength(1)-1, rooms.GetLength(0)-1));
-                
+                Vector2 cache = Vector2.Clamp(playerRoomPos, Vector2.Zero, new Vector2(rooms.GetLength(1) - 1, rooms.GetLength(0) - 1));
+
                 if (playerRoomPos == cache)
                     player.position = new Vector2(roomRectangle.X + roomRectangle.Width / 2, roomRectangle.Y + roomRectangle.Height - player.hitBox.Height - 40);
 
@@ -205,8 +205,8 @@ namespace Dungeaon.States
             if (player.hitBox.Intersects(rightDoor))
             {
                 playerRoomPos.X++;
-                Vector2 cache = Vector2.Clamp(playerRoomPos, Vector2.Zero, new Vector2(rooms.GetLength(1)-1, rooms.GetLength(0)-1));
-                
+                Vector2 cache = Vector2.Clamp(playerRoomPos, Vector2.Zero, new Vector2(rooms.GetLength(1) - 1, rooms.GetLength(0) - 1));
+
                 if (playerRoomPos == cache)
                     player.position = new Vector2(roomRectangle.X + 10, roomRectangle.Y + roomRectangle.Height / 2);
 
@@ -216,7 +216,7 @@ namespace Dungeaon.States
             if (player.hitBox.Intersects(lowerDoor))
             {
                 playerRoomPos.Y++;
-                Vector2 cache = Vector2.Clamp(playerRoomPos, Vector2.Zero, new Vector2(rooms.GetLength(1)-1, rooms.GetLength(0)-1));
+                Vector2 cache = Vector2.Clamp(playerRoomPos, Vector2.Zero, new Vector2(rooms.GetLength(1) - 1, rooms.GetLength(0) - 1));
 
                 if (playerRoomPos == cache)
                     player.position = new Vector2(roomRectangle.X + roomRectangle.Width / 2, roomRectangle.Y + 20);
@@ -227,7 +227,7 @@ namespace Dungeaon.States
             if (player.hitBox.Intersects(leftDoor))
             {
                 playerRoomPos.X--;
-                Vector2 cache = Vector2.Clamp(playerRoomPos, Vector2.Zero, new Vector2(rooms.GetLength(1)-1, rooms.GetLength(0)-1));
+                Vector2 cache = Vector2.Clamp(playerRoomPos, Vector2.Zero, new Vector2(rooms.GetLength(1) - 1, rooms.GetLength(0) - 1));
 
                 if (playerRoomPos == cache)
                     player.position = new Vector2(roomRectangle.X + roomRectangle.Width - player.hitBox.Width - 50, roomRectangle.Y + roomRectangle.Height / 2);

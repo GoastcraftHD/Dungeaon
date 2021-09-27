@@ -104,12 +104,12 @@ namespace Dungeaon
             textBoxSprite = Content.Load<Texture2D>("Textbox");
             shoproom = Content.Load<Texture2D>("rooms/shoproom");
             boss1Head = Content.Load<Texture2D>("heads/boss1-head");
-            boss1= Content.Load<Texture2D>("enemies/boss1");
-            devilHead= Content.Load<Texture2D>("heads/devil-Head");
+            boss1 = Content.Load<Texture2D>("enemies/boss1");
+            devilHead = Content.Load<Texture2D>("heads/devil-Head");
             devil = Content.Load<Texture2D>("devil");
-            devilShop= Content.Load<Texture2D>("devilshop");
+            devilShop = Content.Load<Texture2D>("devilshop");
             necromancerHead = Content.Load<Texture2D>("heads/Necromancer-Head");
-            necromancer= Content.Load<Texture2D>("enemies/Necromancer");
+            necromancer = Content.Load<Texture2D>("enemies/Necromancer");
 
             // = Content.Load<Texture2D>("");
 

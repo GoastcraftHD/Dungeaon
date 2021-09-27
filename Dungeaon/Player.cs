@@ -10,6 +10,8 @@ namespace Dungeaon
         public static int player_Health = 100;
         public static int player_maxHealth = 100;
         public static int playerHealthBarWidth = 286;
+        public static int constant_PlayerHealthBarWidth = 286;
+        public static Rectangle playerHealthBarRect => new Rectangle(0, 0, playerHealthBarWidth, 32);
         public Vector2 position;
         private Texture2D texture;
         private SpriteEffects direction = SpriteEffects.None;
