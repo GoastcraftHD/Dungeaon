@@ -15,7 +15,7 @@ namespace Dungeaon
         private SpriteEffects direction = SpriteEffects.None;
         private Game1 game;
 
-        public Rectangle hitBox => new Rectangle((int)position.X, (int)position.Y, (int)(texture.Width * MainGameState.roomScale), (int)(texture.Height * MainGameState.roomScale));
+        public Rectangle hitBox => new Rectangle((int)position.X + 20, (int)position.Y + 20, (int)(texture.Width * MainGameState.roomScale) - 30, (int)(texture.Height * MainGameState.roomScale) - 30);
 
         public Player(Texture2D playerTexture, Vector2 spawnPosition, Game1 game)
         {
@@ -29,7 +29,7 @@ namespace Dungeaon
             spriteBatch.Draw(texture, position, null, Color.White, 0f, Vector2.Zero, MainGameState.roomScale, direction, 0);
 
             if (game.options.debugMode)
-                spriteBatch.Draw(game.whiteTexture, position, hitBox, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);
+                spriteBatch.Draw(game.whiteTexture, new Vector2(hitBox.X, hitBox.Y), hitBox, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0);
         }
 
         public override void Update(GameTime gameTime)

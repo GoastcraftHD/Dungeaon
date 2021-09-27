@@ -13,7 +13,8 @@ namespace Dungeaon.Enemies
         public override int health { get => _health; set => _health = value; }
         public override int damage => 1;
         public override Texture2D texture => game.knightEnemy;
-        public override Rectangle hitBox => new Rectangle((int)position.X, (int)position.Y, (int)(texture.Width * scale), (int)(texture.Height * scale));
+        public override Texture2D headTexture => null;
+        public override Rectangle hitBox => new Rectangle((int)position.X + 10, (int)position.Y + 10, (int)(texture.Width * scale) - 20, (int)(texture.Height * scale) - 20);
         public override float scale { get => _scale; set => _scale = value; }
         public override Vector2 position { get => _position; set => _position = value; }
         public override bool isAlive { get => _isAlive; set => _isAlive = value; }
@@ -23,6 +24,11 @@ namespace Dungeaon.Enemies
             health = maxHealth;
             isAlive = true;
             scale = 3.5f;
+        }
+
+        public override void Attack()
+        {
+
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)

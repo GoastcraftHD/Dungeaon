@@ -14,8 +14,9 @@ namespace Dungeaon.States
         private Vector2 roomPos;
         private List<Component> componentList;
         private Enemie enemie;
-        private int enemieHealthBarWidth = 286;
-        private Rectangle ememieHealthBarRect => new Rectangle(0, 0, enemieHealthBarWidth, 32);
+        private const int enemieHealthBarWitdhB = 286;
+        private int enemieHealthBarWitdh = 286;
+        private Rectangle ememieHealthBarRect =>  new Rectangle(0, 0, enemieHealthBarWitdh, 32); 
 
         public FightState(Game1 game, GraphicsDeviceManager graphicsDeviceManager, ContentManager content, State previousState, Enemie enemie) : base(game, graphicsDeviceManager, content, previousState)
         {
@@ -161,7 +162,10 @@ namespace Dungeaon.States
 
         private void dge_Button(object sender, EventArgs e)
         {
-
+            enemie.health -= 10;
+            double enemieHealth = ((double)enemie.health / (double)enemie.maxHealth) * enemieHealthBarWitdhB;
+            enemieHealthBarWitdh = (int)enemieHealth;
+            enemieHealthBarWitdh = (int)b;
         }
     }
 }
