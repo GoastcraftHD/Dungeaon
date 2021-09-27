@@ -22,7 +22,7 @@ namespace Dungeaon.Enemies
         protected bool _isAlive { get; set; }
         public abstract bool isAlive { get; set; }
 
-        public abstract void Attack();
+        public abstract void Attack(bool block, bool dodge);
 
         protected Game1 game;
 
