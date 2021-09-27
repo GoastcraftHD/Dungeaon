@@ -45,13 +45,10 @@ namespace Dungeaon
         {
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
-                if (position.Y > MainGameState.roomRectangle.Y)
-                {
-                    if (currentVelocity.Y < -maxVelocity.Y)
-                        currentVelocity.Y = -maxVelocity.Y;
-                    else
-                        currentVelocity.Y -= accelerationSpeed.Y;
-                }
+                if (currentVelocity.Y < -maxVelocity.Y)
+                    currentVelocity.Y = -maxVelocity.Y;
+                else
+                    currentVelocity.Y -= accelerationSpeed.Y;
             }
             else
             {
@@ -64,13 +61,10 @@ namespace Dungeaon
             {
                 direction = SpriteEffects.FlipHorizontally;
 
-                if (position.X > MainGameState.roomRectangle.X)
-                {
-                    if (currentVelocity.X < -maxVelocity.X)
-                        currentVelocity.X = -maxVelocity.X;
-                    else
-                        currentVelocity.X -= accelerationSpeed.X;
-                }
+                if (currentVelocity.X < -maxVelocity.X)
+                    currentVelocity.X = -maxVelocity.X;
+                else
+                    currentVelocity.X -= accelerationSpeed.X;
             }
             else
             {
@@ -81,13 +75,10 @@ namespace Dungeaon
 
             if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
-                if (position.Y < MainGameState.roomRectangle.Y + MainGameState.roomRectangle.Height - texture.Height * MainGameState.roomScale)
-                {
-                    if (currentVelocity.Y < maxVelocity.Y)
-                        currentVelocity.Y = maxVelocity.Y;
-                    else
-                        currentVelocity.Y += accelerationSpeed.Y;
-                }
+                if (currentVelocity.Y < maxVelocity.Y)
+                    currentVelocity.Y = maxVelocity.Y;
+                else
+                    currentVelocity.Y += accelerationSpeed.Y;
             }
             else
             {
@@ -103,13 +94,10 @@ namespace Dungeaon
             {
                 direction = SpriteEffects.None;
 
-                if (position.X < MainGameState.roomRectangle.X + MainGameState.roomRectangle.Width - texture.Width * MainGameState.roomScale)
-                {
-                    if (currentVelocity.X < maxVelocity.X)
-                        currentVelocity.X = maxVelocity.X;
-                    else
-                        currentVelocity.X += accelerationSpeed.X;
-                }
+                if (currentVelocity.X < maxVelocity.X)
+                    currentVelocity.X = maxVelocity.X;
+                else
+                    currentVelocity.X += accelerationSpeed.X;
             }
             else
             {
@@ -121,6 +109,9 @@ namespace Dungeaon
             }
 
             position += currentVelocity;
+
+            position.X = Math.Clamp(position.X, MainGameState.roomRectangle.X, MainGameState.roomRectangle.X + MainGameState.roomRectangle.Width - texture.Width * MainGameState.roomScale);
+            position.Y = Math.Clamp(position.Y, MainGameState.roomRectangle.Y, MainGameState.roomRectangle.Y + MainGameState.roomRectangle.Height - texture.Height * MainGameState.roomScale);
         }
     }
 }
