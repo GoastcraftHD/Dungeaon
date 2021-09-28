@@ -25,7 +25,7 @@ namespace Dungeaon.States
                 font = game.font,
                 text = "Start Game",
                 textScale = 2,
-                spriteScale = buttonScale
+                 spriteScale = buttonScale
             };
             startGameButton.click += startGameButton_Click;
 

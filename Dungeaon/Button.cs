@@ -27,22 +27,30 @@ namespace Dungeaon
         public SpriteEffects spriteEffect = SpriteEffects.None;
 
         public SpriteFont font;
+        public int spriteScaleX = 1;
+        public int spriteScaleY = 1;
         public Color textColor = Color.Black;
         public float textRotation = 0f;
         public Vector2 textOrigin = Vector2.Zero;
         public float textScale = 1f;
         public SpriteEffects textEffect = SpriteEffects.None;
 
-        public Rectangle rectangle
+        public Rectangle HitBoxRectangle
         {
             get
             {
                 int width = hitBoxSizeX == 0 ? texture.Width * spriteScale : hitBoxSizeX;
                 int height = hitBoxSizeY == 0 ? texture.Height * spriteScale : hitBoxSizeY;
 
-                return new Rectangle((int) position.X, (int) position.Y, width, height);
+                int scaleX = spriteScaleX != 1 ? spriteScaleX : width;
+                int scaleY = spriteScaleY != 1 ? spriteScaleY : height;
+
+                return new Rectangle((int) position.X, (int) position.Y, scaleX, scaleY);
             }
         }
+
+        public Rectangle sourceRectangle { get => new Rectangle(0, 0, texture.Width, texture.Height); }
+        public Rectangle sizeRectangle { get => new Rectangle((int)position.X, (int)position.Y, spriteScaleX, spriteScaleY); }
 
         public string text;
 
@@ -59,13 +67,19 @@ namespace Dungeaon
             if (isHovering || buttonStayPressed)
                 color = spriteColorHover;
 
-            if  (texture != null)
+            if  (texture != null && (spriteScaleX != 1 || spriteScaleY != 1))
+                spriteBatch.Draw(texture, sizeRectangle, sourceRectangle, color);
+            else if (texture != null)
                 spriteBatch.Draw(texture, position, null, color, spriteRotation, spriteOrigin, spriteScale, spriteEffect, 0);
+
 
             if (!string.IsNullOrEmpty(text))
             {
-                float x = (position.X + (texture.Width * spriteScale / 2)) - (font.MeasureString(text).X * textScale / 2);
-                float y = (position.Y + (texture.Height * spriteScale / 2)) - (font.MeasureString(text).Y * textScale / 2);
+                float width = spriteScaleX != 1 ? sizeRectangle.Width : texture.Width * spriteScale;
+                float height = spriteScaleY != 1 ? sizeRectangle.Height : texture.Height * spriteScale;
+
+                float x = (position.X + (width / 2)) - (font.MeasureString(text).X * textScale / 2);
+                float y = (position.Y + (height / 2)) - (font.MeasureString(text).Y * textScale / 2);
 
                 spriteBatch.DrawString(font, text, new Vector2(x, y), textColor, textRotation, textOrigin, textScale, textEffect, 0);
             }
@@ -80,7 +94,7 @@ namespace Dungeaon
 
             isHovering = false;
 
-            if (mouseRectangle.Intersects(rectangle))
+            if (mouseRectangle.Intersects(HitBoxRectangle))
             {
                 isHovering = true;
 

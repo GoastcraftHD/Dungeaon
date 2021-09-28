@@ -8,9 +8,174 @@ using System.Collections.Generic;
 
 namespace Dungeaon.States
 {
+    enum ItemType
+    {
+        Potion,
+        Weapon,
+        Defense
+    }
+
     class MainGameState : State
     {
         private List<Component> components;
+        public static List<Item> postionList;
+        public static List<Item> weaponList;
+        public static List<Item> defenseList;
+
+        #region ItemInitilisation
+        private void InitPotionList()
+        {
+            Item healthPotion = new Item()
+            {
+                name = "Healing Potion",
+                sprite = game.healthPostion,
+                cost = 10,
+                type = ItemType.Potion
+            };
+
+            Item speedPotion = new Item()
+            {
+                name = "Speed Potion",
+                sprite = game.speedPotion,
+                cost = 7,
+                type = ItemType.Potion
+            };
+
+            postionList = new List<Item>()
+            {
+                healthPotion,
+                speedPotion
+            };
+        }
+
+        private void InitWeaponList()
+        {
+            Item rustySword = new Item()
+            {
+                name = "Rusty Sword",
+                sprite = game.sword1,
+                cost = 1,
+                type = ItemType.Weapon,
+                damage = 10
+            };
+
+            Item ironSword = new Item()
+            {
+                name = "Iron Sword",
+                sprite = game.sword2,
+                cost = 5,
+                type = ItemType.Weapon,
+                damage = 15
+            };
+
+            Item Sword = new Item()
+            {
+                name = "Sword",
+                sprite = game.sword3,
+                cost = 10,
+                type = ItemType.Weapon,
+                damage = 20
+            };
+
+            Item crystalSword = new Item()
+            {
+                name = "Crystal Sword",
+                sprite = game.sword4,
+                cost = 30,
+                type = ItemType.Weapon,
+                damage = 25
+            };
+
+            Item razorSword = new Item()
+            {
+                name = "Razor Blade",
+                sprite = game.sword5,
+                cost = 40,
+                type = ItemType.Weapon,
+                damage = 30
+            };
+
+            Item flamingSword = new Item()
+            {
+                name = "Flaming Sword",
+                sprite = game.sword6,
+                cost = 50,
+                type = ItemType.Weapon,
+                damage = 35
+            };
+
+            weaponList = new List<Item>()
+            {
+                rustySword,
+                ironSword,
+                Sword,
+                crystalSword,
+                razorSword,
+                flamingSword
+            };
+        }
+
+        private void InitDefenseList()
+        {
+            Item basicShield = new Item()
+            {
+                name = "Basic Shield",
+                sprite = game.shield1,
+                cost = 10,
+                type = ItemType.Defense
+            };
+
+            Item advancedShield = new Item()
+            {
+                name = "Advanced Shield",
+                sprite = game.shield2,
+                cost = 20,
+                type = ItemType.Defense
+            };
+
+            Item proShield = new Item()
+            {
+                name = "Professional Shield",
+                sprite = game.shield3,
+                cost = 40,
+                type = ItemType.Defense
+            };
+
+            Item woodShield = new Item()
+            {
+                name = "Wooden Shield",
+                sprite = game.shield4,
+                cost = 35,
+                type = ItemType.Defense
+            };
+
+            Item wolfShield = new Item()
+            {
+                name = "Wolf Clan Shield",
+                sprite = game.shield5,
+                cost = 500,
+                type = ItemType.Defense
+            };
+
+            defenseList = new List<Item>()
+            {
+                basicShield,
+                advancedShield,
+                proShield,
+                woodShield,
+                wolfShield
+            };
+        }
+        #endregion
+        public struct Item
+        {
+            public string name;
+            public Texture2D sprite;
+            public int cost;
+            public ItemType type;
+            public int damage;
+            public int defense;
+        }
 
         struct Room
         {
@@ -52,7 +217,11 @@ namespace Dungeaon.States
             roomTextures = new Texture2D[2] { game.room1, game.room2 };
             rooms = new Room[5, 5];
 
-            rooms = GenerateDungeon(3, 3);
+            rooms = GenerateDungeon(5, 5);
+
+            InitPotionList();
+            InitWeaponList();
+            InitDefenseList();
 
             components = new List<Component>()
             {

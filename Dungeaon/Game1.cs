@@ -43,6 +43,18 @@ namespace Dungeaon
         public Texture2D healthPostion;
         public Texture2D speedPotion;
 
+        public Texture2D sword1;
+        public Texture2D sword2;
+        public Texture2D sword3;
+        public Texture2D sword4;
+        public Texture2D sword5;
+        public Texture2D sword6;
+
+        public Texture2D shield1;
+        public Texture2D shield2;
+        public Texture2D shield3;
+        public Texture2D shield4;
+        public Texture2D shield5;
 
         public Options options = new Options()
         {
@@ -116,8 +128,19 @@ namespace Dungeaon
             necromancer = Content.Load<Texture2D>("enemies/Necromancer");
             smallDoor = Content.Load<Texture2D>("rooms/no-door-schmol");
             door = Content.Load<Texture2D>("rooms/no-door");
-            healthPostion = Content.Load<Texture2D>("items/Hpotion");
-            speedPotion = Content.Load<Texture2D>("items/Speed");
+            healthPostion = Content.Load<Texture2D>("items/potions/Hpotion");
+            speedPotion = Content.Load<Texture2D>("items/potions/Speed");
+            sword1 = Content.Load<Texture2D>("items/weapons/schwerts");
+            sword2 = Content.Load<Texture2D>("items/weapons/schwertu1");
+            sword3 = Content.Load<Texture2D>("items/weapons/schwertu2");
+            sword4 = Content.Load<Texture2D>("items/weapons/schwertu3");
+            sword5 = Content.Load<Texture2D>("items/weapons/schwertu4");
+            sword6 = Content.Load<Texture2D>("items/weapons/schwertu5");
+            shield1 = Content.Load<Texture2D>("items/defense/shield");
+            shield2 = Content.Load<Texture2D>("items/defense/shieldu1");
+            shield3 = Content.Load<Texture2D>("items/defense/shieldu2");
+            shield4 = Content.Load<Texture2D>("items/defense/shieldu3");
+            shield5 = Content.Load<Texture2D>("items/defense/shieldu4");
 
             // = Content.Load<Texture2D>("");
 
