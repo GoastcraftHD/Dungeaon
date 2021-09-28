@@ -141,7 +141,6 @@ namespace Dungeaon.States
             if (room.isShop && player.hitBox.Intersects(shopHitbox))
                 game.ChangeState(new ShopState(game, graphicsDeviceManager, content, this));
 
-
             if (room.enemie != null && room.enemie.isAlive)
             {
                 room.enemie.position = Vector2.Lerp(room.enemie.position, player.position, 0.01f);
@@ -172,12 +171,16 @@ namespace Dungeaon.States
 
                     if (rand.Next(101) <= 66)
                     {
-                        int enemieIndex = rand.Next(1);
+                        int enemieIndex = rand.Next(2);
                         Enemie enemie = new KnightEnemie(game, new Vector2(900, 400));
 
                         if (enemieIndex == 0)
                         {
                             enemie = new KnightEnemie(game, new Vector2(900, 400));
+                        }
+                        else if (enemieIndex == 1)
+                        {
+                            enemie = new GhostEnemie(game, new Vector2(900, 400));
                         }
 
                         room.enemie = enemie;

@@ -49,15 +49,15 @@ namespace Dungeaon.Enemies
             }
             else if (dodge == true)
             {
-                Random rdm = new Random();     
+                Random rdm = new Random();
                 int dodgechance = rdm.Next(1, 4);
-                if(dodgechance >= 2)
+                if (dodgechance >= 2)
                 {
                     Player.player_Health -= damage;
                     double playerhealth = ((double)Player.player_Health / (double)Player.player_maxHealth) * Player.constant_PlayerHealthBarWidth;
                     Player.playerHealthBarWidth = (int)playerhealth;
                 }
-                
+
             }
             else if (block == true)
             {
@@ -66,7 +66,7 @@ namespace Dungeaon.Enemies
                 double playerhealth = ((double)Player.player_Health / (double)Player.player_maxHealth) * Player.constant_PlayerHealthBarWidth;
                 Player.playerHealthBarWidth = (int)playerhealth;
             }
-            
+
         }
     }
 }
