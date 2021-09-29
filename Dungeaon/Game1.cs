@@ -31,6 +31,7 @@ namespace Dungeaon
         public Texture2D knightEnemy;
         public Texture2D financeEnemy;
         public Texture2D ghostEnemy;
+        public Texture2D cyborgNinjaEnemy;
         public Texture2D boss1;
         public Texture2D devil;
         public Texture2D devilShop;
@@ -142,6 +143,7 @@ namespace Dungeaon
             shield3 = Content.Load<Texture2D>("items/defense/shieldu2");
             shield4 = Content.Load<Texture2D>("items/defense/shieldu3");
             shield5 = Content.Load<Texture2D>("items/defense/shieldu4");
+            cyborgNinjaEnemy= Content.Load<Texture2D>("enemies/Cyborg-Ninja-Demon");
             inventoryCard = Content.Load<Texture2D>("Inventar-Board");
 
             // = Content.Load<Texture2D>("");
