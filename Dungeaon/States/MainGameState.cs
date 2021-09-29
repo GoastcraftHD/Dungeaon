@@ -18,7 +18,7 @@ namespace Dungeaon.States
     class MainGameState : State
     {
         private List<Component> components;
-        private List<Button> inventorySlots;
+        public static List<Button> inventorySlots;
 
         public static List<Item> postionList;
         public static List<Item> weaponList;
@@ -202,6 +202,7 @@ namespace Dungeaon.States
         private Vector2 playerRoomPos = new Vector2(0, 0);
         private Texture2D[] roomTextures;
         public static Vector2 inventoryCardPos;
+        private Item emptyItem = new Item();
 
         private Rectangle shopHitbox;
 
@@ -254,6 +255,7 @@ namespace Dungeaon.States
 
                 inventorySlots.Add(slot);
                 components.Add(slot);
+                Player.inventory.Add(slot, emptyItem);
             }
         }
 
@@ -316,12 +318,15 @@ namespace Dungeaon.States
 
         }
 
-        private double timeSinceLastDebugDraw = 0D;
+        private double time = 0D;
 
         public override void Update(GameTime gameTime)
         {
             double deltaTime = gameTime.ElapsedGameTime.TotalSeconds;
-            timeSinceLastDebugDraw += deltaTime;
+            time += deltaTime;
+
+            if (time > .2D)
+
 
             mouseX = Mouse.GetState().X;
             mouseY = Mouse.GetState().Y;

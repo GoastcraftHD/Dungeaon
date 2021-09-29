@@ -4,13 +4,12 @@ using Dungeaon.States;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace Dungeaon
 {
     class Player : Component
     {
-        public static List<MainGameState.Item> inventory = new List<MainGameState.Item>();
+        public static Dictionary<Button, MainGameState.Item> inventory = new Dictionary<Button, MainGameState.Item>();
         public static Texture2D playerHealthBar;
         public static int player_Health = 100;
         public static int player_maxHealth = 100;
