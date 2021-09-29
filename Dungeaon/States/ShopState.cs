@@ -32,22 +32,25 @@ namespace Dungeaon.States
             int defenseIndex = rand.Next(MainGameState.defenseList.Count);
             defense = MainGameState.defenseList[defenseIndex];
 
-            item1Button = new Button(weapon.sprite, new Vector2(530, 525))
+            item1Button = new Button(new Vector2(530, 525))
             {
+                texture = weapon.sprite,
                 spriteScaleX = game.sword1.Width * 10,
                 spriteScaleY = game.sword1.Height * 10,
             };
 
-            item2Button = new Button(defense.sprite, new Vector2(700, 525))
+            item2Button = new Button(new Vector2(700, 525))
             {
+                texture = defense.sprite,
                 spriteScaleX = game.shield1.Width * 10,
                 spriteScaleY = game.shield1.Height * 10,
             };
 
-            item3Button = new Button(potion.sprite, new Vector2(720, 200))
+            item3Button = new Button(new Vector2(720, 200))
             {
-                spriteScaleX = game.healthPostion.Width * 6,
-                spriteScaleY = game.healthPostion.Height * 6,
+                texture = potion.sprite,
+                spriteScaleX = game.healthPostion.Width * 10,
+                spriteScaleY = game.healthPostion.Height * 10,
             };
 
             components = new List<Component>()
@@ -66,7 +69,7 @@ namespace Dungeaon.States
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);
 
             spriteBatch.Draw(game.devilShop, MainGameState.roomPos, null, Color.White, 0f, Vector2.Zero, 14f, SpriteEffects.None, 0);
-            MainGameState.DrawUI(spriteBatch, game);
+            MainGameState.DrawUI(spriteBatch, game, graphicsDeviceManager);
 
             if (game.options.debugMode)
             {

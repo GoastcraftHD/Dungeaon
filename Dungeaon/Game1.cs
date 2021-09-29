@@ -16,6 +16,7 @@ namespace Dungeaon
         public Texture2D player;
         public Texture2D button;
         public Texture2D playerCard;
+        public Texture2D inventoryCard;
         public Texture2D textBoxSprite;
         public SpriteFont font;
 
@@ -141,6 +142,7 @@ namespace Dungeaon
             shield3 = Content.Load<Texture2D>("items/defense/shieldu2");
             shield4 = Content.Load<Texture2D>("items/defense/shieldu3");
             shield5 = Content.Load<Texture2D>("items/defense/shieldu4");
+            inventoryCard = Content.Load<Texture2D>("Inventar-Board");
 
             // = Content.Load<Texture2D>("");
 

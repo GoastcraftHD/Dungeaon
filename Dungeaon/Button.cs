@@ -10,8 +10,8 @@ namespace Dungeaon
         private MouseState currentMouse;
         private MouseState previousMouse;
         private bool isHovering;
-        private Texture2D texture;
 
+        public Texture2D texture;
         public event EventHandler click;
         public bool clicked;
         public Vector2 position;
@@ -54,9 +54,8 @@ namespace Dungeaon
 
         public string text;
 
-        public Button(Texture2D texture, Vector2 position)
+        public Button(Vector2 position)
         {
-            this.texture = texture;
             this.position = position;
         }
 

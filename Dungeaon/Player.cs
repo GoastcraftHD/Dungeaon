@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Dungeaon.States;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,6 +10,7 @@ namespace Dungeaon
 {
     class Player : Component
     {
+        public static List<MainGameState.Item> inventory = new List<MainGameState.Item>();
         public static Texture2D playerHealthBar;
         public static int player_Health = 100;
         public static int player_maxHealth = 100;

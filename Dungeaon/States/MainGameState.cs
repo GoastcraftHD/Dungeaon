@@ -18,6 +18,8 @@ namespace Dungeaon.States
     class MainGameState : State
     {
         private List<Component> components;
+        private List<Button> inventorySlots;
+
         public static List<Item> postionList;
         public static List<Item> weaponList;
         public static List<Item> defenseList;
@@ -199,6 +201,7 @@ namespace Dungeaon.States
         private Player player;
         private Vector2 playerRoomPos = new Vector2(0, 0);
         private Texture2D[] roomTextures;
+        public static Vector2 inventoryCardPos;
 
         private Rectangle shopHitbox;
 
@@ -208,6 +211,7 @@ namespace Dungeaon.States
             roomRectangle = new Rectangle((int)roomPos.X + 5, (int)roomPos.Y + 10, (int)(game.room1.Width * roomScale) - 10, (int)(game.room1.Height * roomScale) - 18);
             player = new Player(game.player, new Vector2(700, 500), game, graphicsDeviceManager);
             shopHitbox = new Rectangle((int)roomPos.X, (int)roomPos.Y, 350, 150);
+            inventoryCardPos = new Vector2((roomPos.X + game.room1.Width * roomScale) + (graphicsDeviceManager.PreferredBackBufferWidth - (roomPos.X + game.room1.Width * roomScale)) / 2 - game.inventoryCard.Width * 3.4f / 2, 10);
 
             upperDoor = new Rectangle((int)(roomPos.X + roomRectangle.Width / 2) - 20, (int)roomPos.Y + 10, 50, 35);
             rightDoor = new Rectangle((int)(roomPos.X + roomRectangle.Width) - 10, (int)(roomPos.Y + roomRectangle.Height / 2) + 12, 15, 50);
@@ -215,7 +219,6 @@ namespace Dungeaon.States
             leftDoor = new Rectangle((int)(roomPos.X), (int)(roomPos.Y + roomRectangle.Height / 2) + 12, 30, 50);
 
             roomTextures = new Texture2D[2] { game.room1, game.room2 };
-            rooms = new Room[5, 5];
 
             rooms = GenerateDungeon(5, 5);
 
@@ -227,6 +230,31 @@ namespace Dungeaon.States
             {
                 player
             };
+
+            InitInventory();
+        }
+
+        private void InitInventory()
+        {
+            int slotScale = 100;
+            inventorySlots = new List<Button>();
+
+            for (int i = 0; i < 15; i++)
+            {
+                int yPos = i / 3;
+                int xPos = i % 3;
+                Vector2 slotPos = inventoryCardPos + new Vector2(slotScale * xPos + 15 * xPos, yPos * slotScale + yPos * 100 - 15 * yPos) + new Vector2(50, 30);
+
+                Button slot = new Button(slotPos)
+                {
+                    texture = game.sword1,
+                    spriteScaleX = slotScale,
+                    spriteScaleY = slotScale
+                };
+
+                inventorySlots.Add(slot);
+                components.Add(slot);
+            }
         }
 
         private int mouseX;
@@ -273,7 +301,7 @@ namespace Dungeaon.States
                 spriteBatch.DrawString(game.font, "X: " + mouseX + " Y: " + mouseY, new Vector2(0, 0), Color.Black, 0f, Vector2.Zero, 2, SpriteEffects.None, 0);
             }
 
-            DrawUI(spriteBatch, game);
+            DrawUI(spriteBatch, game, graphicsDeviceManager);
 
             foreach (Component component in components)
             {
@@ -323,11 +351,14 @@ namespace Dungeaon.States
             }
         }
 
-        public static void DrawUI(SpriteBatch spriteBatch, Game1 game)
+        public static void DrawUI(SpriteBatch spriteBatch, Game1 game, GraphicsDeviceManager graphicsDeviceManager)
         {
-            spriteBatch.Draw(game.playerCard, new Vector2(MainGameState.roomPos.X / 2 - game.playerCard.Width * 3.4f / 2, 10), null, Color.White, 0f, Vector2.Zero, 3.4f, SpriteEffects.None, 0);
-            spriteBatch.Draw(Player.playerHealthBar, new Vector2(MainGameState.roomPos.X / 2 - Player.constant_PlayerHealthBarWidth / 2 + 6, 819), Player.playerHealthBarRect, Color.White);
-            spriteBatch.Draw(game.playerHead, new Vector2(MainGameState.roomPos.X / 2 - game.playerHead.Width * 4f / 2, 114), null, Color.White, 0f, Vector2.Zero, 4f, SpriteEffects.None, 0);
+            spriteBatch.Draw(game.playerCard, new Vector2(roomPos.X / 2 - game.playerCard.Width * 3.4f / 2, 10), null, Color.White, 0f, Vector2.Zero, 3.4f, SpriteEffects.None, 0);
+            spriteBatch.Draw(Player.playerHealthBar, new Vector2(roomPos.X / 2 - Player.constant_PlayerHealthBarWidth / 2 + 6, 819), Player.playerHealthBarRect, Color.White);
+            spriteBatch.Draw(game.playerHead, new Vector2(roomPos.X / 2 - game.playerHead.Width * 4f / 2, 114), null, Color.White, 0f, Vector2.Zero, 4f, SpriteEffects.None, 0);
+
+            spriteBatch.Draw(game.inventoryCard, inventoryCardPos, null, Color.White, 0f, Vector2.Zero, 3.4f, SpriteEffects.None, 0);
+
         }
 
         private Room[,] GenerateDungeon(int sizeX, int sizeY)

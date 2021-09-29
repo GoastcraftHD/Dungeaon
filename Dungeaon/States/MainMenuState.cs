@@ -20,17 +20,19 @@ namespace Dungeaon.States
 
             int buttonScale = 8;
 
-            Button startGameButton = new Button(game.button, new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - (game.button.Width * buttonScale) / 2, 270))
+            Button startGameButton = new Button(new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - (game.button.Width * buttonScale) / 2, 270))
             {
+                texture = game.button,
                 font = game.font,
                 text = "Start Game",
                 textScale = 2,
-                 spriteScale = buttonScale
+                spriteScale = buttonScale
             };
             startGameButton.click += startGameButton_Click;
 
-            Button optionsButton = new Button(game.button, new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - (game.button.Width * buttonScale) / 2, graphicsDeviceManager.PreferredBackBufferHeight / 2 - (game.button.Height * buttonScale) / 2))
+            Button optionsButton = new Button(new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - (game.button.Width * buttonScale) / 2, graphicsDeviceManager.PreferredBackBufferHeight / 2 - (game.button.Height * buttonScale) / 2))
             {
+                texture = game.button,
                 font = game.font,
                 text = "Options",
                 textScale = 2,
@@ -38,8 +40,9 @@ namespace Dungeaon.States
             };
             optionsButton.click += optionsButton_Click;
 
-            Button exitButton = new Button(game.button, new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - (game.button.Width * buttonScale) / 2, 650))
+            Button exitButton = new Button(new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - (game.button.Width * buttonScale) / 2, 650))
             {
+                texture = game.button,
                 font = game.font,
                 text = "Exit Game",
                 textScale = 2,

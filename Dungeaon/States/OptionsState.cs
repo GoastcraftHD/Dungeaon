@@ -39,8 +39,9 @@ namespace Dungeaon.States
 
         public OptionsState(Game1 game, GraphicsDeviceManager graphicsDeviceManager, ContentManager content, State previousState) : base(game, graphicsDeviceManager, content, previousState)
         {
-            debugModeButton = new Button(game.button, new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - (game.button.Width * buttonScale) / 2, 400))
+            debugModeButton = new Button(new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - (game.button.Width * buttonScale) / 2, 400))
             {
+                texture = game.button,
                 font = game.font,
                 text = "Debug Mode",
                 textScale = 2,
@@ -49,8 +50,9 @@ namespace Dungeaon.States
             
             debugModeButton.click += debugModeButton_Click;
 
-            fullscreenButton = new Button(game.button, new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - (game.button.Width * buttonScale) / 2, 600))
+            fullscreenButton = new Button(new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - (game.button.Width * buttonScale) / 2, 600))
             {
+                texture = game.button,
                 font = game.font,
                 text = "Fullscreen",
                 textScale = 2,
@@ -60,8 +62,9 @@ namespace Dungeaon.States
 
             fullscreenButton.click += fullscreenButton_Click;
 
-            Button colorAddButton = new Button(game.whiteTexture, new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 + (game.button.Width * buttonScale) / 2 - 30, colorButtonPosY + game.button.Height * buttonScale / 2))
+            Button colorAddButton = new Button(new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 + (game.button.Width * buttonScale) / 2 - 30, colorButtonPosY + game.button.Height * buttonScale / 2))
             {
+                texture = game.whiteTexture,
                 font = game.font,
                 text = "+",
                 textScale = 2,
@@ -72,8 +75,9 @@ namespace Dungeaon.States
 
             colorAddButton.click += colorAddButton_Click;
 
-            Button colorSubButton = new Button(game.whiteTexture, new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - (game.button.Width * buttonScale) / 2 + 20, colorButtonPosY + game.button.Height * buttonScale / 2))
+            Button colorSubButton = new Button(new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - (game.button.Width * buttonScale) / 2 + 20, colorButtonPosY + game.button.Height * buttonScale / 2))
             {
+                texture = game.whiteTexture,
                 font = game.font,
                 text = "-",
                 textScale = 2,
@@ -84,8 +88,9 @@ namespace Dungeaon.States
 
             colorSubButton.click += colorSubButton_Click;
 
-            Button backButton = new Button(game.button, new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - (game.button.Width * buttonScale) / 2, 850))
+            Button backButton = new Button(new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - (game.button.Width * buttonScale) / 2, 850))
             {
+                texture = game.button,
                 font = game.font,
                 text = "Back",
                 textScale = 2,

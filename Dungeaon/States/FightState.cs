@@ -41,8 +41,9 @@ namespace Dungeaon.States
             }
             buttonAttackTexture.SetData(color);
 
-            Button attackButton = new Button(buttonAttackTexture, new Vector2(600, 730))
+            Button attackButton = new Button(new Vector2(600, 730))
             {
+                texture = buttonAttackTexture,
                 font = game.font,
                 text = "ATTACK",
                 textScale = 4,
@@ -61,8 +62,9 @@ namespace Dungeaon.States
             }
 
             buttonAttackTextureB.SetData(colorB);
-            Button blockButton = new Button(buttonAttackTextureB, new Vector2(868, 730))
+            Button blockButton = new Button(new Vector2(868, 730))
             {
+                texture = buttonAttackTextureB,
                 font = game.font,
                 text = "BLOCK",
                 textScale = 4,
@@ -81,8 +83,9 @@ namespace Dungeaon.States
             }
 
             buttonAttackTextureC.SetData(colorC);
-            Button dodgeButton = new Button(buttonAttackTextureC, new Vector2(1138, 730))
+            Button dodgeButton = new Button(new Vector2(1138, 730))
             {
+                texture = buttonAttackTextureC,
                 font = game.font,
                 text = "DODGE",
                 textScale = 4,
@@ -114,7 +117,7 @@ namespace Dungeaon.States
             spriteBatch.Draw(enemyHealthbar, new Vector2(roomPos.X + game.fightScreen.Width * 3.4f / 2 - ememieHealthBarRect.Width / 2, 70), ememieHealthBarRect, Color.White);
             spriteBatch.DrawString(game.font, "Versuchsperson", new Vector2(roomPos.X + game.fightScreen.Width * 3.5f / 2 - ememieHealthBarRect.Width / 2, 35), Color.Yellow, 0f, Vector2.Zero, 2, SpriteEffects.None, 0);
            
-            MainGameState.DrawUI(spriteBatch, game);
+            MainGameState.DrawUI(spriteBatch, game, graphicsDeviceManager);
 
             foreach (Component component in componentList)
             {
