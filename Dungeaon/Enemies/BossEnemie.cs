@@ -27,7 +27,7 @@ namespace Dungeaon.Enemies
             isAlive = true;
             scale = 3.5f;
         }
-
+        #region Attack Pattern
         public override void Attack(bool block, bool dodge)
         {
             Random random = new Random();
@@ -61,10 +61,16 @@ namespace Dungeaon.Enemies
                 }
             }
         }
+        #endregion
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-           
+            spriteBatch.Draw(texture, position, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0);
+
+            if (game.options.debugMode)
+            {
+                spriteBatch.Draw(game.whiteTexture, hitBox, Color.White);
+            }
         }
 
         public override void Update(GameTime gameTime)
