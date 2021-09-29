@@ -6,9 +6,10 @@ namespace Dungeaon.Enemies
 {
     class GhostEnemie : Enemie
     {
-        public override string name => "Geister Ruestung";
+        public override string name => "Ghostly Armor";
 
         public override int maxHealth => 125;
+        public override int money => 10;
 
         public override int health { get => _health; set => _health = value; }
 

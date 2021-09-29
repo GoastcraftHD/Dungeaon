@@ -12,6 +12,7 @@ namespace Dungeaon.Enemies
         protected int _health { get; set; }
         public abstract int health { get; set; }
         public abstract int damage { get; }
+        public abstract int money { get; }
         public abstract Texture2D texture { get; }
         public abstract Texture2D headTexture { get; }
         protected float _scale { get; set; }
