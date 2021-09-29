@@ -13,7 +13,7 @@ namespace Dungeaon
         public static List<Button> inventorySlots;
         public static Texture2D playerHealthBar;
         public static int player_Health = 100;
-        public static int player_maxHealth = 100 + inventory[inventorySlots[0]].defense;
+        public static int player_maxHealth => 100 + inventory[inventorySlots[0]].defense;
         public static int playerHealthBarWidth = 286;
         public static int constant_PlayerHealthBarWidth = 286;
         public static int player_Damage => 15 + inventory[inventorySlots[0]].damage;

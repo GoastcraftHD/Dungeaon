@@ -39,6 +39,8 @@ namespace Dungeaon.States
                 spriteScaleY = game.sword1.Height * 10,
             };
 
+            item1Button.click += item1Button_Click;
+
             item2Button = new Button(new Vector2(700, 525))
             {
                 texture = defense.sprite,
@@ -46,12 +48,16 @@ namespace Dungeaon.States
                 spriteScaleY = game.shield1.Height * 10,
             };
 
+            item2Button.click += item2Button_Click;
+
             item3Button = new Button(new Vector2(720, 200))
             {
                 texture = potion.sprite,
-                spriteScaleX = game.healthPostion.Width * 10,
-                spriteScaleY = game.healthPostion.Height * 10,
+                spriteScaleX = game.healthPostion.Width * 6,
+                spriteScaleY = game.healthPostion.Height * 6,
             };
+
+            item3Button.click += item3Button_Click;
 
             components = new List<Component>()
             {
@@ -144,6 +150,66 @@ namespace Dungeaon.States
            
             if (item.damage != 0)
                 spriteBatch.DrawString(game.font, "Damage: " + item.damage, position + new Vector2(5, 60), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0);
+        }
+
+        private void item1Button_Click(object sender, EventArgs e)
+        {
+            if (weapon.cost <= Player.player_Money)
+            {
+                Player.player_Money -= weapon.cost;
+
+                int i = 0;
+                foreach (KeyValuePair<Button, MainGameState.Item> slot in Player.inventory)
+                {
+                    if (slot.Value.sprite == null)
+                    {
+                        Player.inventory[slot.Key] = weapon;
+                        Player.inventorySlots[i].texture = weapon.sprite;
+                        break;
+                    }
+                    i++;
+                }
+            }
+        }
+
+        private void item2Button_Click(object sender, EventArgs e)
+        {
+            if (defense.cost <= Player.player_Money)
+            {
+                Player.player_Money -= defense.cost;
+
+                int i = 0;
+                foreach (KeyValuePair<Button, MainGameState.Item> slot in Player.inventory)
+                {
+                    if (slot.Value.sprite == null)
+                    {
+                        Player.inventory[slot.Key] = defense;
+                        Player.inventorySlots[i].texture = defense.sprite;
+                        break;
+                    }
+                    i++;
+                }
+            }
+        }
+
+        private void item3Button_Click(object sender, EventArgs e)
+        {
+            if (potion.cost <= Player.player_Money)
+            {
+                Player.player_Money -= potion.cost;
+
+                int i = 0;
+                foreach (KeyValuePair<Button, MainGameState.Item> slot in Player.inventory)
+                {
+                    if (slot.Value.sprite == null)
+                    {
+                        Player.inventory[slot.Key] = potion;
+                        Player.inventorySlots[i].texture = potion.sprite;
+                        break;
+                    }
+                    i++;
+                }
+            }
         }
     }
 }

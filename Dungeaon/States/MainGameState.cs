@@ -185,6 +185,7 @@ namespace Dungeaon.States
             public bool[] walls;
             public bool isBoss;
             public bool isShop;
+            public State shopState;
         }
 
         private Room[,] rooms = new Room[5, 5];
@@ -219,13 +220,12 @@ namespace Dungeaon.States
             leftDoor = new Rectangle((int)(roomPos.X), (int)(roomPos.Y + roomRectangle.Height / 2) + 12, 30, 50);
 
             roomTextures = new Texture2D[2] { game.room1, game.room2 };
-
-            rooms = GenerateDungeon(5, 5);
-
             InitPotionList();
             InitWeaponList();
             InitDefenseList();
             InitInventory();
+
+            rooms = GenerateDungeon(5, 5);
 
             components = new List<Component>()
             {
@@ -420,7 +420,7 @@ namespace Dungeaon.States
             CheckForDoorColission();
 
             if (room.isShop && player.hitBox.Intersects(shopHitbox))
-                game.ChangeState(new ShopState(game, graphicsDeviceManager, content, this));
+                game.ChangeState(room.shopState);
 
             if (room.enemie != null && room.enemie.isAlive)
             {
@@ -517,8 +517,9 @@ namespace Dungeaon.States
             Room shopRoom = new Room();
             shopRoom.texture = game.shoproom;
             shopRoom.isShop = true;
+            shopRoom.shopState = new ShopState(game, graphicsDeviceManager, content, this);
             shopRoom.walls = setDoors(shopY, shopX, sizeY, sizeX);
-            rooms[shopY, shopX] = shopRoom;
+            rooms[1, 0] = shopRoom;
 
             int bossX = rand.Next(1, sizeX);
             int bossY = rand.Next(1, sizeY);
