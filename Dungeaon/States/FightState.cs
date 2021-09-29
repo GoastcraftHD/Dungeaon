@@ -105,7 +105,8 @@ namespace Dungeaon.States
 
             components.AddRange(Player.inventorySlots);
         }
-
+        
+        //Fightscreen wird erstellt
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);
@@ -154,6 +155,7 @@ namespace Dungeaon.States
             }
         }
 
+        #region button funktionen
         private void atk_Button(object sender, EventArgs e)
         {
             bool dodge = false;
@@ -163,7 +165,7 @@ namespace Dungeaon.States
             enemieHealthBarWitdh = (int)enemieHealth;
             if (enemie.health <= 0)
             {
-                PPlayer.player_MoneyAnzeige = Convert.ToString(Player.player_Money += enemie.money);
+                Player.player_MoneyAnzeige = Convert.ToString(Player.player_Money += enemie.money);
                 enemie.isAlive = false;
                 game.ChangeState(previousState);
             }
@@ -220,5 +222,6 @@ namespace Dungeaon.States
                 Player.playerHealthBarWidth = 286;
             }
         }
+        #endregion
     }
 }

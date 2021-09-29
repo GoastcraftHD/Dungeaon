@@ -341,7 +341,7 @@ namespace Dungeaon.States
                 time = 0D;
             }
 
-            mouseX = Mouse.GetState().X;
+                mouseX = Mouse.GetState().X;
             mouseY = Mouse.GetState().Y;
 
             foreach (Component component in components)
@@ -394,6 +394,7 @@ namespace Dungeaon.States
 
             spriteBatch.Draw(game.toolTip, rect, new Rectangle(0, 0, game.toolTip.Width, game.toolTip.Height), Color.White);
             spriteBatch.DrawString(game.font, item.name, position + new Vector2(5, 0), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0);
+            spriteBatch.DrawString(game.font, Player.player_MoneyAnzeige, new Vector2(roomPos.X / 2 - game.playerCard.Width / 2, 730), Color.Yellow, 0f, Vector2.Zero, 3.4f, SpriteEffects.None, 0);
 
             if (item.damage != 0)
                 spriteBatch.DrawString(game.font, "Damage: " + item.damage, position + new Vector2(5, 30), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0);
@@ -426,7 +427,7 @@ namespace Dungeaon.States
                         {
                             enemie = new GhostEnemie(game, new Vector2(900, 400));
                         }
-                        else if(enemieIndex == 2)
+                        else if (enemieIndex == 2)
                         {
                             enemie = new CyborgNinjaEnemie(game, new Vector2(900, 400));
                         }
@@ -457,6 +458,7 @@ namespace Dungeaon.States
             Room bossRoom = new Room();
             bossRoom.texture = game.bossRoom;
             bossRoom.isBoss = true;
+            bossRoom.enemie = new BossEnemie(game, new Vector2(900, 400));
             bossRoom.walls = setDoors(bossY, bossX, sizeY, sizeX);
             rooms[bossY, bossX] = bossRoom;
 
