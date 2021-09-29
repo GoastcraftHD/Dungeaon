@@ -9,6 +9,7 @@ namespace Dungeaon.Enemies
         public override string name => "Cyborg Ninja Demon";
 
         public override int maxHealth => 110;
+        public override int money => 12;
 
         public override int health { get => _health; set => _health = value; }
 

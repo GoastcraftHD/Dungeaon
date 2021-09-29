@@ -375,6 +375,7 @@ namespace Dungeaon.States
             spriteBatch.Draw(game.playerHead, new Vector2(roomPos.X / 2 - game.playerHead.Width * 4f / 2, 114), null, Color.White, 0f, Vector2.Zero, 4f, SpriteEffects.None, 0);
 
             spriteBatch.Draw(game.inventoryCard, inventoryCardPos, null, Color.White, 0f, Vector2.Zero, 3.4f, SpriteEffects.None, 0);
+            spriteBatch.DrawString(game.font, Player.player_MoneyAnzeige, new Vector2(roomPos.X / 2 - game.playerCard.Width  / 2, 730), Color.Yellow, 0f, Vector2.Zero, 3.4f, SpriteEffects.None, 0);
         }
 
         public static void DrawToolTip(SpriteBatch spriteBatch, MainGameState.Item item, Game1 game)
