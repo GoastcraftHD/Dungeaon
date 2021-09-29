@@ -94,6 +94,7 @@ namespace Dungeaon
             Rectangle mouseRectangle = new Rectangle(currentMouse.X, currentMouse.Y, 1, 1);
 
             isHovering = false;
+            clicked = false;
 
             if (mouseRectangle.Intersects(HitBoxRectangle))
             {
@@ -101,6 +102,7 @@ namespace Dungeaon
 
                 if (currentMouse.LeftButton == ButtonState.Released && previousMouse.LeftButton == ButtonState.Pressed)
                 {
+                    clicked = true;
                     click?.Invoke(this, new EventArgs());
                 }
             }

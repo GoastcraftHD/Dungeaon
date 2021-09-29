@@ -225,19 +225,47 @@ namespace Dungeaon.States
             InitPotionList();
             InitWeaponList();
             InitDefenseList();
+            InitInventory();
 
             components = new List<Component>()
             {
                 player
             };
 
-            InitInventory();
+            components.AddRange(Player.inventorySlots);
         }
 
         private void InitInventory()
         {
             int slotScale = 100;
             Player.inventorySlots = new List<Button>();
+
+            Button primarySlot = new Button(new Vector2(100, 580))
+            {
+                spriteScaleX = 120,
+                spriteScaleY = 120
+            };
+
+            primarySlot.click += primaryButton_Click;
+
+            Button secondarySlot = new Button(new Vector2(295, 580))
+            {
+                spriteScaleX = 120,
+                spriteScaleY = 120
+            };
+
+            secondarySlot.click += secondaryButton_Click;
+
+            Player.inventorySlots.Add(primarySlot);
+            Player.inventorySlots.Add(secondarySlot);
+            Player.inventory.Add(primarySlot, emptyItem);
+            Player.inventory.Add(secondarySlot, emptyItem);
+
+            Player.inventory[Player.inventorySlots[0]] = weaponList[0];
+            Player.inventorySlots[0].texture = weaponList[0].sprite;
+
+            Player.inventory[Player.inventorySlots[1]] = defenseList[3];
+            Player.inventorySlots[1].texture = defenseList[3].sprite;
 
             for (int i = 0; i < 15; i++)
             {
@@ -251,15 +279,67 @@ namespace Dungeaon.States
                     spriteScaleY = slotScale
                 };
 
+                slot.click += slotButton_Click;
                 Player.inventorySlots.Add(slot);
-                components.Add(slot);
                 Player.inventory.Add(slot, emptyItem);
             }
+
+            Player.inventorySlots[2].texture = defenseList[2].sprite;
+            Player.inventorySlots[3].texture = weaponList[4].sprite;
+            Player.inventorySlots[4].texture = weaponList[1].sprite;
+            Player.inventorySlots[5].texture = defenseList[3].sprite;
+
+            Player.inventory[Player.inventorySlots[2]] = defenseList[2];
+            Player.inventory[Player.inventorySlots[3]] = weaponList[4];
+            Player.inventory[Player.inventorySlots[4]] = weaponList[1];
+            Player.inventory[Player.inventorySlots[5]] = defenseList[3];
         }
 
         private int mouseX;
         private int mouseY;
         private Room room;
+
+        private void primaryButton_Click(object sender, EventArgs e)
+        {
+            Player.inventory[Player.inventorySlots[0]] = emptyItem;
+            Player.inventorySlots[0].texture = null;
+        }
+
+        private void secondaryButton_Click(object sender, EventArgs e)
+        {
+            Player.inventory[Player.inventorySlots[1]] = emptyItem;
+            Player.inventorySlots[1].texture = null;
+        }
+
+        private void slotButton_Click(object sender, EventArgs e)
+        {
+            int i = 0;
+            foreach (Button slot in Player.inventorySlots)
+            {
+                if (slot.clicked)
+                {
+                    Item cache = Player.inventory[slot];
+                    int slotType = 0;
+
+                    if (cache.type == ItemType.Potion)
+                    {
+
+                        break;
+                    }
+                    
+                    if (cache.type == ItemType.Defense)
+                        slotType = 1;
+
+                    Player.inventorySlots[i].texture = Player.inventorySlots[slotType].texture;
+                    Player.inventory[slot] = Player.inventory[Player.inventorySlots[slotType]];
+                    Player.inventory[Player.inventorySlots[slotType]] = cache;
+                    Player.inventorySlots[slotType].texture = cache.sprite;
+
+                    break;
+                }
+                i++;
+            }
+        }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
@@ -288,19 +368,6 @@ namespace Dungeaon.States
             if (room.isShop)
                 spriteBatch.Draw(game.devil, new Vector2(680, 75), null, Color.White, 0f, Vector2.Zero, 1.5f, SpriteEffects.None, 0);
 
-            if (game.options.debugMode)
-            {
-                spriteBatch.Draw(game.whiteTexture, upperDoor, Color.White);
-                spriteBatch.Draw(game.whiteTexture, rightDoor, Color.White);
-                spriteBatch.Draw(game.whiteTexture, lowerDoor, Color.White);
-                spriteBatch.Draw(game.whiteTexture, leftDoor, Color.White);
-
-                if (room.isShop)
-                    spriteBatch.Draw(game.whiteTexture, shopHitbox, Color.White);
-
-                spriteBatch.DrawString(game.font, "X: " + mouseX + " Y: " + mouseY, new Vector2(0, 0), Color.Black, 0f, Vector2.Zero, 2, SpriteEffects.None, 0);
-            }
-
             DrawUI(spriteBatch, game, graphicsDeviceManager);
 
             foreach (Component component in components)
@@ -312,6 +379,19 @@ namespace Dungeaon.States
             {
                 if (mouseRectangle.Intersects(slot.HitBoxRectangle) && Player.inventory[slot].sprite != null)
                     DrawToolTip(spriteBatch, Player.inventory[slot], game);
+            }
+
+            if (game.options.debugMode)
+            {
+                spriteBatch.Draw(game.whiteTexture, upperDoor, Color.White);
+                spriteBatch.Draw(game.whiteTexture, rightDoor, Color.White);
+                spriteBatch.Draw(game.whiteTexture, lowerDoor, Color.White);
+                spriteBatch.Draw(game.whiteTexture, leftDoor, Color.White);
+
+                if (room.isShop)
+                    spriteBatch.Draw(game.whiteTexture, shopHitbox, Color.White);
+
+                spriteBatch.DrawString(game.font, "X: " + mouseX + " Y: " + mouseY, new Vector2(0, 0), Color.Black, 0f, Vector2.Zero, 2, SpriteEffects.None, 0);
             }
 
             spriteBatch.End();
@@ -333,15 +413,7 @@ namespace Dungeaon.States
             double deltaTime = gameTime.ElapsedGameTime.TotalSeconds;
             time += deltaTime;
 
-            if (time > .5D)
-            {
-                int index = rand.Next(weaponList.Count);
-                Player.inventory[Player.inventorySlots[0]] = weaponList[index];
-                Player.inventorySlots[0].texture = weaponList[index].sprite;
-                time = 0D;
-            }
-
-                mouseX = Mouse.GetState().X;
+            mouseX = Mouse.GetState().X;
             mouseY = Mouse.GetState().Y;
 
             foreach (Component component in components)
