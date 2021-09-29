@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
@@ -7,18 +9,81 @@ namespace Dungeaon.States
 {
     class ShopState : State
     {
-        private Vector2 roomPos;
+        private List<Component> components;
+
+        private MainGameState.Item potion;
+        private MainGameState.Item weapon;
+        private MainGameState.Item defense;
+
+        private Button item1Button;
+        private Button item2Button;
+        private Button item3Button;
 
         public ShopState(Game1 game, GraphicsDeviceManager graphicsDeviceManager, ContentManager content, State previousState) : base(game, graphicsDeviceManager, content, previousState)
         {
-            roomPos = new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - (game.room1.Width * 3.5f) / 2, 0);
+            Random rand = new Random();
+
+            int potionIndex = rand.Next(MainGameState.postionList.Count);
+            potion = MainGameState.postionList[potionIndex];
+
+            int weaponIndex = rand.Next(MainGameState.weaponList.Count);
+            weapon = MainGameState.weaponList[weaponIndex];
+
+            int defenseIndex = rand.Next(MainGameState.defenseList.Count);
+            defense = MainGameState.defenseList[defenseIndex];
+
+            item1Button = new Button(weapon.sprite, new Vector2(530, 525))
+            {
+                spriteScaleX = game.sword1.Width * 10,
+                spriteScaleY = game.sword1.Height * 10,
+            };
+
+            item2Button = new Button(defense.sprite, new Vector2(700, 525))
+            {
+                spriteScaleX = game.shield1.Width * 10,
+                spriteScaleY = game.shield1.Height * 10,
+            };
+
+            item3Button = new Button(potion.sprite, new Vector2(720, 200))
+            {
+                spriteScaleX = game.healthPostion.Width * 6,
+                spriteScaleY = game.healthPostion.Height * 6,
+            };
+
+            components = new List<Component>()
+            {
+                item1Button,
+                item2Button,
+                item3Button
+            };
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            int mouseX = Mouse.GetState().X;
+            int mouseY = Mouse.GetState().Y;
+
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);
 
-            spriteBatch.Draw(game.devilShop, roomPos, null, Color.White, 0f, Vector2.Zero, 14f, SpriteEffects.None, 0);
+            spriteBatch.Draw(game.devilShop, MainGameState.roomPos, null, Color.White, 0f, Vector2.Zero, 14f, SpriteEffects.None, 0);
+            MainGameState.DrawUI(spriteBatch, game);
+
+            if (game.options.debugMode)
+            {
+                spriteBatch.DrawString(game.font, "X: " + mouseX + " Y: " + mouseY, new Vector2(0, 0), Color.Black, 0f, Vector2.Zero, 2, SpriteEffects.None, 0);
+            }
+
+            foreach (Component component in components)
+            {
+                component.Draw(gameTime, spriteBatch);
+            }
+
+            if (mouseRectangle.Intersects(item1Button.HitBoxRectangle))
+                DrawToolTip(spriteBatch, weapon);
+            else if (mouseRectangle.Intersects(item2Button.HitBoxRectangle))
+                DrawToolTip(spriteBatch, defense);
+            else if (mouseRectangle.Intersects(item3Button.HitBoxRectangle))
+                DrawToolTip(spriteBatch, potion);
 
             spriteBatch.End();
         }
@@ -28,10 +93,47 @@ namespace Dungeaon.States
             
         }
 
+        private Rectangle mouseRectangle;
+
         public override void Update(GameTime gameTime)
         {
+
+            mouseRectangle = new Rectangle(Mouse.GetState().X, Mouse.GetState().Y, 1, 1);
+
+            foreach (Component component in components)
+            {
+                component.Update(gameTime);
+            }
+
             if (Keyboard.GetState().IsKeyDown(Keys.Q))
                 game.ChangeState(previousState);
+        }
+
+        private void DrawToolTip(SpriteBatch spriteBatch, MainGameState.Item item)
+        {
+            int costWidth = (int)game.font.MeasureString("Cost: " + item.cost).X * 2;
+            int nameWidth = (int)game.font.MeasureString(item.name).X * 2;
+            int damageWidth = item.damage != 0 ? (int)game.font.MeasureString("Damage: " + item.damage.ToString()).X * 2 : 0;
+
+            int costHeight = (int)game.font.MeasureString("Cost: " + item.cost).Y * 2;
+            int nameHeight = (int)game.font.MeasureString(item.name).Y * 2;
+            int damageHeight = item.damage != 0 ? (int)game.font.MeasureString("Damage: " + item.damage.ToString()).Y * 2 : 0;
+
+
+            int wCache1 = costWidth < nameWidth ? nameWidth : costWidth;
+            int wCache2 = wCache1 < damageWidth ? damageHeight : wCache1;
+
+            Vector2 position = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
+
+            Rectangle rect = new Rectangle((int)position.X, (int)position.Y, wCache2 + 10, nameHeight + costHeight + damageHeight);
+
+            spriteBatch.Draw(game.bossRoom, rect, new Rectangle(0, 0, game.bossRoom.Width, game.bossRoom.Height), Color.White);
+            spriteBatch.DrawString(game.font, item.name, position + new Vector2(5, 0), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0);
+            spriteBatch.DrawString(game.font, "Cost: " + item.cost, position + new Vector2(5, 30), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0);
+           
+            if (item.damage != 0)
+                spriteBatch.DrawString(game.font, "Damage: " + item.damage, position + new Vector2(5, 60), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0);
+
         }
     }
 }

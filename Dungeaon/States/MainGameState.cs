@@ -8,9 +8,174 @@ using System.Collections.Generic;
 
 namespace Dungeaon.States
 {
+    enum ItemType
+    {
+        Potion,
+        Weapon,
+        Defense
+    }
+
     class MainGameState : State
     {
         private List<Component> components;
+        public static List<Item> postionList;
+        public static List<Item> weaponList;
+        public static List<Item> defenseList;
+
+        #region ItemInitilisation
+        private void InitPotionList()
+        {
+            Item healthPotion = new Item()
+            {
+                name = "Healing Potion",
+                sprite = game.healthPostion,
+                cost = 10,
+                type = ItemType.Potion
+            };
+
+            Item speedPotion = new Item()
+            {
+                name = "Speed Potion",
+                sprite = game.speedPotion,
+                cost = 7,
+                type = ItemType.Potion
+            };
+
+            postionList = new List<Item>()
+            {
+                healthPotion,
+                speedPotion
+            };
+        }
+
+        private void InitWeaponList()
+        {
+            Item rustySword = new Item()
+            {
+                name = "Rusty Sword",
+                sprite = game.sword1,
+                cost = 1,
+                type = ItemType.Weapon,
+                damage = 10
+            };
+
+            Item ironSword = new Item()
+            {
+                name = "Iron Sword",
+                sprite = game.sword2,
+                cost = 5,
+                type = ItemType.Weapon,
+                damage = 15
+            };
+
+            Item Sword = new Item()
+            {
+                name = "Sword",
+                sprite = game.sword3,
+                cost = 10,
+                type = ItemType.Weapon,
+                damage = 20
+            };
+
+            Item crystalSword = new Item()
+            {
+                name = "Crystal Sword",
+                sprite = game.sword4,
+                cost = 30,
+                type = ItemType.Weapon,
+                damage = 25
+            };
+
+            Item razorSword = new Item()
+            {
+                name = "Razor Blade",
+                sprite = game.sword5,
+                cost = 40,
+                type = ItemType.Weapon,
+                damage = 30
+            };
+
+            Item flamingSword = new Item()
+            {
+                name = "Flaming Sword",
+                sprite = game.sword6,
+                cost = 50,
+                type = ItemType.Weapon,
+                damage = 35
+            };
+
+            weaponList = new List<Item>()
+            {
+                rustySword,
+                ironSword,
+                Sword,
+                crystalSword,
+                razorSword,
+                flamingSword
+            };
+        }
+
+        private void InitDefenseList()
+        {
+            Item basicShield = new Item()
+            {
+                name = "Basic Shield",
+                sprite = game.shield1,
+                cost = 10,
+                type = ItemType.Defense
+            };
+
+            Item advancedShield = new Item()
+            {
+                name = "Advanced Shield",
+                sprite = game.shield2,
+                cost = 20,
+                type = ItemType.Defense
+            };
+
+            Item proShield = new Item()
+            {
+                name = "Professional Shield",
+                sprite = game.shield3,
+                cost = 40,
+                type = ItemType.Defense
+            };
+
+            Item woodShield = new Item()
+            {
+                name = "Wooden Shield",
+                sprite = game.shield4,
+                cost = 35,
+                type = ItemType.Defense
+            };
+
+            Item wolfShield = new Item()
+            {
+                name = "Wolf Clan Shield",
+                sprite = game.shield5,
+                cost = 500,
+                type = ItemType.Defense
+            };
+
+            defenseList = new List<Item>()
+            {
+                basicShield,
+                advancedShield,
+                proShield,
+                woodShield,
+                wolfShield
+            };
+        }
+        #endregion
+        public struct Item
+        {
+            public string name;
+            public Texture2D sprite;
+            public int cost;
+            public ItemType type;
+            public int damage;
+            public int defense;
+        }
 
         struct Room
         {
@@ -30,7 +195,7 @@ namespace Dungeaon.States
         public static Rectangle lowerDoor;
         public static Rectangle leftDoor;
 
-        private Vector2 roomPos;
+        public static Vector2 roomPos;
         private Player player;
         private Vector2 playerRoomPos = new Vector2(0, 0);
         private Texture2D[] roomTextures;
@@ -52,7 +217,11 @@ namespace Dungeaon.States
             roomTextures = new Texture2D[2] { game.room1, game.room2 };
             rooms = new Room[5, 5];
 
-            rooms = GenerateDungeon(3, 3);
+            rooms = GenerateDungeon(5, 5);
+
+            InitPotionList();
+            InitWeaponList();
+            InitDefenseList();
 
             components = new List<Component>()
             {
@@ -88,10 +257,6 @@ namespace Dungeaon.States
             if (room.enemie != null && room.enemie.isAlive)
                 room.enemie.Draw(gameTime, spriteBatch);
 
-            spriteBatch.Draw(game.playerCard, new Vector2(roomPos.X / 2 - game.playerCard.Width * 3.4f / 2, 10), null, Color.White, 0f, Vector2.Zero, 3.4f, SpriteEffects.None, 0);
-            spriteBatch.Draw(Player.playerHealthBar, new Vector2(roomPos.X / 2 - Player.constant_PlayerHealthBarWidth / 2 + 6, 819), Player.playerHealthBarRect, Color.White);
-            spriteBatch.Draw(game.playerHead, new Vector2(roomPos.X / 2 - game.playerHead.Width * 4f / 2, 114), null, Color.White, 0f, Vector2.Zero, 4f, SpriteEffects.None, 0);
-
             if (room.isShop)
                 spriteBatch.Draw(game.devil, new Vector2(680, 75), null, Color.White, 0f, Vector2.Zero, 1.5f, SpriteEffects.None, 0);
 
@@ -107,6 +272,8 @@ namespace Dungeaon.States
 
                 spriteBatch.DrawString(game.font, "X: " + mouseX + " Y: " + mouseY, new Vector2(0, 0), Color.Black, 0f, Vector2.Zero, 2, SpriteEffects.None, 0);
             }
+
+            DrawUI(spriteBatch, game);
 
             foreach (Component component in components)
             {
@@ -153,6 +320,13 @@ namespace Dungeaon.States
             {
                 game.ChangeState(previousState);
             }
+        }
+
+        public static void DrawUI(SpriteBatch spriteBatch, Game1 game)
+        {
+            spriteBatch.Draw(game.playerCard, new Vector2(MainGameState.roomPos.X / 2 - game.playerCard.Width * 3.4f / 2, 10), null, Color.White, 0f, Vector2.Zero, 3.4f, SpriteEffects.None, 0);
+            spriteBatch.Draw(Player.playerHealthBar, new Vector2(MainGameState.roomPos.X / 2 - Player.constant_PlayerHealthBarWidth / 2 + 6, 819), Player.playerHealthBarRect, Color.White);
+            spriteBatch.Draw(game.playerHead, new Vector2(MainGameState.roomPos.X / 2 - game.playerHead.Width * 4f / 2, 114), null, Color.White, 0f, Vector2.Zero, 4f, SpriteEffects.None, 0);
         }
 
         private Room[,] GenerateDungeon(int sizeX, int sizeY)
