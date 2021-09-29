@@ -246,15 +246,11 @@ namespace Dungeaon.States
                 spriteScaleY = 120
             };
 
-            primarySlot.click += primaryButton_Click;
-
             Button secondarySlot = new Button(new Vector2(295, 580))
             {
                 spriteScaleX = 120,
                 spriteScaleY = 120
             };
-
-            secondarySlot.click += secondaryButton_Click;
 
             Player.inventorySlots.Add(primarySlot);
             Player.inventorySlots.Add(secondarySlot);
