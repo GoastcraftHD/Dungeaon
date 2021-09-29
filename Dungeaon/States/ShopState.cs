@@ -59,6 +59,8 @@ namespace Dungeaon.States
                 item2Button,
                 item3Button
             };
+
+            components.AddRange(Player.inventorySlots);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -87,6 +89,12 @@ namespace Dungeaon.States
                 DrawToolTip(spriteBatch, defense);
             else if (mouseRectangle.Intersects(item3Button.HitBoxRectangle))
                 DrawToolTip(spriteBatch, potion);
+
+            foreach (Button slot in Player.inventorySlots)
+            {
+                if (mouseRectangle.Intersects(slot.HitBoxRectangle) && Player.inventory[slot].sprite != null)
+                   MainGameState.DrawToolTip(spriteBatch, Player.inventory[slot], game);
+            }
 
             spriteBatch.End();
         }
@@ -130,13 +138,12 @@ namespace Dungeaon.States
 
             Rectangle rect = new Rectangle((int)position.X, (int)position.Y, wCache2 + 10, nameHeight + costHeight + damageHeight);
 
-            spriteBatch.Draw(game.bossRoom, rect, new Rectangle(0, 0, game.bossRoom.Width, game.bossRoom.Height), Color.White);
+            spriteBatch.Draw(game.toolTip, rect, new Rectangle(0, 0, game.toolTip.Width, game.toolTip.Height), Color.White);
             spriteBatch.DrawString(game.font, item.name, position + new Vector2(5, 0), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0);
             spriteBatch.DrawString(game.font, "Cost: " + item.cost, position + new Vector2(5, 30), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0);
            
             if (item.damage != 0)
                 spriteBatch.DrawString(game.font, "Damage: " + item.damage, position + new Vector2(5, 60), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0);
-
         }
     }
 }

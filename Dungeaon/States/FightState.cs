@@ -12,7 +12,7 @@ namespace Dungeaon.States
     {
         private Texture2D enemyHealthbar;
         private Vector2 roomPos;
-        private List<Component> componentList;
+        private List<Component> components;
         private Enemie enemie;
         private const int enemieHealthBarWitdhB = 286;
         private int enemieHealthBarWitdh = 286;
@@ -96,13 +96,14 @@ namespace Dungeaon.States
             #endregion
 
             //List
-            componentList = new List<Component>()
+            components = new List<Component>()
             {
                 attackButton,
                 blockButton,
                 dodgeButton
             };
 
+            components.AddRange(Player.inventorySlots);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -119,9 +120,15 @@ namespace Dungeaon.States
            
             MainGameState.DrawUI(spriteBatch, game, graphicsDeviceManager);
 
-            foreach (Component component in componentList)
+            foreach (Component component in components)
             {
                 component.Draw(gameTime, spriteBatch);
+            }
+
+            foreach (Button slot in Player.inventorySlots)
+            {
+                if (mouseRectangle.Intersects(slot.HitBoxRectangle) && Player.inventory[slot].sprite != null)
+                    MainGameState.DrawToolTip(spriteBatch, Player.inventory[slot], game);
             }
             spriteBatch.End();
         }
@@ -131,9 +138,13 @@ namespace Dungeaon.States
 
         }
 
+        private Rectangle mouseRectangle;
+
         public override void Update(GameTime gameTime)
         {
-            foreach (Component component in componentList)
+            mouseRectangle = new Rectangle(Mouse.GetState().X, Mouse.GetState().Y, 1, 1);
+
+            foreach (Component component in components)
             {
                 component.Update(gameTime);
             }

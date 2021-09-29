@@ -10,6 +10,7 @@ namespace Dungeaon
     class Player : Component
     {
         public static Dictionary<Button, MainGameState.Item> inventory = new Dictionary<Button, MainGameState.Item>();
+        public static List<Button> inventorySlots;
         public static Texture2D playerHealthBar;
         public static int player_Health = 100;
         public static int player_maxHealth = 100;

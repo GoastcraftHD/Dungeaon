@@ -39,13 +39,15 @@ namespace Dungeaon
         {
             get
             {
-                int width = hitBoxSizeX == 0 ? texture.Width * spriteScale : hitBoxSizeX;
-                int height = hitBoxSizeY == 0 ? texture.Height * spriteScale : hitBoxSizeY;
+                if (texture != null)
+                {
+                    int scaleX = spriteScaleX != 1 ? spriteScaleX : texture.Width * spriteScale;
+                    int scaleY = spriteScaleY != 1 ? spriteScaleY : texture.Height * spriteScale;
 
-                int scaleX = spriteScaleX != 1 ? spriteScaleX : width;
-                int scaleY = spriteScaleY != 1 ? spriteScaleY : height;
+                    return new Rectangle((int)position.X, (int)position.Y, scaleX, scaleY);
+                }
 
-                return new Rectangle((int) position.X, (int) position.Y, scaleX, scaleY);
+                return new Rectangle((int)position.X, (int)position.Y, hitBoxSizeX, hitBoxSizeY);
             }
         }
 

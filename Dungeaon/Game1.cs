@@ -18,6 +18,7 @@ namespace Dungeaon
         public Texture2D playerCard;
         public Texture2D inventoryCard;
         public Texture2D textBoxSprite;
+        public Texture2D toolTip;
         public SpriteFont font;
 
         public Texture2D fightScreen;
@@ -145,6 +146,7 @@ namespace Dungeaon
             shield5 = Content.Load<Texture2D>("items/defense/shieldu4");
             cyborgNinjaEnemy= Content.Load<Texture2D>("enemies/Cyborg-Ninja-Demon");
             inventoryCard = Content.Load<Texture2D>("Inventar-Board");
+            toolTip = Content.Load<Texture2D>("tooltip");
 
             // = Content.Load<Texture2D>("");
 

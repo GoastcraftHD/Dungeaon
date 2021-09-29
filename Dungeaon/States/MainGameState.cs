@@ -18,7 +18,6 @@ namespace Dungeaon.States
     class MainGameState : State
     {
         private List<Component> components;
-        public static List<Button> inventorySlots;
 
         public static List<Item> postionList;
         public static List<Item> weaponList;
@@ -238,7 +237,7 @@ namespace Dungeaon.States
         private void InitInventory()
         {
             int slotScale = 100;
-            inventorySlots = new List<Button>();
+            Player.inventorySlots = new List<Button>();
 
             for (int i = 0; i < 15; i++)
             {
@@ -248,12 +247,11 @@ namespace Dungeaon.States
 
                 Button slot = new Button(slotPos)
                 {
-                    texture = game.sword1,
                     spriteScaleX = slotScale,
                     spriteScaleY = slotScale
                 };
 
-                inventorySlots.Add(slot);
+                Player.inventorySlots.Add(slot);
                 components.Add(slot);
                 Player.inventory.Add(slot, emptyItem);
             }
@@ -310,6 +308,12 @@ namespace Dungeaon.States
                 component.Draw(gameTime, spriteBatch);
             }
 
+            foreach (Button slot in Player.inventorySlots)
+            {
+                if (mouseRectangle.Intersects(slot.HitBoxRectangle) && Player.inventory[slot].sprite != null)
+                    DrawToolTip(spriteBatch, Player.inventory[slot], game);
+            }
+
             spriteBatch.End();
         }
 
@@ -319,14 +323,23 @@ namespace Dungeaon.States
         }
 
         private double time = 0D;
+        private Random rand = new Random();
 
+        private static Rectangle mouseRectangle;
         public override void Update(GameTime gameTime)
         {
+            mouseRectangle = new Rectangle(Mouse.GetState().X, Mouse.GetState().Y, 1, 1);
+
             double deltaTime = gameTime.ElapsedGameTime.TotalSeconds;
             time += deltaTime;
 
-            if (time > .2D)
-
+            if (time > .5D)
+            {
+                int index = rand.Next(weaponList.Count);
+                Player.inventory[Player.inventorySlots[0]] = weaponList[index];
+                Player.inventorySlots[0].texture = weaponList[index].sprite;
+                time = 0D;
+            }
 
             mouseX = Mouse.GetState().X;
             mouseY = Mouse.GetState().Y;
@@ -362,7 +375,27 @@ namespace Dungeaon.States
             spriteBatch.Draw(game.playerHead, new Vector2(roomPos.X / 2 - game.playerHead.Width * 4f / 2, 114), null, Color.White, 0f, Vector2.Zero, 4f, SpriteEffects.None, 0);
 
             spriteBatch.Draw(game.inventoryCard, inventoryCardPos, null, Color.White, 0f, Vector2.Zero, 3.4f, SpriteEffects.None, 0);
+        }
 
+        public static void DrawToolTip(SpriteBatch spriteBatch, MainGameState.Item item, Game1 game)
+        {
+            int nameWidth = (int)game.font.MeasureString(item.name).X * 2;
+            int damageWidth = item.damage != 0 ? (int)game.font.MeasureString("Damage: " + item.damage).X * 2 : 0;
+
+            int nameHeight = (int)game.font.MeasureString(item.name).Y * 2;
+            int damageHeight = item.damage != 0 ? (int)game.font.MeasureString("Damage: " + item.damage).Y * 2 : 0;
+
+            int wCache1 = nameWidth < damageWidth ? damageWidth : nameWidth;
+
+            Vector2 position = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
+
+            Rectangle rect = new Rectangle((int)position.X, (int)position.Y, wCache1 + 10, nameHeight + damageHeight);
+
+            spriteBatch.Draw(game.toolTip, rect, new Rectangle(0, 0, game.toolTip.Width, game.toolTip.Height), Color.White);
+            spriteBatch.DrawString(game.font, item.name, position + new Vector2(5, 0), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0);
+
+            if (item.damage != 0)
+                spriteBatch.DrawString(game.font, "Damage: " + item.damage, position + new Vector2(5, 30), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0);
         }
 
         private Room[,] GenerateDungeon(int sizeX, int sizeY)
