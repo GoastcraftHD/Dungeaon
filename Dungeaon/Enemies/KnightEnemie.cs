@@ -41,32 +41,36 @@ namespace Dungeaon.Enemies
 
         public override void Attack(bool block, bool dodge)
         {
-            if (block == false && dodge == false)
+            Random random = new Random();
+            int misschance = random.Next(1, 10);
+            if (misschance >= 6)
             {
-                Player.player_Health -= damage;
-                double playerhealth = ((double)Player.player_Health / (double)Player.player_maxHealth) * Player.constant_PlayerHealthBarWidth;
-                Player.playerHealthBarWidth = (int)playerhealth;
-            }
-            else if (dodge == true)
-            {
-                Random rdm = new Random();
-                int dodgechance = rdm.Next(1, 4);
-                if (dodgechance >= 2)
+                if (block == false && dodge == false)
                 {
                     Player.player_Health -= damage;
                     double playerhealth = ((double)Player.player_Health / (double)Player.player_maxHealth) * Player.constant_PlayerHealthBarWidth;
                     Player.playerHealthBarWidth = (int)playerhealth;
                 }
+                else if (dodge == true)
+                {
+                    Random rdm = new Random();
+                    int dodgechance = rdm.Next(1, 4);
+                    if (dodgechance >= 3)
+                    {
+                        Player.player_Health -= damage;
+                        double playerhealth = ((double)Player.player_Health / (double)Player.player_maxHealth) * Player.constant_PlayerHealthBarWidth;
+                        Player.playerHealthBarWidth = (int)playerhealth;
+                    }
 
+                }
+                else if (block == true)
+                {
+                    int blockdamage = 40 * damage / 100;
+                    Player.player_Health -= blockdamage;
+                    double playerhealth = ((double)Player.player_Health / (double)Player.player_maxHealth) * Player.constant_PlayerHealthBarWidth;
+                    Player.playerHealthBarWidth = (int)playerhealth;
+                }
             }
-            else if (block == true)
-            {
-                int blockdamage = 40 * damage / 100;
-                Player.player_Health -= blockdamage;
-                double playerhealth = ((double)Player.player_Health / (double)Player.player_maxHealth) * Player.constant_PlayerHealthBarWidth;
-                Player.playerHealthBarWidth = (int)playerhealth;
-            }
-
         }
     }
 }

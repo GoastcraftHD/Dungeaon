@@ -345,7 +345,7 @@ namespace Dungeaon.States
 
                     if (rand.Next(101) <= 66)
                     {
-                        int enemieIndex = rand.Next(2);
+                        int enemieIndex = rand.Next(3);
                         Enemie enemie = new KnightEnemie(game, new Vector2(900, 400));
 
                         if (enemieIndex == 0)
@@ -355,6 +355,10 @@ namespace Dungeaon.States
                         else if (enemieIndex == 1)
                         {
                             enemie = new GhostEnemie(game, new Vector2(900, 400));
+                        }
+                        else if(enemieIndex == 2)
+                        {
+                            enemie = new CyborgNinjaEnemie(game, new Vector2(900, 400));
                         }
 
                         room.enemie = enemie;

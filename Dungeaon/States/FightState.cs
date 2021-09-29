@@ -112,7 +112,7 @@ namespace Dungeaon.States
             spriteBatch.Draw(game.fightScreen, roomPos, null, Color.White, 0f, Vector2.Zero, 3.5f, SpriteEffects.None, 0);
             spriteBatch.Draw(enemie.texture, new Vector2(820, 260), null, Color.White, 0f, Vector2.Zero, 10f, SpriteEffects.None, 0);
             spriteBatch.Draw(enemyHealthbar, new Vector2(roomPos.X + game.fightScreen.Width * 3.4f / 2 - ememieHealthBarRect.Width / 2, 70), ememieHealthBarRect, Color.White);
-            spriteBatch.DrawString(game.font, "Versuchsperson", new Vector2(roomPos.X + game.fightScreen.Width * 3.5f / 2 - ememieHealthBarRect.Width / 2, 35), Color.Yellow, 0f, Vector2.Zero, 2, SpriteEffects.None, 0);
+            spriteBatch.DrawString(game.font, enemie.name, new Vector2(roomPos.X + game.fightScreen.Width * 3.5f / 2 - ememieHealthBarRect.Width / 2, 35), Color.Yellow, 0f, Vector2.Zero, 2, SpriteEffects.None, 0);
            
             MainGameState.DrawUI(spriteBatch, game);
 
@@ -134,7 +134,6 @@ namespace Dungeaon.States
             {
                 component.Update(gameTime);
             }
-
             if (Keyboard.GetState().IsKeyDown(Keys.Q))
             {
                 game.ChangeState(previousState);
@@ -145,7 +144,7 @@ namespace Dungeaon.States
         {
             bool dodge = false;
             bool block = false;
-            enemie.health -= 15;
+            enemie.health -= Player.player_Damage;
             double enemieHealth = ((double)enemie.health / (double)enemie.maxHealth) * enemieHealthBarWitdhB;
             enemieHealthBarWitdh = (int)enemieHealth;
             if (enemie.health <= 0)
@@ -156,6 +155,8 @@ namespace Dungeaon.States
             if (Player.player_Health <= 0)
             {
                 game.ChangeState(new MainMenuState(game, graphicsDeviceManager, content, null));
+                Player.player_Health = 100;
+                Player.playerHealthBarWidth = 286;
             }
             enemie.Attack(block, dodge);
 
@@ -166,6 +167,20 @@ namespace Dungeaon.States
             bool dodge = false;
             bool block = true;
             enemie.Attack(block, dodge);
+            enemie.health -= 60 * Player.player_Damage / 100;
+            double enemieHealth = ((double)enemie.health / (double)enemie.maxHealth) * enemieHealthBarWitdhB;
+            enemieHealthBarWitdh = (int)enemieHealth;
+            if (enemie.health <= 0)
+            {
+                enemie.isAlive = false;
+                game.ChangeState(previousState);
+            }
+            if (Player.player_Health <= 0)
+            {
+                game.ChangeState(new MainMenuState(game, graphicsDeviceManager, content, null));
+                Player.player_Health = 100;
+                Player.playerHealthBarWidth = 286;
+            }
         }
 
         private void dge_Button(object sender, EventArgs e)
@@ -173,6 +188,20 @@ namespace Dungeaon.States
             bool dodge = true;
             bool block = false;
             enemie.Attack(block, dodge);
+            enemie.health -= 40 * Player.player_Damage / 100;
+            double enemieHealth = ((double)enemie.health / (double)enemie.maxHealth) * enemieHealthBarWitdhB;
+            enemieHealthBarWitdh = (int)enemieHealth;
+            if (enemie.health <= 0)
+            {
+                enemie.isAlive = false;
+                game.ChangeState(previousState);
+            }
+            if (Player.player_Health <= 0)
+            {
+                game.ChangeState(new MainMenuState(game, graphicsDeviceManager, content, null));
+                Player.player_Health = 100;
+                Player.playerHealthBarWidth = 286;
+            }
         }
     }
 }

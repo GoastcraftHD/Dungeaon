@@ -4,17 +4,17 @@ using System;
 
 namespace Dungeaon.Enemies
 {
-    class GhostEnemie : Enemie
+    class CyborgNinjaEnemie : Enemie
     {
-        public override string name => "Geister Ruestung";
+        public override string name => "Cyborg Ninja Demon";
 
-        public override int maxHealth => 125;
+        public override int maxHealth => 110;
 
         public override int health { get => _health; set => _health = value; }
 
-        public override int damage => 13;
+        public override int damage => 15;
 
-        public override Texture2D texture => game.ghostEnemy;
+        public override Texture2D texture => game.cyborgNinjaEnemy;
 
         public override Texture2D headTexture => null;
 
@@ -25,11 +25,47 @@ namespace Dungeaon.Enemies
         public override Vector2 position { get => _position; set => _position = value; }
         public override bool isAlive { get => _isAlive; set => _isAlive = value; }
 
-        public GhostEnemie(Game1 game, Vector2 position) : base(game, position)
+
+        public CyborgNinjaEnemie(Game1 game, Vector2 position) : base(game, position)
         {
             health = maxHealth;
             isAlive = true;
             scale = 3.5f;
+        }
+
+        public override void Attack(bool block, bool dodge)
+        {
+
+            Random random = new Random();
+            int misschance = random.Next(1, 10);
+            if (misschance >= 2)
+            {
+                if (block == false && dodge == false)
+                {
+                    Player.player_Health -= damage;
+                    double playerhealth = ((double)Player.player_Health / (double)Player.player_maxHealth) * Player.constant_PlayerHealthBarWidth;
+                    Player.playerHealthBarWidth = (int)playerhealth;
+                }
+                else if (dodge == true)
+                {
+                    Random rdm = new Random();
+                    int dodgechance = rdm.Next(1, 4);
+                    if (dodgechance >= 2)
+                    {
+                        Player.player_Health -= damage;
+                        double playerhealth = ((double)Player.player_Health / (double)Player.player_maxHealth) * Player.constant_PlayerHealthBarWidth;
+                        Player.playerHealthBarWidth = (int)playerhealth;
+                    }
+
+                }
+                else if (block == true)
+                {
+                    int blockdamage = 20 * damage / 100;
+                    Player.player_Health -= blockdamage;
+                    double playerhealth = ((double)Player.player_Health / (double)Player.player_maxHealth) * Player.constant_PlayerHealthBarWidth;
+                    Player.playerHealthBarWidth = (int)playerhealth;
+                }
+            }
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -41,40 +77,6 @@ namespace Dungeaon.Enemies
                 spriteBatch.Draw(game.whiteTexture, hitBox, Color.White);
             }
         }
-        public override void Attack(bool block, bool dodge)
-        {
-            Random random = new Random();
-            int misschance = random.Next(1, 10);
-            if (misschance >= 4)
-            {
-                if (block == false && dodge == false)
-                {
-                    Player.player_Health -= damage;
-                    double playerhealth = ((double)Player.player_Health / (double)Player.player_maxHealth) * Player.constant_PlayerHealthBarWidth;
-                    Player.playerHealthBarWidth = (int)playerhealth;
-                }
-                else if (dodge == true)
-                {
-                    Random rdm = new Random();
-                    int dodgechance = rdm.Next(1, 10);
-                    if (dodgechance >= 9)
-                    {
-                        Player.player_Health -= damage;
-                        double playerhealth = ((double)Player.player_Health / (double)Player.player_maxHealth) * Player.constant_PlayerHealthBarWidth;
-                        Player.playerHealthBarWidth = (int)playerhealth;
-                    }
-
-                }
-                else if (block == true)
-                {
-                    int blockdamage = 70 * damage / 100;
-                    Player.player_Health -= blockdamage;
-                    double playerhealth = ((double)Player.player_Health / (double)Player.player_maxHealth) * Player.constant_PlayerHealthBarWidth;
-                    Player.playerHealthBarWidth = (int)playerhealth;
-                }
-            }
-        }
-
 
         public override void Update(GameTime gameTime)
         {
