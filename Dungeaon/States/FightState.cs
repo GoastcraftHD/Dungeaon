@@ -159,10 +159,17 @@ namespace Dungeaon.States
 
             if (activeTextBox == null)
             {
-                Random random = new Random();
-                int textAuswahl = random.Next(1, 3);
-                activeTextBox = new TextBox(game, new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - game.textBoxSprite.Width * 10 / 2, graphicsDeviceManager.PreferredBackBufferHeight - game.textBoxSprite.Height * 10), enemie.Dialog[textAuswahl], enemie.headTexture);
-                components.Add(activeTextBox);
+                if(enemie.headTexture == game.boss1Head)
+                {
+                    activeTextBox = new TextBox(game, new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - game.textBoxSprite.Width * 10 / 2, graphicsDeviceManager.PreferredBackBufferHeight - game.textBoxSprite.Height * 10), enemie.Dialog, enemie.headTexture);
+                    components.Add(activeTextBox);
+                }
+                else {
+                    Random random = new Random();
+                    int textAuswahl = random.Next(4);
+                    activeTextBox = new TextBox(game, new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - game.textBoxSprite.Width * 10 / 2, graphicsDeviceManager.PreferredBackBufferHeight - game.textBoxSprite.Height * 10), enemie.Dialog[textAuswahl], enemie.headTexture);
+                    components.Add(activeTextBox);
+                }
             }
 
             if (activeTextBox.finished)

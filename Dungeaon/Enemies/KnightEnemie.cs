@@ -18,7 +18,7 @@ namespace Dungeaon.Enemies
         public override float scale { get => _scale; set => _scale = value; }
         public override Vector2 position { get => _position; set => _position = value; }
         public override bool isAlive { get => _isAlive; set => _isAlive = value; }
-        public override List<string> Dialog => new List<string>() { "Test1", "Test2", "Test3" };
+        public override List<string> Dialog => new List<string>() { "Ich werde mir deine Seele holen!", "*Als das Lict richtig lag hast\ndu das innere des einstigen Ritters\ngesehen nichts als verdorbenes Fleisch\nund Schmerz*", "Wo ist er!\nWo ist er!\nWer hat mir das angetan?!\n","*Der Ritter laesst sein Schwert direkt\nin der ersten Sekunde fallen\n(anscheinend ist er Rechtshaender)*" };
 
         public KnightEnemie(Game1 game, Vector2 position) : base(game, position)
         {

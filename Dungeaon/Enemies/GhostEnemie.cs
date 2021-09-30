@@ -27,7 +27,7 @@ namespace Dungeaon.Enemies
         public override Vector2 position { get => _position; set => _position = value; }
         public override bool isAlive { get => _isAlive; set => _isAlive = value; }
 
-        public override List<string> Dialog => new List<string>() { "Test1", "Test2", "Test3" };
+        public override List<string> Dialog => new List<string>() { "Ad mortem, inimicus!", "Te affligam!", "Ad Profundis!","*Bevor der Kampf startet siehst du\nwie der Geist durch ein\n Lateinbuch blaettert,\nweil er sein text vergessen hat...*" };
 
         public GhostEnemie(Game1 game, Vector2 position) : base(game, position)
         {
