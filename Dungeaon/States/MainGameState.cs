@@ -259,8 +259,11 @@ namespace Dungeaon.States
 
             Player.inventorySlots.Add(primarySlot);
             Player.inventorySlots.Add(secondarySlot);
-            Player.inventory.Add(primarySlot, emptyItem);
+            Player.inventory.Add(primarySlot, weaponList[0]);
             Player.inventory.Add(secondarySlot, emptyItem);
+
+            Player.inventorySlots[0].texture = weaponList[0].sprite;
+
 
             for (int i = 0; i < 15; i++)
             {
@@ -444,7 +447,7 @@ namespace Dungeaon.States
             spriteBatch.Draw(game.playerHead, new Vector2(roomPos.X / 2 - game.playerHead.Width * 4f / 2, 114), null, Color.White, 0f, Vector2.Zero, 4f, SpriteEffects.None, 0);
 
             spriteBatch.Draw(game.inventoryCard, inventoryCardPos, null, Color.White, 0f, Vector2.Zero, 3.4f, SpriteEffects.None, 0);
-            spriteBatch.DrawString(game.font, Player.player_Money.ToString(), new Vector2(roomPos.X / 2 - game.playerCard.Width  / 2, 730), Color.Yellow, 0f, Vector2.Zero, 3.4f, SpriteEffects.None, 0);
+            spriteBatch.DrawString(game.font, "Money: " + Player.player_Money, new Vector2(112, 765), Color.Yellow, 0f, Vector2.Zero, 2.5f, SpriteEffects.None, 0);
         }
 
         public static void DrawToolTip(SpriteBatch spriteBatch, MainGameState.Item item, Game1 game)

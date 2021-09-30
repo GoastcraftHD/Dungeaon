@@ -121,8 +121,8 @@ namespace Dungeaon.States
             spriteBatch.DrawString(game.font, "X: " + mouseX + " Y: " + mouseY, new Vector2(0, 0), Color.Black, 0f, Vector2.Zero, 2, SpriteEffects.None, 0);
             spriteBatch.Draw(game.fightScreen, roomPos, null, Color.White, 0f, Vector2.Zero, 3.5f, SpriteEffects.None, 0);
             spriteBatch.Draw(enemie.texture, enemySizeRectangle, enemySourceRectangle, Color.White);
-            spriteBatch.Draw(enemyHealthbar, new Vector2(roomPos.X + game.fightScreen.Width * 3.4f / 2 - ememieHealthBarRect.Width / 2, 70), ememieHealthBarRect, Color.White);
-            spriteBatch.DrawString(game.font, enemie.name, new Vector2(roomPos.X + game.fightScreen.Width * 3.5f / 2 - ememieHealthBarRect.Width / 2, 35), Color.Yellow, 0f, Vector2.Zero, 2, SpriteEffects.None, 0);
+            spriteBatch.Draw(enemyHealthbar, new Vector2(roomPos.X + game.fightScreen.Width * 3.4f / 2 - enemieHealthBarWitdhB / 2, 70), ememieHealthBarRect, Color.White);
+            spriteBatch.DrawString(game.font, enemie.name, new Vector2(roomPos.X + game.fightScreen.Width * 3.5f / 2 - enemieHealthBarWitdhB / 2, 35), Color.Yellow, 0f, Vector2.Zero, 2, SpriteEffects.None, 0);
 
             MainGameState.DrawUI(spriteBatch, game, graphicsDeviceManager);
 
