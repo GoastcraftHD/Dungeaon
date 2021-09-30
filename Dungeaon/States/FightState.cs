@@ -161,7 +161,12 @@ namespace Dungeaon.States
 
             if (activeTextBox == null)
             {
-                if(enemie.headTexture == game.boss1Head)
+                if(enemie.headTexture == game.financeHead)
+                {
+                    activeTextBox = new TextBox(game, new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - game.textBoxSprite.Width * 10 / 2, graphicsDeviceManager.PreferredBackBufferHeight - game.textBoxSprite.Height * 10), enemie.Dialog, enemie.headTexture);
+                    components.Add(activeTextBox);
+                }
+                else if(enemie.headTexture == game.boss1Head)
                 {
                     activeTextBox = new TextBox(game, new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - game.textBoxSprite.Width * 10 / 2, graphicsDeviceManager.PreferredBackBufferHeight - game.textBoxSprite.Height * 10), enemie.Dialog, enemie.headTexture);
                     components.Add(activeTextBox);

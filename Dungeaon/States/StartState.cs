@@ -14,6 +14,7 @@ namespace Dungeaon.States
         private Rectangle door = new Rectangle(1250, 0, 250, 180);
         private TextBox necroMancerTextBox;
         private TextBox financeTextBox;
+        private TextBox aufregung;
         private MainGameState mainGameState;
         private Vector2 financePos;
 
@@ -28,11 +29,16 @@ namespace Dungeaon.States
                 player
             };
 
-            List<string> Ndialog = new List<string>() { "Test1", "Test2", "Test3" };
+            List<string> Ndialog = new List<string>() { "HAhahaHAHAHAHHAHAhaha\n*hust hust* haHAHAha.... haha\nEndlich bist du wach das war\nanstregend.....",
+                "So mein ehmaliger Toter (Freund?)\ndu musst fuer mich was erledigen\nich habe womoeglich ein monster erschaffen\n",
+                "Und ich habe Angst also musst du\ndas Logischerweise erledigen",
+                "das Letzte mal als ich so viel\nAngst hatte war als das Finanzamt mich\nfast beim steuern hinterziehen geschnappt hat" };
             necroMancerTextBox = new TextBox(game, new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - game.textBoxSprite.Width * 10 / 2, graphicsDeviceManager.PreferredBackBufferHeight - game.textBoxSprite.Height * 10), Ndialog, game.necromancerHead);
             components.Add(necroMancerTextBox);
 
-            List<string> Fdialog = new List<string>() { "Test1", "Test2", "Test3" };
+            aufregung = new TextBox(game, new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - game.textBoxSprite.Width * 10 / 2, graphicsDeviceManager.PreferredBackBufferHeight - game.textBoxSprite.Height * 10), "HAT JEMAND STEUERN HINTERZIEHEN GESAGT! ", null);
+
+            List<string> Fdialog = new List<string>() { "Da haben wir sie endlich", "Test2", "Test3" };
             financeTextBox = new TextBox(game, new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - game.textBoxSprite.Width * 10 / 2, graphicsDeviceManager.PreferredBackBufferHeight - game.textBoxSprite.Height * 10), Fdialog, game.financeHead);
         }
 
@@ -71,6 +77,7 @@ namespace Dungeaon.States
         double financeDialogTime = 0D;
         private bool count = true;
         private bool fText = true;
+       
 
         public override void Update(GameTime gameTime)
         {
@@ -99,7 +106,7 @@ namespace Dungeaon.States
             if (financeTextBox.finished)
             {
                 components.Remove(financeTextBox);
-                game.ChangeState(new FightState(game, graphicsDeviceManager, content, mainGameState, new BossEnemie(game, Vector2.Zero)));
+                game.ChangeState(new FightState(game, graphicsDeviceManager, content, mainGameState, new FinanzEnemie(game, Vector2.Zero)));
             }
 
             foreach (Component component in components)
