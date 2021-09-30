@@ -74,8 +74,7 @@ namespace Dungeaon.States
             
         }
 
-        double financeDialogTime = 0D;
-        private bool count = true;
+        private bool aText = true;
         private bool fText = true;
        
 
@@ -85,7 +84,20 @@ namespace Dungeaon.States
 
             if (necroMancerTextBox.finished)
             {
+
                 components.Remove(necroMancerTextBox);
+
+                if (aText)
+                {
+                    components.Add(aufregung);
+                    aText = false;
+                }
+            }
+
+            if (aufregung.finished)
+            {
+
+                components.Remove(aufregung);
 
                 if (fText)
                 {
@@ -93,14 +105,7 @@ namespace Dungeaon.States
                     fText = false;
                 }
 
-                if (count)
-                    financeDialogTime += deltaTime;
-
-                if (financeDialogTime > 1)
-                {
-                    financePos = Vector2.Lerp(financePos, new Vector2(1000, financePos.Y), 0.01f);
-                    count = false;
-                }
+                financePos = Vector2.Lerp(financePos, new Vector2(1000, financePos.Y), 0.01f);
             }
 
             if (financeTextBox.finished)
