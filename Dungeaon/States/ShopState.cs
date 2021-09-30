@@ -173,7 +173,7 @@ namespace Dungeaon.States
                 int i = 0;
                 foreach (KeyValuePair<Button, MainGameState.Item> slot in Player.inventory)
                 {
-                    if (slot.Value.sprite == null)
+                    if (i > 1 && slot.Value.sprite == null)
                     {
                         Player.inventory[slot.Key] = weapon;
                         Player.inventorySlots[i].texture = weapon.sprite;
@@ -193,7 +193,7 @@ namespace Dungeaon.States
                 int i = 0;
                 foreach (KeyValuePair<Button, MainGameState.Item> slot in Player.inventory)
                 {
-                    if (slot.Value.sprite == null)
+                    if (i > 1 && slot.Value.sprite == null)
                     {
                         Player.inventory[slot.Key] = defense;
                         Player.inventorySlots[i].texture = defense.sprite;
@@ -213,7 +213,7 @@ namespace Dungeaon.States
                 int i = 0;
                 foreach (KeyValuePair<Button, MainGameState.Item> slot in Player.inventory)
                 {
-                    if (slot.Value.sprite == null)
+                    if (i > 1 && slot.Value.sprite == null)
                     {
                         Player.inventory[slot.Key] = potion;
                         Player.inventorySlots[i].texture = potion.sprite;
