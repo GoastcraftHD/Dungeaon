@@ -236,6 +236,18 @@
 /processorParam:TextureFormat=Color
 /build:heads/player-head.png
 
+#begin heads/versuchsperson-Head.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:heads/versuchsperson-Head.png
+
 #begin Inventar-Board.png
 /importer:TextureImporter
 /processor:TextureProcessor

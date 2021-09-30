@@ -45,6 +45,7 @@ namespace Dungeaon
         public Texture2D necromancerHead;
         public Texture2D financeHead;
         public Texture2D ghostHead;
+        public Texture2D knightHead;
 
         public Texture2D healthPostion;
         public Texture2D speedPotion;
@@ -83,6 +84,7 @@ namespace Dungeaon
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            
         }
 
         protected override void Initialize()
@@ -153,6 +155,7 @@ namespace Dungeaon
             graveyard = Content.Load<Texture2D>("rooms/Friedhof");
             financeHead = Content.Load<Texture2D>("heads/Finanzmitarbeiter-Head");
             ghostHead = Content.Load<Texture2D>("heads/geist-Head");
+            knightHead = Content.Load<Texture2D>("heads/versuchsperson-Head");
 
             // = Content.Load<Texture2D>("");
 
