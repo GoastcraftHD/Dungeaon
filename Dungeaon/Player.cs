@@ -24,14 +24,16 @@ namespace Dungeaon
         private Texture2D texture;
         private SpriteEffects direction = SpriteEffects.None;
         private Game1 game;
+        private bool useRoomHitbox;
 
         public Rectangle hitBox => new Rectangle((int)position.X + 20, (int)position.Y + 20, (int)(texture.Width * MainGameState.roomScale) - 30, (int)(texture.Height * MainGameState.roomScale) - 30);
 
-        public Player(Texture2D playerTexture, Vector2 spawnPosition, Game1 game,GraphicsDeviceManager graphicsDeviceManager)
+        public Player(Texture2D playerTexture, Vector2 spawnPosition, Game1 game,GraphicsDeviceManager graphicsDeviceManager, bool useRoomHitbox)
         {
             this.texture = playerTexture;
             this.position = spawnPosition;
             this.game = game;
+            this.useRoomHitbox = useRoomHitbox;
 
             playerHealthBar = new Texture2D(graphicsDeviceManager.GraphicsDevice, 1, 1);
             playerHealthBar.SetData(new Color[] { Color.Red });
@@ -119,8 +121,16 @@ namespace Dungeaon
 
             position += currentVelocity;
 
-            position.X = Math.Clamp(position.X, MainGameState.roomRectangle.X, MainGameState.roomRectangle.X + MainGameState.roomRectangle.Width - texture.Width * MainGameState.roomScale);
-            position.Y = Math.Clamp(position.Y, MainGameState.roomRectangle.Y, MainGameState.roomRectangle.Y + MainGameState.roomRectangle.Height - texture.Height * MainGameState.roomScale);
+            if (useRoomHitbox)
+            {
+                position.X = Math.Clamp(position.X, MainGameState.roomRectangle.X, MainGameState.roomRectangle.X + MainGameState.roomRectangle.Width - texture.Width * MainGameState.roomScale);
+                position.Y = Math.Clamp(position.Y, MainGameState.roomRectangle.Y, MainGameState.roomRectangle.Y + MainGameState.roomRectangle.Height - texture.Height * MainGameState.roomScale);
+            }
+            else
+            {
+                position.X = Math.Clamp(position.X, 0, 1920 - texture.Width * MainGameState.roomScale);
+                position.Y = Math.Clamp(position.Y, 0, 1080 - texture.Height * MainGameState.roomScale);
+            }
         }
     }
 }

@@ -11,12 +11,12 @@ namespace Dungeaon.States
         private List<Component> components;
 
         private State optionsState;
-        private State mainGameState;      
+        private State startState;      
 
         public MainMenuState(Game1 game, GraphicsDeviceManager graphicsDeviceManager, ContentManager content, State previousState) : base(game, graphicsDeviceManager, content, previousState)
         {
             optionsState = new OptionsState(game, graphicsDeviceManager, content, this);
-            mainGameState = new MainGameState(game, graphicsDeviceManager, content, this);     
+            startState = new StartState(game, graphicsDeviceManager, content, this);     
 
             int buttonScale = 8;
 
@@ -85,7 +85,7 @@ namespace Dungeaon.States
 
         private void startGameButton_Click(object sender, EventArgs e)
         {
-            game.ChangeState(mainGameState);
+            game.ChangeState(startState);
         }
 
         private void optionsButton_Click(object sender, EventArgs e)
