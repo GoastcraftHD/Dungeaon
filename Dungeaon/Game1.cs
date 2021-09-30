@@ -28,6 +28,7 @@ namespace Dungeaon
         public Texture2D shoproom;
         public Texture2D door;
         public Texture2D smallDoor;
+        public Texture2D graveyard;
 
         public Texture2D knightEnemy;
         public Texture2D financeEnemy;
@@ -147,6 +148,7 @@ namespace Dungeaon
             cyborgNinjaEnemy= Content.Load<Texture2D>("enemies/Cyborg-Ninja-Demon");
             inventoryCard = Content.Load<Texture2D>("Inventar-Board");
             toolTip = Content.Load<Texture2D>("tooltip");
+            graveyard = Content.Load<Texture2D>("rooms/Friedhof");
 
             // = Content.Load<Texture2D>("");
 

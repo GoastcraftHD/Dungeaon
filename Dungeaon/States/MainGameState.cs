@@ -123,7 +123,8 @@ namespace Dungeaon.States
                 name = "Basic Shield",
                 sprite = game.shield1,
                 cost = 10,
-                type = ItemType.Defense
+                type = ItemType.Defense,
+                defense = 5
             };
 
             Item advancedShield = new Item()
@@ -131,7 +132,8 @@ namespace Dungeaon.States
                 name = "Advanced Shield",
                 sprite = game.shield2,
                 cost = 20,
-                type = ItemType.Defense
+                type = ItemType.Defense,
+                defense = 10
             };
 
             Item proShield = new Item()
@@ -139,7 +141,8 @@ namespace Dungeaon.States
                 name = "Professional Shield",
                 sprite = game.shield3,
                 cost = 40,
-                type = ItemType.Defense
+                type = ItemType.Defense,
+                defense = 15
             };
 
             Item woodShield = new Item()
@@ -147,7 +150,8 @@ namespace Dungeaon.States
                 name = "Wooden Shield",
                 sprite = game.shield4,
                 cost = 35,
-                type = ItemType.Defense
+                type = ItemType.Defense,
+                defense = 20
             };
 
             Item wolfShield = new Item()
@@ -155,7 +159,8 @@ namespace Dungeaon.States
                 name = "Wolf Clan Shield",
                 sprite = game.shield5,
                 cost = 500,
-                type = ItemType.Defense
+                type = ItemType.Defense,
+                defense = 25
             };
 
             defenseList = new List<Item>()
@@ -210,7 +215,7 @@ namespace Dungeaon.States
         {
             roomPos = new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - (game.room1.Width * roomScale) / 2, 0);
             roomRectangle = new Rectangle((int)roomPos.X + 5, (int)roomPos.Y + 10, (int)(game.room1.Width * roomScale) - 10, (int)(game.room1.Height * roomScale) - 18);
-            player = new Player(game.player, new Vector2(700, 500), game, graphicsDeviceManager);
+            player = new Player(game.player, new Vector2(700, 500), game, graphicsDeviceManager, true);
             shopHitbox = new Rectangle((int)roomPos.X, (int)roomPos.Y, 350, 150);
             inventoryCardPos = new Vector2((roomPos.X + game.room1.Width * roomScale) + (graphicsDeviceManager.PreferredBackBufferWidth - (roomPos.X + game.room1.Width * roomScale)) / 2 - game.inventoryCard.Width * 3.4f / 2, 10);
 
@@ -322,7 +327,7 @@ namespace Dungeaon.States
 
                         break;
                     }
-                    
+
                     if (cache.type == ItemType.Defense)
                         slotType = 1;
 
@@ -330,6 +335,8 @@ namespace Dungeaon.States
                     Player.inventory[slot] = Player.inventory[Player.inventorySlots[slotType]];
                     Player.inventory[Player.inventorySlots[slotType]] = cache;
                     Player.inventorySlots[slotType].texture = cache.sprite;
+
+                    Player.player_Health = Math.Clamp(Player.player_Health + cache.defense, 0, Player.player_maxHealth);
 
                     break;
                 }
@@ -420,7 +427,8 @@ namespace Dungeaon.States
             CheckForDoorColission();
 
             if (room.isShop && player.hitBox.Intersects(shopHitbox))
-                game.ChangeState(room.shopState);
+                game.ChangeState(new ShopState(game, graphicsDeviceManager, content, this));
+                //game.ChangeState(room.shopState);
 
             if (room.enemie != null && room.enemie.isAlive)
             {
@@ -450,22 +458,28 @@ namespace Dungeaon.States
         {
             int nameWidth = (int)game.font.MeasureString(item.name).X * 2;
             int damageWidth = item.damage != 0 ? (int)game.font.MeasureString("Damage: " + item.damage).X * 2 : 0;
+            int defenseWidth = item.defense != 0 ? (int)game.font.MeasureString("Defense: " + item.defense).X * 2 : 0;
 
             int nameHeight = (int)game.font.MeasureString(item.name).Y * 2;
             int damageHeight = item.damage != 0 ? (int)game.font.MeasureString("Damage: " + item.damage).Y * 2 : 0;
+            int defenseHeight = item.defense != 0 ? (int)game.font.MeasureString("Defense: " + item.defense).Y * 2 : 0;
 
             int wCache1 = nameWidth < damageWidth ? damageWidth : nameWidth;
+            int wCache2 = wCache1 < defenseWidth ? defenseWidth : wCache1;
 
-            Vector2 position = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
+            Vector2 position = new Vector2(Mouse.GetState().X, Mouse.GetState().Y) + new Vector2(10, 10);
 
-            Rectangle rect = new Rectangle((int)position.X, (int)position.Y, wCache1 + 10, nameHeight + damageHeight);
+            Rectangle rect = new Rectangle((int)position.X, (int)position.Y, wCache2 + 10, 3 + nameHeight + damageHeight + defenseHeight);
 
             spriteBatch.Draw(game.toolTip, rect, new Rectangle(0, 0, game.toolTip.Width, game.toolTip.Height), Color.White);
             spriteBatch.DrawString(game.font, item.name, position + new Vector2(5, 0), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0);
-            spriteBatch.DrawString(game.font, Player.player_MoneyAnzeige, new Vector2(roomPos.X / 2 - game.playerCard.Width / 2, 730), Color.Yellow, 0f, Vector2.Zero, 3.4f, SpriteEffects.None, 0);
 
             if (item.damage != 0)
                 spriteBatch.DrawString(game.font, "Damage: " + item.damage, position + new Vector2(5, 30), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0);
+
+            if (item.defense != 0)
+                spriteBatch.DrawString(game.font, "Defense: " + item.defense, position + new Vector2(5, 30), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0);
+
         }
 
         private Room[,] GenerateDungeon(int sizeX, int sizeY)

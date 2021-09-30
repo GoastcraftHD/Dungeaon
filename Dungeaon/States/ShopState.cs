@@ -29,7 +29,7 @@ namespace Dungeaon.States
             int weaponIndex = rand.Next(MainGameState.weaponList.Count);
             weapon = MainGameState.weaponList[weaponIndex];
 
-            int defenseIndex = rand.Next(MainGameState.defenseList.Count);
+           int defenseIndex = rand.Next(MainGameState.defenseList.Count);
             defense = MainGameState.defenseList[defenseIndex];
 
             item1Button = new Button(new Vector2(530, 525))
@@ -130,19 +130,22 @@ namespace Dungeaon.States
         {
             int costWidth = (int)game.font.MeasureString("Cost: " + item.cost).X * 2;
             int nameWidth = (int)game.font.MeasureString(item.name).X * 2;
-            int damageWidth = item.damage != 0 ? (int)game.font.MeasureString("Damage: " + item.damage.ToString()).X * 2 : 0;
+            int damageWidth = item.damage != 0 ? (int)game.font.MeasureString("Damage: " + item.damage).X * 2 : 0;
+            int defenseWidth = item.defense != 0 ? (int)game.font.MeasureString("Defense: " + item.defense).X * 2 : 0;
 
             int costHeight = (int)game.font.MeasureString("Cost: " + item.cost).Y * 2;
             int nameHeight = (int)game.font.MeasureString(item.name).Y * 2;
-            int damageHeight = item.damage != 0 ? (int)game.font.MeasureString("Damage: " + item.damage.ToString()).Y * 2 : 0;
-
+            int damageHeight = item.damage != 0 ? (int)game.font.MeasureString("Damage: " + item.damage).Y * 2 : 0;
+            int defenseHeight = item.defense != 0 ? (int)game.font.MeasureString("Defense: " + item.defense).Y * 2 : 0;
 
             int wCache1 = costWidth < nameWidth ? nameWidth : costWidth;
-            int wCache2 = wCache1 < damageWidth ? damageHeight : wCache1;
+            int wCache2 = wCache1 < damageWidth ? damageWidth : wCache1;
+            int wCache3 = wCache2 < defenseWidth ? defenseWidth : wCache2;
+
 
             Vector2 position = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
 
-            Rectangle rect = new Rectangle((int)position.X, (int)position.Y, wCache2 + 10, nameHeight + costHeight + damageHeight);
+            Rectangle rect = new Rectangle((int)position.X, (int)position.Y, wCache3 + 10, nameHeight + costHeight + damageHeight + defenseHeight);
 
             spriteBatch.Draw(game.toolTip, rect, new Rectangle(0, 0, game.toolTip.Width, game.toolTip.Height), Color.White);
             spriteBatch.DrawString(game.font, item.name, position + new Vector2(5, 0), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0);
@@ -150,6 +153,10 @@ namespace Dungeaon.States
            
             if (item.damage != 0)
                 spriteBatch.DrawString(game.font, "Damage: " + item.damage, position + new Vector2(5, 60), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0);
+          
+            if (item.defense != 0)
+                spriteBatch.DrawString(game.font, "Defense: " + item.defense, position + new Vector2(5, 60), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0);
+
         }
 
         private void item1Button_Click(object sender, EventArgs e)
