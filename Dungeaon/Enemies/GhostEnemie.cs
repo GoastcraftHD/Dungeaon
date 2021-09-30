@@ -33,7 +33,7 @@ namespace Dungeaon.Enemies
         {
             health = maxHealth;
             isAlive = true;
-            scale = 3.5f;
+            scale = 3.2f;
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)

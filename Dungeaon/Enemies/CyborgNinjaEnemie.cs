@@ -33,7 +33,7 @@ namespace Dungeaon.Enemies
         {
             health = maxHealth;
             isAlive = true;
-            scale = 2f;
+            scale = 2.5f;
         }
 
         public override void Attack(bool block, bool dodge)
