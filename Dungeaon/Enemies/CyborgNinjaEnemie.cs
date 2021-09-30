@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 
 namespace Dungeaon.Enemies
 {
@@ -26,6 +27,7 @@ namespace Dungeaon.Enemies
         public override Vector2 position { get => _position; set => _position = value; }
         public override bool isAlive { get => _isAlive; set => _isAlive = value; }
 
+        public override List<string> Dialog => new List<string>() { "Test1", "Test2", "Test3" };
 
         public CyborgNinjaEnemie(Game1 game, Vector2 position) : base(game, position)
         {

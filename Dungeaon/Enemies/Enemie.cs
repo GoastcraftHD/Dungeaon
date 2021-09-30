@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 
 namespace Dungeaon.Enemies
 {
@@ -22,6 +23,7 @@ namespace Dungeaon.Enemies
         public abstract Vector2 position { get; set; }
         protected bool _isAlive { get; set; }
         public abstract bool isAlive { get; set; }
+        public abstract List<String> Dialog  { get; }
 
         public abstract void Attack(bool block, bool dodge);
 

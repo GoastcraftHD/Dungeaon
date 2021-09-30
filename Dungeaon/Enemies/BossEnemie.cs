@@ -19,7 +19,8 @@ namespace Dungeaon.Enemies
         public override float scale { get => _scale; set => _scale = value; }
         public override Vector2 position { get => _position; set => _position = value; }
         public override bool isAlive { get => _isAlive; set => _isAlive = value; }
-      
+
+        public override List<string> Dialog => new List<string>() { "Test1", "Test2", "Test3" };
 
         public BossEnemie(Game1 game, Vector2 position) : base(game, position)
         {

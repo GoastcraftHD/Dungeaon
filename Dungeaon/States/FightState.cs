@@ -107,7 +107,7 @@ namespace Dungeaon.States
 
             components.AddRange(Player.inventorySlots);
         }
-        
+
         //Fightscreen wird erstellt
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
@@ -120,7 +120,7 @@ namespace Dungeaon.States
             spriteBatch.Draw(enemie.texture, new Vector2(820, 260), null, Color.White, 0f, Vector2.Zero, 10f, SpriteEffects.None, 0);
             spriteBatch.Draw(enemyHealthbar, new Vector2(roomPos.X + game.fightScreen.Width * 3.4f / 2 - ememieHealthBarRect.Width / 2, 70), ememieHealthBarRect, Color.White);
             spriteBatch.DrawString(game.font, enemie.name, new Vector2(roomPos.X + game.fightScreen.Width * 3.5f / 2 - ememieHealthBarRect.Width / 2, 35), Color.Yellow, 0f, Vector2.Zero, 2, SpriteEffects.None, 0);
-           
+
             MainGameState.DrawUI(spriteBatch, game, graphicsDeviceManager);
 
             foreach (Component component in components)
@@ -142,7 +142,7 @@ namespace Dungeaon.States
         }
 
         private Rectangle mouseRectangle;
- 
+
 
         public override void Update(GameTime gameTime)
         {
@@ -159,8 +159,9 @@ namespace Dungeaon.States
 
             if (activeTextBox == null)
             {
-                List<string> dialog = new List<string>() { "Test1", "Test2", "Test3" };
-                activeTextBox = new TextBox(game, new Vector2(100, 100), dialog, enemie.headTexture);
+                Random random = new Random();
+                int textAuswahl = random.Next(1, 3);
+                activeTextBox = new TextBox(game, new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - game.textBoxSprite.Width * 10 / 2, graphicsDeviceManager.PreferredBackBufferHeight - game.textBoxSprite.Height * 10), enemie.Dialog[textAuswahl], enemie.headTexture);
                 components.Add(activeTextBox);
             }
 
