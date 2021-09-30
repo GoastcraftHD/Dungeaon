@@ -203,7 +203,7 @@ namespace Dungeaon.States
         public static Rectangle leftDoor;
 
         public static Vector2 roomPos;
-        private Player player;
+        public static Player player;
         private Vector2 playerRoomPos = new Vector2(0, 0);
         private Texture2D[] roomTextures;
         public static Vector2 inventoryCardPos;
@@ -262,12 +262,6 @@ namespace Dungeaon.States
             Player.inventory.Add(primarySlot, emptyItem);
             Player.inventory.Add(secondarySlot, emptyItem);
 
-            Player.inventory[Player.inventorySlots[0]] = weaponList[0];
-            Player.inventorySlots[0].texture = weaponList[0].sprite;
-
-            Player.inventory[Player.inventorySlots[1]] = defenseList[3];
-            Player.inventorySlots[1].texture = defenseList[3].sprite;
-
             for (int i = 0; i < 15; i++)
             {
                 int yPos = i / 3;
@@ -284,16 +278,6 @@ namespace Dungeaon.States
                 Player.inventorySlots.Add(slot);
                 Player.inventory.Add(slot, emptyItem);
             }
-
-            Player.inventorySlots[2].texture = defenseList[2].sprite;
-            Player.inventorySlots[3].texture = weaponList[4].sprite;
-            Player.inventorySlots[4].texture = weaponList[1].sprite;
-            Player.inventorySlots[5].texture = defenseList[3].sprite;
-
-            Player.inventory[Player.inventorySlots[2]] = defenseList[2];
-            Player.inventory[Player.inventorySlots[3]] = weaponList[4];
-            Player.inventory[Player.inventorySlots[4]] = weaponList[1];
-            Player.inventory[Player.inventorySlots[5]] = defenseList[3];
         }
 
         private int mouseX;
@@ -324,6 +308,15 @@ namespace Dungeaon.States
 
                     if (cache.type == ItemType.Potion)
                     {
+                        if (cache.Equals(postionList[0]))
+                        {
+                            Player.player_Health = Math.Clamp(Player.player_Health + rand.Next(20, 41), 0, Player.player_maxHealth);
+                            double playerhealth = ((double)Player.player_Health / (double)Player.player_maxHealth) * Player.constant_PlayerHealthBarWidth;
+                            Player.playerHealthBarWidth = (int)playerhealth;
+
+                            Player.inventory[slot] = emptyItem;
+                            Player.inventorySlots[i].texture = null;
+                        }
 
                         break;
                     }
@@ -451,7 +444,7 @@ namespace Dungeaon.States
             spriteBatch.Draw(game.playerHead, new Vector2(roomPos.X / 2 - game.playerHead.Width * 4f / 2, 114), null, Color.White, 0f, Vector2.Zero, 4f, SpriteEffects.None, 0);
 
             spriteBatch.Draw(game.inventoryCard, inventoryCardPos, null, Color.White, 0f, Vector2.Zero, 3.4f, SpriteEffects.None, 0);
-            spriteBatch.DrawString(game.font, Player.player_MoneyAnzeige, new Vector2(roomPos.X / 2 - game.playerCard.Width  / 2, 730), Color.Yellow, 0f, Vector2.Zero, 3.4f, SpriteEffects.None, 0);
+            spriteBatch.DrawString(game.font, Player.player_Money.ToString(), new Vector2(roomPos.X / 2 - game.playerCard.Width  / 2, 730), Color.Yellow, 0f, Vector2.Zero, 3.4f, SpriteEffects.None, 0);
         }
 
         public static void DrawToolTip(SpriteBatch spriteBatch, MainGameState.Item item, Game1 game)

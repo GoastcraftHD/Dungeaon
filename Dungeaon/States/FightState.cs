@@ -182,7 +182,7 @@ namespace Dungeaon.States
             enemieHealthBarWitdh = (int)enemieHealth;
             if (enemie.health <= 0)
             {
-                Player.player_MoneyAnzeige = Convert.ToString(Player.player_Money += enemie.money);
+                Player.player_Money += enemie.money;
                 enemie.isAlive = false;
                 game.ChangeState(previousState);
             }
@@ -206,7 +206,7 @@ namespace Dungeaon.States
             enemieHealthBarWitdh = (int)enemieHealth;
             if (enemie.health <= 0)
             {
-                Player.player_MoneyAnzeige = Convert.ToString(Player.player_Money += enemie.money);
+                Player.player_Money += enemie.money;
                 enemie.isAlive = false;
                 game.ChangeState(previousState);
             }
@@ -228,7 +228,7 @@ namespace Dungeaon.States
             enemieHealthBarWitdh = (int)enemieHealth;
             if (enemie.health <= 0)
             {
-                Player.player_MoneyAnzeige = Convert.ToString(Player.player_Money += enemie.money);
+                Player.player_Money += enemie.money;
                 enemie.isAlive = false;
                 game.ChangeState(previousState);
             }

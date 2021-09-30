@@ -43,6 +43,7 @@ namespace Dungeaon
         public Texture2D boss1Head;
         public Texture2D devilHead;
         public Texture2D necromancerHead;
+        public Texture2D financeHead;
 
         public Texture2D healthPostion;
         public Texture2D speedPotion;
@@ -149,6 +150,7 @@ namespace Dungeaon
             inventoryCard = Content.Load<Texture2D>("Inventar-Board");
             toolTip = Content.Load<Texture2D>("tooltip");
             graveyard = Content.Load<Texture2D>("rooms/Friedhof");
+            financeHead = Content.Load<Texture2D>("heads/Finanzmitarbeiter-Head");
 
             // = Content.Load<Texture2D>("");
 

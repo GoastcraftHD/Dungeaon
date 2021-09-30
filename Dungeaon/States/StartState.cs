@@ -33,7 +33,7 @@ namespace Dungeaon.States
             components.Add(necroMancerTextBox);
 
             List<string> Fdialog = new List<string>() { "Test1", "Test2", "Test3" };
-            financeTextBox = new TextBox(game, new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - game.textBoxSprite.Width * 10 / 2, graphicsDeviceManager.PreferredBackBufferHeight - game.textBoxSprite.Height * 10), Fdialog, null);
+            financeTextBox = new TextBox(game, new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - game.textBoxSprite.Width * 10 / 2, graphicsDeviceManager.PreferredBackBufferHeight - game.textBoxSprite.Height * 10), Fdialog, game.financeHead);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)

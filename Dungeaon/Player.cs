@@ -17,8 +17,7 @@ namespace Dungeaon
         public static int playerHealthBarWidth = 286;
         public static int constant_PlayerHealthBarWidth = 286;
         public static int player_Damage => 15 + inventory[inventorySlots[0]].damage;
-        public static int player_Money = 0;
-        public static string player_MoneyAnzeige = Convert.ToString(player_Money);
+        public static int player_Money = 100;
         public static Rectangle playerHealthBarRect => new Rectangle(0, 0, playerHealthBarWidth, 32);
         public Vector2 position;
         private Texture2D texture;

@@ -89,6 +89,8 @@ namespace Dungeaon.States
                 component.Draw(gameTime, spriteBatch);
             }
 
+            spriteBatch.DrawString(game.font, "Press 'Q' to exit!", new Vector2(1200, 895), Color.White, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0);
+
             if (mouseRectangle.Intersects(item1Button.HitBoxRectangle))
                 DrawToolTip(spriteBatch, weapon);
             else if (mouseRectangle.Intersects(item2Button.HitBoxRectangle))
@@ -123,7 +125,10 @@ namespace Dungeaon.States
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Q))
+            {
                 game.ChangeState(previousState);
+                MainGameState.player.position += new Vector2(0, 20);
+            }
         }
 
         private void DrawToolTip(SpriteBatch spriteBatch, MainGameState.Item item)
@@ -143,7 +148,7 @@ namespace Dungeaon.States
             int wCache3 = wCache2 < defenseWidth ? defenseWidth : wCache2;
 
 
-            Vector2 position = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
+            Vector2 position = new Vector2(Mouse.GetState().X, Mouse.GetState().Y) + new Vector2(10, 10);
 
             Rectangle rect = new Rectangle((int)position.X, (int)position.Y, wCache3 + 10, nameHeight + costHeight + damageHeight + defenseHeight);
 
