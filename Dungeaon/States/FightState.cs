@@ -146,7 +146,6 @@ namespace Dungeaon.States
 
         private Rectangle mouseRectangle;
 
-
         public override void Update(GameTime gameTime)
         {
             mouseRectangle = new Rectangle(Mouse.GetState().X, Mouse.GetState().Y, 1, 1);

@@ -44,6 +44,7 @@ namespace Dungeaon
         public Texture2D devilHead;
         public Texture2D necromancerHead;
         public Texture2D financeHead;
+        public Texture2D ghostHead;
 
         public Texture2D healthPostion;
         public Texture2D speedPotion;
@@ -151,6 +152,7 @@ namespace Dungeaon
             toolTip = Content.Load<Texture2D>("tooltip");
             graveyard = Content.Load<Texture2D>("rooms/Friedhof");
             financeHead = Content.Load<Texture2D>("heads/Finanzmitarbeiter-Head");
+            ghostHead = Content.Load<Texture2D>("heads/geist-Head");
 
             // = Content.Load<Texture2D>("");
 

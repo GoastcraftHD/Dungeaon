@@ -200,6 +200,18 @@
 /processorParam:TextureFormat=Color
 /build:heads/Finanzmitarbeiter-Head.png
 
+#begin heads/geist-Head.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:heads/geist-Head.png
+
 #begin heads/Necromancer-Head.png
 /importer:TextureImporter
 /processor:TextureProcessor
