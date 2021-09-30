@@ -16,6 +16,8 @@ namespace Dungeaon.States
         private Enemie enemie;
         private const int enemieHealthBarWitdhB = 286;
         private int enemieHealthBarWitdh = 286;
+        private TextBox activeTextBox;
+
         private Rectangle ememieHealthBarRect => new Rectangle(0, 0, enemieHealthBarWitdh, 32);
 
         public FightState(Game1 game, GraphicsDeviceManager graphicsDeviceManager, ContentManager content, State previousState, Enemie enemie) : base(game, graphicsDeviceManager, content, previousState)
@@ -140,6 +142,7 @@ namespace Dungeaon.States
         }
 
         private Rectangle mouseRectangle;
+ 
 
         public override void Update(GameTime gameTime)
         {
@@ -153,6 +156,16 @@ namespace Dungeaon.States
             {
                 game.ChangeState(previousState);
             }
+
+            if (activeTextBox == null)
+            {
+                List<string> dialog = new List<string>() { "Test1", "Test2", "Test3" };
+                activeTextBox = new TextBox(game, new Vector2(100, 100), dialog, enemie.headTexture);
+                components.Add(activeTextBox);
+            }
+
+            if (activeTextBox.finished)
+                components.Remove(activeTextBox);
         }
 
         #region button funktionen
