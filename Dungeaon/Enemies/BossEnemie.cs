@@ -14,7 +14,7 @@ namespace Dungeaon.Enemies
         public override int health { get => _health; set => _health = value; }
         public override int damage => 20;
         public override Texture2D texture => game.boss1;
-        public override Texture2D headTexture => null;
+        public override Texture2D headTexture => game.boss1Head;
         public override Rectangle hitBox => new Rectangle((int)position.X + 10, (int)position.Y + 10, (int)(texture.Width * scale) - 20, (int)(texture.Height * scale) - 20);
         public override float scale { get => _scale; set => _scale = value; }
         public override Vector2 position { get => _position; set => _position = value; }

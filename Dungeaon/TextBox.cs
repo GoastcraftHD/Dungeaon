@@ -43,6 +43,7 @@ namespace Dungeaon
         {
             spriteBatch.Draw(game.textBoxSprite, position, null, Color.White, 0f, Vector2.Zero, 10f, SpriteEffects.None,
                 0);
+            if(headTexture != null)
             spriteBatch.Draw(headTexture, position + new Vector2(15, 10), null, Color.White, 0f, Vector2.Zero, 2.18f,
                 SpriteEffects.None, 0);
             spriteBatch.DrawString(game.font, displayedDialog, position + new Vector2(180, 10), Color.White, 0f, Vector2.Zero,
