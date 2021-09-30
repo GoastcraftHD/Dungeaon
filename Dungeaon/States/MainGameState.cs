@@ -533,7 +533,7 @@ namespace Dungeaon.States
             shopRoom.isShop = true;
             shopRoom.shopState = new ShopState(game, graphicsDeviceManager, content, this);
             shopRoom.walls = setDoors(shopY, shopX, sizeY, sizeX);
-            rooms[1, 0] = shopRoom;
+            rooms[shopY, shopX] = shopRoom;
 
             int bossX = rand.Next(1, sizeX);
             int bossY = rand.Next(1, sizeY);
@@ -544,7 +544,6 @@ namespace Dungeaon.States
             bossRoom.enemie = new BossEnemie(game, new Vector2(900, 400));
             bossRoom.walls = setDoors(bossY, bossX, sizeY, sizeX);
             rooms[bossY, bossX] = bossRoom;
-
 
             return rooms;
         }
