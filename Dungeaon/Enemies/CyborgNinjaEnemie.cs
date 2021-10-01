@@ -18,7 +18,7 @@ namespace Dungeaon.Enemies
 
         public override Texture2D texture => game.cyborgNinjaEnemy;
 
-        public override Texture2D headTexture => null;
+        public override Texture2D headTexture => game.ninjaHead;
 
         public override float scale { get => _scale; set => _scale = value; }
 
