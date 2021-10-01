@@ -34,18 +34,18 @@ namespace Dungeaon.States
                 type = ItemType.Potion
             };
 
-            Item speedPotion = new Item()
+           /* Item speedPotion = new Item()
             {
                 name = "Speed Potion",
                 sprite = game.speedPotion,
                 cost = 7,
                 type = ItemType.Potion
-            };
+            };*/
 
             postionList = new List<Item>()
             {
                 healthPotion,
-                speedPotion
+            //    speedPotion
             };
         }
 
@@ -286,18 +286,6 @@ namespace Dungeaon.States
         private int mouseX;
         private int mouseY;
         private Room room;
-
-        private void primaryButton_Click(object sender, EventArgs e)
-        {
-            Player.inventory[Player.inventorySlots[0]] = emptyItem;
-            Player.inventorySlots[0].texture = null;
-        }
-
-        private void secondaryButton_Click(object sender, EventArgs e)
-        {
-            Player.inventory[Player.inventorySlots[1]] = emptyItem;
-            Player.inventorySlots[1].texture = null;
-        }
 
         private void slotButton_Click(object sender, EventArgs e)
         {
