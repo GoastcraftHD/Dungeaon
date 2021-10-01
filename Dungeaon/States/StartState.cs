@@ -31,14 +31,17 @@ namespace Dungeaon.States
 
             List<string> Ndialog = new List<string>() { "HAhahaHAHAHAHHAHAhaha\n*hust hust* haHAHAha.... haha\nEndlich bist du wach das war\nanstregend.....",
                 "So mein ehmaliger Toter (Freund?)\ndu musst fuer mich was erledigen\nich habe womoeglich ein monster erschaffen\n",
-                "Und ich habe Angst also musst du\ndas Logischerweise erledigen",
-                "das Letzte mal als ich so viel\nAngst hatte war als das Finanzamt mich\nfast beim steuern hinterziehen geschnappt hat" };
+                "Und ich habe Angst also musst du\nes Logischerweise loswerden",
+                "Das Letzte mal als ich so viel\nAngst hatte war als das Finanzamt mich\nfast bei der steuerhinterziehung\ngeschnappt hat" };
             necroMancerTextBox = new TextBox(game, new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - game.textBoxSprite.Width * 10 / 2, graphicsDeviceManager.PreferredBackBufferHeight - game.textBoxSprite.Height * 10), Ndialog, game.necromancerHead);
             components.Add(necroMancerTextBox);
 
-            aufregung = new TextBox(game, new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - game.textBoxSprite.Width * 10 / 2, graphicsDeviceManager.PreferredBackBufferHeight - game.textBoxSprite.Height * 10), "HAT JEMAND STEUERN HINTERZIEHEN GESAGT! ", null);
+            aufregung = new TextBox(game, new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - game.textBoxSprite.Width * 10 / 2, graphicsDeviceManager.PreferredBackBufferHeight - game.textBoxSprite.Height * 10), "HAT JEMAND STEUERHINTERZIEHUNG GESAGT! ", null);
 
-            List<string> Fdialog = new List<string>() { "Da haben wir sie endlich", "Test2", "Test3" };
+            List<string> Fdialog = new List<string>() { "Da haben wir sie endlich\nWir suchen sie schon seit fast\n600 Jahren",
+                "???....\nwas soll das? ist das\nihr schlaeger oder was?\nsie wissen er kann mich nichts anhaben ",
+                "Mord ist illegal also geht das nicht",
+                "Halt warte nein geh weg von mir!" };
             financeTextBox = new TextBox(game, new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - game.textBoxSprite.Width * 10 / 2, graphicsDeviceManager.PreferredBackBufferHeight - game.textBoxSprite.Height * 10), Fdialog, game.financeHead);
         }
 

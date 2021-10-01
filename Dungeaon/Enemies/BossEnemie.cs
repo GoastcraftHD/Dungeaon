@@ -19,7 +19,7 @@ namespace Dungeaon.Enemies
         public override Vector2 position { get => _position; set => _position = value; }
         public override bool isAlive { get => _isAlive; set => _isAlive = value; }
 
-        public override List<string> Dialog => new List<string>() { "Schon wieder wurde eine Verlorene Seele\nhierher verdammt um die Drecksarbeit\nvon diesen Nichtsnutz zu erledigen", "er nutz dich und all die anderen aus\ndie hierher kommen nur fuer seine\nexperimente aus", "Der Tod ist eine bessere alternative\nfuer dich als das was er vorhat", "*Er Fuehlt keinen hass auf dich\nnur mitleid das du\ngegen ihn kaempfen musst*" };
+        public override List<string> Dialog => new List<string>() { "Schon wieder wurde eine Verlorene Seele\nhierher verdammt um die Drecksarbeit\nvon diesen Nichtsnutz zu erledigen", "er nutz dich und all die anderen\ndie hierher kommen nur fuer seine\nexperimente aus", "Der Tod ist eine bessere alternative\nfuer dich als das was er vorhat", "*Er Fuehlt keinen hass auf dich\nnur mitleid das du\ngegen ihn kaempfen musst*" };
 
         public BossEnemie(Game1 game, Vector2 position) : base(game, position)
         {

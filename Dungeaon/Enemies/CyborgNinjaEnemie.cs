@@ -18,7 +18,7 @@ namespace Dungeaon.Enemies
 
         public override Texture2D texture => game.cyborgNinjaEnemy;
 
-        public override Texture2D headTexture => null;
+        public override Texture2D headTexture => game.ninjaHead;
 
         public override float scale { get => _scale; set => _scale = value; }
 
@@ -33,7 +33,7 @@ namespace Dungeaon.Enemies
         {
             health = maxHealth;
             isAlive = true;
-            scale = 2f;
+            scale = 2.5f;
         }
 
         public override void Attack(bool block, bool dodge)

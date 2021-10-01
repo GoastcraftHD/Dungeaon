@@ -46,6 +46,7 @@ namespace Dungeaon
         public Texture2D financeHead;
         public Texture2D ghostHead;
         public Texture2D knightHead;
+        public Texture2D ninjaHead;
 
         public Texture2D healthPostion;
         public Texture2D speedPotion;
@@ -157,6 +158,7 @@ namespace Dungeaon
             financeHead = Content.Load<Texture2D>("heads/Finanzmitarbeiter-Head");
             ghostHead = Content.Load<Texture2D>("heads/geist-Head");
             knightHead = Content.Load<Texture2D>("heads/versuchsperson-Head");
+            ninjaHead = Content.Load<Texture2D>("heads/concept");
 
             // = Content.Load<Texture2D>("");
 

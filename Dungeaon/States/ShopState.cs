@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
 
 namespace Dungeaon.States
 {
@@ -19,8 +19,18 @@ namespace Dungeaon.States
         private Button item2Button;
         private Button item3Button;
 
+        private TextBox activeTextBox;
+
+        private List<string> Dialog;
+
+
         public ShopState(Game1 game, GraphicsDeviceManager graphicsDeviceManager, ContentManager content, State previousState) : base(game, graphicsDeviceManager, content, previousState)
         {
+            Dialog = new List<string>() { "Wilkommen in \"meinen\" kleinen Shop\nder Besitzer hat ihn mir\nKurzfristig auf ewig geliehen",
+                "Geniesse dein Urlaub hier oben\nich freue mich schon dich unten\nwieder anzutreffen",
+                "Zeit fuer ein HellfireSale \nHoellisch gute Preise gibts nur hier\n*Zwinker*",
+                "Ah mein Bester Kunde besucht mich wieder\nfuer dich mache ich sogar einen guten preis\n...nein das war Spass" };
+
             Random rand = new Random();
 
             int potionIndex = rand.Next(MainGameState.postionList.Count);
@@ -29,7 +39,7 @@ namespace Dungeaon.States
             int weaponIndex = rand.Next(MainGameState.weaponList.Count);
             weapon = MainGameState.weaponList[weaponIndex];
 
-           int defenseIndex = rand.Next(MainGameState.defenseList.Count);
+            int defenseIndex = rand.Next(MainGameState.defenseList.Count);
             defense = MainGameState.defenseList[defenseIndex];
 
             item1Button = new Button(new Vector2(530, 525))
@@ -101,7 +111,7 @@ namespace Dungeaon.States
             foreach (Button slot in Player.inventorySlots)
             {
                 if (mouseRectangle.Intersects(slot.HitBoxRectangle) && Player.inventory[slot].sprite != null)
-                   MainGameState.DrawToolTip(spriteBatch, Player.inventory[slot], game);
+                    MainGameState.DrawToolTip(spriteBatch, Player.inventory[slot], game);
             }
 
             spriteBatch.End();
@@ -109,7 +119,7 @@ namespace Dungeaon.States
 
         public override void PostUpdate(GameTime gameTime)
         {
-            
+
         }
 
         private Rectangle mouseRectangle;
@@ -129,6 +139,15 @@ namespace Dungeaon.States
                 game.ChangeState(previousState);
                 MainGameState.player.position += new Vector2(0, 20);
             }
+            if (activeTextBox == null)
+            {
+                Random random = new Random();
+                int textAuswahl = random.Next(4);
+                activeTextBox = new TextBox(game, new Vector2(graphicsDeviceManager.PreferredBackBufferWidth / 2 - game.textBoxSprite.Width * 10 / 2, graphicsDeviceManager.PreferredBackBufferHeight - game.textBoxSprite.Height * 10), Dialog[textAuswahl], game.devilHead);
+                components.Add(activeTextBox);
+            }
+            if (activeTextBox.finished)
+                components.Remove(activeTextBox);
         }
 
         private void DrawToolTip(SpriteBatch spriteBatch, MainGameState.Item item)
@@ -155,10 +174,10 @@ namespace Dungeaon.States
             spriteBatch.Draw(game.toolTip, rect, new Rectangle(0, 0, game.toolTip.Width, game.toolTip.Height), Color.White);
             spriteBatch.DrawString(game.font, item.name, position + new Vector2(5, 0), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0);
             spriteBatch.DrawString(game.font, "Cost: " + item.cost, position + new Vector2(5, 30), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0);
-           
+
             if (item.damage != 0)
                 spriteBatch.DrawString(game.font, "Damage: " + item.damage, position + new Vector2(5, 60), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0);
-          
+
             if (item.defense != 0)
                 spriteBatch.DrawString(game.font, "Defense: " + item.defense, position + new Vector2(5, 60), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0);
 
